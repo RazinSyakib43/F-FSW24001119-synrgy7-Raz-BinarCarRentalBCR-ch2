@@ -11,6 +11,7 @@
     --lime-green-young: #A3D2A3;
     --lime-green-old: #3A7D44;
     --neutral: #D0D0D0;
+    --dark-blue: #0D28A6;
 }
 
 /* Navbar Section*/
@@ -252,4 +253,63 @@ header{
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;
+}
+
+/* Getting Started Section */
+.getting-started__card{
+    padding: 64px 0;
+    background-color: var(--dark-blue);
+    color: white;
+    border-radius: 13px;
+    margin-bottom: 100px;
+    -webkit-border-radius: 13px;
+    -moz-border-radius: 13px;
+    -ms-border-radius: 13px;
+    -o-border-radius: 13px;
+}
+
+.getting-started__title{
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 54px;
+    margin-bottom: 16px;
+}
+
+.getting-started__description{
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 20px;
+}
+
+.getting-started__button{
+    background-color: var(--lime-green);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 2px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    width: 160px;
+    height: 36px;
+    animation: ease-in-out;
+    animation-duration: 2s;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -o-border-radius: 2px;
+    -webkit-animation: ease-in-out;
+}
+
+.getting-started__button:hover{
+    background-color: var(--lime-green-young);
+    color: var(--lime-green-old);
+    border: 1.5px solid var(--lime-green);
+    border-radius: 2px;
+    animation: ease-in-out;
+    animation-duration: 2s;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -o-border-radius: 2px;
+    -webkit-animation: ease-in-out;
 }
