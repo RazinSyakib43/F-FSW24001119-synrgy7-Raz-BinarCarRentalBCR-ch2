@@ -313,3 +313,31 @@ header{
     -o-border-radius: 2px;
     -webkit-animation: ease-in-out;
 }
+
+/* FAQ Section */
+.faq{
+    margin-bottom: 100px;
+}
+
+.faq__title{
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 36px;
+    margin-bottom: 16px;
+}
+
+.faq__description{
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 20px;
+}
+
+.faq__accordion-item{
+    border: 1px solid var(--neutral);
+    border-radius: 8px;
+    margin-bottom: 16px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+}
