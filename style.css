@@ -375,7 +375,7 @@ header{
 
 /* FAQ Section */
 .faq{
-    margin-bottom: 100px;
+    margin-bottom: 150px;
 }
 
 .faq__title{
@@ -399,4 +399,70 @@ header{
     -moz-border-radius: 8px;
     -ms-border-radius: 8px;
     -o-border-radius: 8px;
+}
+
+/* Footer Section */
+footer{
+    padding-bottom: 100px;
+}
+
+.address__item{
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 20px;
+    margin-bottom: 16px;
+}
+
+.navigation ul{
+    list-style: none;
+    margin-left: 0;
+}
+
+.navigation li{
+    margin-bottom: 16px;
+}
+
+.navigation__link{
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    animation: ease-in-out;
+    animation-duration: 2s;
+    -webkit-animation: ease-in-out;
+}
+
+.navigation__link:hover{
+    color: var(--dark-blue);
+    background-color: var(--primary-color);
+    padding: 3px 0px;
+    animation: ease-in-out;
+    animation-duration: 2s;
+    -webkit-animation: ease-in-out;
+}
+
+.sosmed__title{
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 20px;
+    margin-bottom: 16px;
+}
+
+.sosmed__icon{
+    width: 32px;
+    height: 32px;
+    margin-right: 16px;
+}
+
+.copyright__title{
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 20px;
+    margin-bottom: 16px;
+}
+
+.copyright__images{
+    width: 100px;
+    height: 34px;
 }
