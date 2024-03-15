@@ -260,12 +260,12 @@ header{
     line-height: 20px;
 }
 
-.swiper{
+.testimonial__swiper{
     width: 100%;
     height: 100%;
 }
 
-.swiper-button-next, .swiper-button-prev{
+.testimonial__swiper-button-next, .testimonial__swiper-button-prev{
     top: unset !important;
     position: absolute;
     background-color: white;
@@ -283,13 +283,13 @@ header{
     -webkit-animation: ease-in-out;
 }
 
-.swiper-button-next::after, .swiper-button-prev::after{
+.testimonial__swiper-button-next::after, .testimonial__swiper-button-prev::after{
     font-size: 16px;
     font-weight: 700;
     color: black;
 }
 
-.swiper-button-next:hover::after, .swiper-button-prev:hover::after{
+.testimonial__swiper-button-next:hover::after, .testimonial__swiper-button-prev:hover::after{
     background-color: var(--lime-green);
     border: 1px solid var(--lime-green);
     color: white !important;
@@ -298,7 +298,7 @@ header{
     -webkit-animation: ease-in-out;
 }
 
-.swiper-button-next:hover, .swiper-button-prev:hover{
+.testimonial__swiper-button-next:hover, .testimonial__swiper-button-prev:hover{
     background-color: var(--lime-green);
     border: 1px solid var(--lime-green);
     color: white !important;
@@ -307,11 +307,11 @@ header{
     -webkit-animation: ease-in-out;
 }
 
-.swiper-button-next{
+.testimonial__swiper-button-next{
     right: calc(50% - 43px);
 }
 
-.swiper-button-prev{
+.testimonial__swiper-button-prev{
     left: calc(50% - 48px);
 }
 
@@ -410,23 +410,23 @@ footer{
     padding-bottom: 100px;
 }
 
-.address__item{
+.footer__address-item{
     font-size: 14px;
     font-weight: 300;
     line-height: 20px;
     margin-bottom: 16px;
 }
 
-.navigation ul{
+.footer__navigation ul{
     list-style: none;
     margin-left: 0;
 }
 
-.navigation li{
+.footer__navigation li{
     margin-bottom: 16px;
 }
 
-.navigation__link{
+.footer__navigation-link{
     text-decoration: none;
     color: black;
     font-size: 14px;
@@ -437,7 +437,7 @@ footer{
     -webkit-animation: ease-in-out;
 }
 
-.navigation__link:hover{
+.footer__navigation-link:hover{
     color: var(--dark-blue);
     background-color: var(--primary-color);
     padding: 3px 0px;
@@ -446,27 +446,27 @@ footer{
     -webkit-animation: ease-in-out;
 }
 
-.sosmed__title{
+.footer__sosmed-title{
     font-size: 14px;
     font-weight: 300;
     line-height: 20px;
     margin-bottom: 16px;
 }
 
-.sosmed__icon{
+.footer__sosmed-icon{
     width: 32px;
     height: 32px;
     margin-right: 16px;
 }
 
-.copyright__title{
+.footer__copyright-title{
     font-size: 14px;
     font-weight: 300;
     line-height: 20px;
     margin-bottom: 16px;
 }
 
-.copyright__images{
+.footer__copyright-images{
     width: 100px;
     height: 34px;
 }
