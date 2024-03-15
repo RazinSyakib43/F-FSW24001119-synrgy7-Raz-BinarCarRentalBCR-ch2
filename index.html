@@ -23,11 +23,11 @@
       display: block;
     } */
 
-    .mySwiper {
+    /* .mySwiper {
       overflow: visible;
       margin-left: auto;
       margin-right: auto
-    }
+    } */
   </style>
 </head>
 
@@ -189,7 +189,7 @@
           <div class="swiper-slide">
             <section class="testimonial__card card border-0">
               <section class="testimonial__card-body card-body d-flex align-items-center justify-content-center">
-                <img src="./assets/images/img_testi2.png" class="testimonial__card-img" alt="">
+                <img src="./assets/images/img_testi1.png" class="testimonial__card-img" alt="">
                 <section class="testimonial__card-review">
                   <section>
                     <img src="./assets/icons/Star 1.png" class="testimonial__card-star" alt="">
@@ -229,7 +229,67 @@
           <div class="swiper-slide">
             <section class="testimonial__card card border-0">
               <section class="testimonial__card-body card-body d-flex align-items-center justify-content-center">
+                <img src="./assets/images/img_testi3.png" class="testimonial__card-img" alt="">
+                <section class="testimonial__card-review">
+                  <section>
+                    <img src="./assets/icons/Star 1.png" class="testimonial__card-star" alt="">
+                    <img src="./assets/icons/Star 1.png" class="testimonial__card-star" alt="">
+                    <img src="./assets/icons/Star 1.png" class="testimonial__card-star" alt="">
+                    <img src="./assets/icons/Star 1.png" class="testimonial__card-star" alt="">
+                    <img src="./assets/icons/Star 1.png" class="testimonial__card-star" alt="">
+                  </section>
+                  <p class="testimonial__card-quote">“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                    eiusmod lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod lorem ipsum dolor
+                    sit amet, consectetur adipiscing elit, sed do eiusmod”</p>
+                  <p class="testimonial__card-name">John Dee 32, Jakarta</p>
+                </section>
+              </section>
+            </section>
+          </div>
+          <div class="swiper-slide">
+            <section class="testimonial__card card border-0">
+              <section class="testimonial__card-body card-body d-flex align-items-center justify-content-center">
+                <img src="./assets/images/img_testi1.png" class="testimonial__card-img" alt="">
+                <section class="testimonial__card-review">
+                  <section>
+                    <img src="./assets/icons/Star 1.png" class="testimonial__card-star" alt="">
+                    <img src="./assets/icons/Star 1.png" class="testimonial__card-star" alt="">
+                    <img src="./assets/icons/Star 1.png" class="testimonial__card-star" alt="">
+                    <img src="./assets/icons/Star 1.png" class="testimonial__card-star" alt="">
+                    <img src="./assets/icons/Star 1.png" class="testimonial__card-star" alt="">
+                  </section>
+                  <p class="testimonial__card-quote">“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                    eiusmod lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod lorem ipsum dolor
+                    sit amet, consectetur adipiscing elit, sed do eiusmod”</p>
+                  <p class="testimonial__card-name">John Dee 32, Solo</p>
+                </section>
+              </section>
+            </section>
+          </div>
+          <div class="swiper-slide">
+            <section class="testimonial__card card border-0">
+              <section class="testimonial__card-body card-body d-flex align-items-center justify-content-center">
                 <img src="./assets/images/img_testi2.png" class="testimonial__card-img" alt="">
+                <section class="testimonial__card-review">
+                  <section>
+                    <img src="./assets/icons/Star 1.png" class="testimonial__card-star" alt="">
+                    <img src="./assets/icons/Star 1.png" class="testimonial__card-star" alt="">
+                    <img src="./assets/icons/Star 1.png" class="testimonial__card-star" alt="">
+                    <img src="./assets/icons/Star 1.png" class="testimonial__card-star" alt="">
+                    <img src="./assets/icons/Star 1.png" class="testimonial__card-star" alt="">
+                  </section>
+                  <p class="testimonial__card-quote">“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                    eiusmod lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod lorem ipsum dolor
+                    sit amet, consectetur adipiscing elit, sed do eiusmod”</p>
+                  <p class="testimonial__card-name">John Dee 32, Bromo</p>
+                </section>
+              </section>
+            </section>
+          </div>
+          <div class="swiper-slide">
+            <section class="testimonial__card card border-0">
+              <section class="testimonial__card-body card-body d-flex align-items-center justify-content-center">
+                <img src="./assets/images/img_testi3.png" class="testimonial__card-img" alt="">
                 <section class="testimonial__card-review">
                   <section>
                     <img src="./assets/icons/Star 1.png" class="testimonial__card-star" alt="">
@@ -385,9 +445,12 @@
   <script>
     var swiper = new Swiper(".mySwiper", {
       loopedSlides: 3,
-      slidesPerView: 2.5,
       watchSlidesVisibility: true,
+      slidesPerView: 2.5,
+      centeredSlides: true,
       loop: true,
+      slideToClickedSlide: true,
+      spaceBetween: 40,
       pagination: {
         el: ".swiper-pagination",
         loop: true,
