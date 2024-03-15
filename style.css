@@ -204,7 +204,8 @@ header{
 
 /* Testimonial Section */
 .testimonial{
-    margin-bottom: 100px;
+    width: 100%;
+    height: 438px;
 }
 
 .testimonial__title{
@@ -255,7 +256,65 @@ header{
     line-height: 20px;
 }
 
+.swiper{
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-button-next, .swiper-button-prev{
+    top: unset !important;
+    position: absolute;
+    background-color: white;
+    margin-top: -130px;
+    border-radius: 50%;
+    border: 1px solid var(--neutral);
+    width: 32px;
+    height: 32px;
+    animation: ease-in-out;
+    animation-duration: 2s;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    -webkit-animation: ease-in-out;
+}
+
+.swiper-button-next::after, .swiper-button-prev::after{
+    font-size: 16px;
+    font-weight: 700;
+    color: black;
+}
+
+.swiper-button-next:hover::after, .swiper-button-prev:hover::after{
+    background-color: var(--lime-green);
+    border: 1px solid var(--lime-green);
+    color: white !important;
+    animation: ease-in-out;
+    animation-duration: 2s;
+    -webkit-animation: ease-in-out;
+}
+
+.swiper-button-next:hover, .swiper-button-prev:hover{
+    background-color: var(--lime-green);
+    border: 1px solid var(--lime-green);
+    color: white !important;
+    animation: ease-in-out;
+    animation-duration: 2s;
+    -webkit-animation: ease-in-out;
+}
+
+.swiper-button-next{
+    right: calc(50% - 43px);
+}
+
+.swiper-button-prev{
+    left: calc(50% - 48px);
+}
+
 /* Getting Started Section */
+.getting-started{
+    margin-top: 100px;
+}
 .getting-started__card{
     padding: 64px 0;
     background-color: var(--dark-blue);
