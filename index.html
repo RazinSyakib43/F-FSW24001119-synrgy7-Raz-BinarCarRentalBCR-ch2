@@ -23,13 +23,16 @@
     <nav class="navbar navbar-expand-lg">
       <section class="container">
         <img src="./assets/images/logo.png" class="navbar-brand" alt="">
-        <section>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <section class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <section class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+          <section class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Binar Car Rental (BCR)</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </section>
+          <section class="offcanvas-body">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
               <li class="nav-item">
                 <a class="nav-link text-dark navbar__text-button" href="#our-services">Our Services</a>
               </li>
@@ -42,10 +45,8 @@
               <li class="nav-item">
                 <a class="nav-link text-dark navbar__text-button" href="#faq">FAQ</a>
               </li>
-              <li>
-                <button type="button" class="btn navbar__register-button">Register</button>
-              </li>
             </ul>
+            <button type="button" class="btn navbar__register-button">Register</button>
           </section>
         </section>
       </section>
@@ -423,22 +424,22 @@
 
   <!-- Footer Section-->
   <footer class="footer">
-    <div class="container">
-      <div class="row">
-        <div class="footer__address col-lg-3">
+    <section class="container">
+      <section class="row">
+        <section class="footer__address col-lg-3">
           <p class="footer__address-item">Jalan Suroyo No. 161 Mayangan Kota Probolonggo 672000</p>
           <p class="footer__address-item">binarcarrental@gmail.com</p>
           <p class="footer__address-item">081-233-334-808</p>
-        </div>
-        <div class="footer__navigation col-lg-2">
+        </section>
+        <section class="footer__navigation col-lg-2">
           <ul>
             <li><a href="#our-services" class="footer__navigation-link">Our services</a></li>
             <li><a href="#why-us" class="footer__navigation-link">Why Us</a></li>
             <li><a href="#testimonial" class="footer__navigation-link">Testimonial</a></li>
             <li><a href="#faq" class="footer__navigation-link">FAQ</a></li>
           </ul>
-        </div>
-        <div class="footer__sosmed col-lg-4">
+        </section>
+        <section class="footer__sosmed col-lg-4">
           <p class="footer__sosmed-title">Connect with us</p>
           <section>
             <img class="footer__sosmed-icon" src="./assets/icons/sosmed/icon_facebook.png" alt=""">
@@ -447,13 +448,13 @@
             <img class="footer__sosmed-icon" src="./assets/icons/sosmed/icon_mail.png" alt="">
             <img class="footer__sosmed-icon" src="./assets/icons/sosmed/icon_twitch.png" alt="">
           </section>
-        </div>
-        <div class="footer__copyright col-lg-3">
+        </section>
+        <section class="footer__copyright col-lg-3">
           <p class="footer__copyright-title">Copyright Binar 2022</p>
           <img class="footer__copyright-images" src="./assets/images/copyright/Rectangle 74.png" alt="">
-        </div>
-      </div>
-    </div>
+        </section>
+      </section>
+    </section>
   </footer>
 
   <!-- Bootstrap JS -->
