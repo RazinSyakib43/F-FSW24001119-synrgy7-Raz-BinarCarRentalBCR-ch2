@@ -1,7 +1,29 @@
+* {
+    font-family: Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+:root {
+    --primary-color: #F1F3FF;
+    --lime-green: #5CB85F;
+    --lime-green-young: #A3D2A3;
+    --lime-green-old: #3A7D44;
+    --neutral: #D0D0D0;
+    --dark-blue: #0D28A6;
+}
+
 @media screen and (max-width: 991px) {
     body {
         margin: 0;
     }
+
+    /* Navbar Section */
 
     .offcanvas {
         padding-top: 32px;
@@ -9,5 +31,23 @@
 
     .navbar__register-button {
         margin-top: 16px;
+    }
+
+    /* Hero Section */
+    .hero{
+        height: 100%;
+    }
+
+    .hero__description{
+        width: 100%;
+        text-align: justify;
+    }
+
+    .hero__img-car{
+        position: absolute;
+        width: 100%;
+        margin-left: 16px !important;
+        padding-top: 24px;
+        background-color: var(--primary-color);
     }
 }
