@@ -13,23 +13,33 @@
   <!-- Link Swiper's CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
-  <!-- style.css -->
-  <link rel="stylesheet" href="style.css">
+  <!-- Main Style -->
+  <link rel="stylesheet" href="./style/style.css">
+
+  <!-- Responsive Style-->
+  <link rel="stylesheet" href="./style/responsive.css">
 </head>
 
 <body>
   <!-- Navbar Section -->
   <header>
     <nav class="navbar navbar-expand-lg">
-      <section class="container">
+      <section class="container navbar__container">
         <img src="./assets/images/logo.png" class="navbar-brand" alt="">
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+          aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <section class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <section class="offcanvas w-50 offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+          aria-labelledby="offcanvasNavbarLabel">
           <section class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Binar Car Rental (BCR)</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <a href="#hero">
+              <h5 class="offcanvas-title navbar__responsive-title" id="offcanvasNavbarLabel">
+                BCR
+              </h5>
+            </a>
+            <button type="button" class="btn-close navbar__responsive-close-button" data-bs-dismiss="offcanvas"
+              aria-label="Close"></button>
           </section>
           <section class="offcanvas-body">
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">

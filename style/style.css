@@ -18,6 +18,10 @@ html {
     --dark-blue: #0D28A6;
 }
 
+a {
+    text-decoration: none;
+}
+
 /* Navbar Section*/
 header {
     background-color: var(--primary-color);
@@ -62,6 +66,20 @@ header {
     -ms-border-radius: 2px;
     -o-border-radius: 2px;
     -webkit-animation: ease-in-out;
+}
+
+.navbar__responsive-title {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 36px;
+    text-decoration: none !important;
+    color: black !important;
+}
+
+.navbar__responsive-close-button {
+    font-size: 20px;
+    font-weight: 700;
+    color: black !important;
 }
 
 /* Hero Section */
