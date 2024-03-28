@@ -374,6 +374,11 @@ header {
     margin-bottom: 16px;
 }
 
+.getting-started__card-body section {
+    width: 468px;
+    margin-bottom: 52px;
+}
+
 .getting-started__description {
     font-size: 14px;
     font-weight: 300;
