@@ -74,7 +74,6 @@ body {
     .our-services__img {
         width: 252px;
         height: 228px;
-        margin-left: 16px !important;
         margin-bottom: 24px;
     }
 
@@ -108,11 +107,11 @@ body {
         height: 614px;
     }
 
-    .testimonial__description{
+    .testimonial__description {
         margin-bottom: 0;
     }
 
-    .testimonial__swiper{
+    .testimonial__swiper {
         margin-top: 16px;
     }
 
@@ -124,23 +123,23 @@ body {
         width: 328px;
         height: auto;
     }
-    
-    .testimonial__card-body{
+
+    .testimonial__card-body {
         display: flex !important;
         flex-direction: column;
         padding: 40px 16px;
     }
 
-    .testimonial__card-img{
+    .testimonial__card-img {
         margin-bottom: 24px;
         margin-right: 0;
     }
 
-    .testimonial__card-review section{
+    .testimonial__card-review section {
         text-align: center;
     }
 
-    .testimonial__card-quote{
+    .testimonial__card-quote {
         text-align: justify;
     }
 
