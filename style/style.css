@@ -476,7 +476,7 @@ footer {
     text-decoration: none;
     color: black;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 500;
     line-height: 20px;
     animation: ease-in-out;
     animation-duration: 2s;
@@ -494,7 +494,7 @@ footer {
 
 .footer__sosmed-title {
     font-size: 14px;
-    font-weight: 300;
+    font-weight: 200;
     line-height: 20px;
     margin-bottom: 16px;
 }

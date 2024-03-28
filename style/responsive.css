@@ -168,4 +168,47 @@ body {
         line-height: 36px;
         margin-bottom: 16px;
     }
+
+    /* FAQ Section */
+    .faq {
+        margin-bottom: 0;
+    }
+
+    .faq__title,
+    .faq__description {
+        text-align: center;
+    }
+
+    /* Footer Section */
+    footer {
+        margin-top: 60px;
+        padding-bottom: 0px;
+        margin-bottom: 60px;
+    }
+
+    .footer__address {
+        margin-bottom: 24px;
+    }
+
+    .footer__address-item:nth-child(3) {
+        margin-bottom: 0;
+    }
+
+    .footer__navigation ul {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+    }
+
+    .footer__navigation {
+        margin-bottom: 24px;
+    }
+
+    .footer__navigation li:nth-child(4) {
+        margin-bottom: 0;
+    }
+
+    .footer__sosmed-icon {
+        margin-bottom: 24px;
+    }
 }
