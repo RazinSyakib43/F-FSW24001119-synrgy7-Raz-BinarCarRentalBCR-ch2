@@ -86,5 +86,19 @@ body {
     /* Why Us Section */
     .why-us {
         margin-top: 60px;
+        margin-bottom: 60px;
+    }
+
+    .why-us__title {
+        text-align: center;
+    }
+
+    .why-us__description {
+        text-align: center;
+        margin-bottom: 16px;
+    }
+
+    .why-us__card{
+        margin-bottom: 16px;
     }
 }
