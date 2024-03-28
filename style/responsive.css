@@ -5,6 +5,12 @@
     box-sizing: border-box;
 }
 
+html,
+body {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
 :root {
     --primary-color: #F1F3FF;
     --lime-green: #5CB85F;
