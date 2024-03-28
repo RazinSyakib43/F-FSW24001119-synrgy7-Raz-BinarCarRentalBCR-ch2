@@ -65,7 +65,7 @@ body {
         padding-bottom: 0px;
     }
 
-    .our-services__col1{
+    .our-services__col1 {
         display: flex;
         justify-content: center;
         padding: 0px 54px;
@@ -78,7 +78,8 @@ body {
         margin-bottom: 24px;
     }
 
-    .our-services__title, .our-services__description{
+    .our-services__title,
+    .our-services__description {
         text-align: justify;
         margin-bottom: 16px;
     }
@@ -98,7 +99,53 @@ body {
         margin-bottom: 16px;
     }
 
-    .why-us__card{
+    .why-us__card {
         margin-bottom: 16px;
+    }
+
+    /* Testimonial Section */
+    .testimonial {
+        height: 614px;
+    }
+
+    .testimonial__description{
+        margin-bottom: 0;
+    }
+
+    .testimonial__swiper{
+        margin-top: 16px;
+    }
+
+    .swiper-wrapper {
+        padding: 16px !important;
+    }
+
+    .testimonial__card {
+        width: 328px;
+        height: auto;
+    }
+    
+    .testimonial__card-body{
+        display: flex !important;
+        flex-direction: column;
+        padding: 40px 16px;
+    }
+
+    .testimonial__card-img{
+        margin-bottom: 24px;
+        margin-right: 0;
+    }
+
+    .testimonial__card-review section{
+        text-align: center;
+    }
+
+    .testimonial__card-quote{
+        text-align: justify;
+    }
+
+    /* Getting Started Section */
+    .getting-started {
+        margin-top: 130px !important;
     }
 }
