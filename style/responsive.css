@@ -26,6 +26,22 @@ body {
     }
 
     /* Navbar Section */
+    .navbar-toggler,
+    .navbar-toggler:focus,
+    .navbar-toggler:active,
+    .navbar-toggler-icon:focus {
+        outline: none;
+        box-shadow: none;
+        border: none;
+    }
+
+    .btn-close,
+    .btn-close:focus,
+    .btn-close:active {
+        outline: none;
+        box-shadow: none;
+        border: none;
+    }
 
     .offcanvas {
         padding-top: 32px;
