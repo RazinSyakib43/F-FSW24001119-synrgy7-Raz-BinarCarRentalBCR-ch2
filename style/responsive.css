@@ -5,10 +5,6 @@
     box-sizing: border-box;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
 :root {
     --primary-color: #F1F3FF;
     --lime-green: #5CB85F;
@@ -34,20 +30,55 @@ html {
     }
 
     /* Hero Section */
-    .hero{
+    .hero {
         height: 100%;
+        margin-bottom: 60px;
     }
 
-    .hero__description{
+    .hero__description {
         width: 100%;
         text-align: justify;
     }
 
-    .hero__img-car{
-        position: absolute;
+    .hero__img-car {
+        position: static;
         width: 100%;
         margin-left: 16px !important;
         padding-top: 24px;
-        background-color: var(--primary-color);
+    }
+
+    /* Our Services Section */
+    .our-services {
+        padding-top: 60px;
+        width: 100%;
+    }
+
+    .our-services__row {
+        padding-left: 16px;
+        padding-right: 16px;
+        padding-bottom: 0px;
+    }
+
+    .our-services__col1{
+        display: flex;
+        justify-content: center;
+        padding: 0px 54px;
+    }
+
+    .our-services__img {
+        width: 252px;
+        height: 228px;
+        margin-left: 16px !important;
+        margin-bottom: 24px;
+    }
+
+    .our-services__title, .our-services__description{
+        text-align: justify;
+        margin-bottom: 16px;
+    }
+
+    /* Why Us Section */
+    .why-us {
+        margin-top: 60px;
     }
 }

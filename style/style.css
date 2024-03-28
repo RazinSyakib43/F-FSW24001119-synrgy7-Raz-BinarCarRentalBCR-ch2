@@ -89,6 +89,11 @@ header {
 
 .hero__row {
     height: 407px;
+
+    html,
+    body {
+        overflow-x: hidden;
+    }
 }
 
 .hero__title {
@@ -169,6 +174,12 @@ header {
     width: 24px;
     height: 24px;
     margin-right: 16px;
+}
+
+.our-services__list-item-text {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 20px;
 }
 
 /* Why Us Section */
