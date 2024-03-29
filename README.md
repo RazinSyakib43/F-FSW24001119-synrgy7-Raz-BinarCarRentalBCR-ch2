@@ -3,7 +3,7 @@ Repositori ini berisi source untuk bagian Front-End (tampilan) dari website Bina
 
 ## Deployment
 Proyek ini telah di-deploy dan dapat diakses melalui tautan berikut:
-[Binar Car Rental Website - Live Demo](https://razinsyakib43.github.io/VehiHire/)
+[Binar Car Rental Website - Live Demo](https://razinsyakib43.github.io/F-FSW24001119-synrgy7-Raz-BinarCarRentalBCR-ch2/)
 
 ## Halaman
 1. **Landing Page**
