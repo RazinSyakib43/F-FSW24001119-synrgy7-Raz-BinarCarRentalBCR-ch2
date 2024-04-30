@@ -516,3 +516,9 @@ footer {
     width: 100px;
     height: 34px;
 }
+
+
+/* Search Page */
+.footer__search-page{
+    margin-top: 168px;
+}

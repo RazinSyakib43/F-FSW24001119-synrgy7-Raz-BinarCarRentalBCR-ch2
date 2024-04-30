@@ -1,0 +1,98 @@
+* {
+    font-family: Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+:root {
+    --primary-color: #f1f3ff;
+    --lime-green: #5cb85f;
+    --lime-green-young: #a3d2a3;
+    --lime-green-old: #3a7d44;
+    --neutral: #d0d0d0;
+    --dark-blue: #0d28a6;
+    --border: #d0d0d0;
+}
+
+.search {
+    display: flex;
+    flex-direction: row;
+    width: 72.6%;
+    margin: 10px auto;
+    padding: 24px !important;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0px 0px 10px 0px #00000026;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+}
+
+.tipe_driver {
+    flex-basis: 21.25%;
+    margin-right: 16px;
+    text-align: left;
+}
+
+.search__button {
+    flex-basis: 15%;
+    height: auto !important;
+}
+
+.search__button-btn {
+    background-color: var(--lime-green);
+    color: white;
+    width: 100%;
+    height: 100%;
+    padding: 8px, 12px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+}
+
+.tipe_driver__title, .search__button-title {
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 4px;
+    color: #3c3c3c;
+}
+
+.tipe_driver__dropdown-button {
+    width: 100%;
+    text-align: left;
+    padding: 9px 12px;
+    border-radius: 2px;
+    border: 1px var(--border) solid;
+    opacity: 0px;
+    color: #999999;
+    animation: ease-in-out;
+    animation-duration: 2s;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -o-border-radius: 2px;
+    -webkit-animation: ease-in-out;
+}
+
+.tipe_driver__dropdown-button:hover {
+    padding: 9px 12px;
+    border-radius: 2px;
+    border: 1px solid;
+    opacity: 0px;
+    animation: ease-in-out;
+    animation-duration: 2s;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -o-border-radius: 2px;
+    -webkit-animation: ease-in-out;
+}
