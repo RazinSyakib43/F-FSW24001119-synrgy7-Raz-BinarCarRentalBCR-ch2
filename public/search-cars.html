@@ -17,10 +17,10 @@
   <link href="./css/style.css" rel="stylesheet" />
 
   <!-- Main Style -->
-  <link rel="stylesheet" href="../style/style.css">
+  <link rel="stylesheet" href="./style/style.css">
 
   <!-- Responsive Style-->
-  <link rel="stylesheet" href="../style/responsive.css">
+  <link rel="stylesheet" href="./style/responsive.css">
 </head>
 
 <body>
@@ -88,58 +88,39 @@
         </section>
       </section>
     </article>
+    <!-- End of Hero Section -->
 
+    <!-- Search Section -->
     <article class="search" id="search">
       <section class="tipe_driver">
         <p class="tipe_driver__title">Tipe Driver</p>
-        <button class="btn dropdown-toggle tipe_driver__dropdown-button" type="button" data-bs-toggle="dropdown"
-          aria-expanded="false">
-          Pilih Tipe Driver
-        </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">Dengan Sopir</a></li>
-          <li><a class="dropdown-item" href="#">Tanpa Sopir (Lepas Kunci)</a></li>
-        </ul>
+        <select class="form-select h-75" name="" id="">
+          <option value="1">Dengan Sopir</option>
+          <option value="0">Tanpa Sopir (Lepas Kunci)</option>
+        </select>
       </section>
-      <section class="tipe_driver">
-        <p class="tipe_driver__title">Tipe Driver</p>
-        <button class="btn dropdown-toggle tipe_driver__dropdown-button" type="button" data-bs-toggle="dropdown"
-          aria-expanded="false">
-          Pilih Tipe Driver
-        </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">Dengan Sopir</a></li>
-          <li><a class="dropdown-item" href="#">Tanpa Sopir (Lepas Kunci)</a></li>
-        </ul>
+      <section class="pilih-tanggal">
+        <p class="pilih-tanggal__title">Tanggal</p>
+        <input type="date" class="form-control h-75" placeholder="Pilih Tanggal" name="" id="">
       </section>
-      <section class="tipe_driver">
-        <p class="tipe_driver__title">Tipe Driver</p>
-        <button class="btn dropdown-toggle tipe_driver__dropdown-button" type="button" data-bs-toggle="dropdown"
-          aria-expanded="false">
-          Pilih Tipe Driver
-        </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">Dengan Sopir</a></li>
-          <li><a class="dropdown-item" href="#">Tanpa Sopir (Lepas Kunci)</a></li>
-        </ul>
+      <section class="waktu_jemput">
+        <p class="waktu_jemput__title">Waktu Jemput/Ambil</p>
+        <input type="time" class="form-control h-75" placeholder="Pilih Tanggal" name="" id="">
       </section>
-      <section class="tipe_driver">
-        <p class="tipe_driver__title">Tipe Driver</p>
-        <button class="btn dropdown-toggle tipe_driver__dropdown-button" type="button" data-bs-toggle="dropdown"
-          aria-expanded="false">
-          Pilih Tipe Driver
-        </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">Dengan Sopir</a></li>
-          <li><a class="dropdown-item" href="#">Tanpa Sopir (Lepas Kunci)</a></li>
-        </ul>
+      <section class="jumlah_penumpang">
+        <p class="jumlah_penumpang__title">Jumlah Penumpang (Optional)</p>
+        <input type="text" class="form-control h-75" placeholder="Jumlah Penumpang" name="" id="">
       </section>
       <section class="search__button">
-        <span class="search__button-title">asd</span>
-        <button type="button" class="search__button-btn">Cari Mobil</button>
+        <p class="jumlah_penumpang__title" style="color: transparent;">P</p>
+        <button type="button" class="search__button-btn h-75" id="load-btn">Cari Mobil</button>
       </section>
     </article>
-    <!-- End of Hero Section -->
+    <!-- End of Search Section -->
+
+    <!-- Car Container -->
+    <section id="cars-container"></section>
+
     <!-- <button id="load-btn">Load</button>
     <button id="clear-btn">Clear</button>
     <section id="cars-container"></section> -->

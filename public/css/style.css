@@ -36,7 +36,10 @@ body {
     -o-border-radius: 8px;
 }
 
-.tipe_driver {
+.tipe_driver,
+.pilih-tanggal,
+.waktu_jemput,
+.jumlah_penumpang {
     flex-basis: 21.25%;
     margin-right: 16px;
     text-align: left;
@@ -56,43 +59,39 @@ body {
     font-size: 14px;
     font-weight: 700;
     line-height: 20px;
+    border: none;
+    border-radius: 2px;
+    animation: ease-in-out;
+    animation-duration: 2s;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -o-border-radius: 2px;
+    -webkit-animation: ease-in-out;
 }
 
-.tipe_driver__title, .search__button-title {
+.search__button-btn:hover {
+    background-color: var(--lime-green-young);
+    color: var(--lime-green-old);
+    border: 2px solid var(--lime-green);
+    border-radius: 2px;
+    animation: ease-in-out;
+    animation-duration: 2s;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -o-border-radius: 2px;
+    -webkit-animation: ease-in-out;
+}
+
+.tipe_driver__title,
+.search__button-title,
+.pilih-tanggal__title,
+.waktu_jemput__title,
+.jumlah_penumpang__title {
     font-size: 12px;
     font-weight: 300;
     line-height: 18px;
     margin-bottom: 4px;
     color: #3c3c3c;
-}
-
-.tipe_driver__dropdown-button {
-    width: 100%;
-    text-align: left;
-    padding: 9px 12px;
-    border-radius: 2px;
-    border: 1px var(--border) solid;
-    opacity: 0px;
-    color: #999999;
-    animation: ease-in-out;
-    animation-duration: 2s;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    -ms-border-radius: 2px;
-    -o-border-radius: 2px;
-    -webkit-animation: ease-in-out;
-}
-
-.tipe_driver__dropdown-button:hover {
-    padding: 9px 12px;
-    border-radius: 2px;
-    border: 1px solid;
-    opacity: 0px;
-    animation: ease-in-out;
-    animation-duration: 2s;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    -ms-border-radius: 2px;
-    -o-border-radius: 2px;
-    -webkit-animation: ease-in-out;
 }
