@@ -41,12 +41,29 @@ class Car {
 
   render() {
     return `
-      <p>id: <b>${this.id}</b></p>
-      <p>plate: <b>${this.plate}</b></p>
-      <p>manufacture: <b>${this.manufacture}</b></p>
-      <p>model: <b>${this.model}</b></p>
-      <p>available at: <b>${this.availableAt}</b></p>
-      <img src="${this.image}" alt="${this.manufacture}" width="64px">
+        <div class="cars-card card px-0">
+          <img src="${this.image}" class="card-img-top object-fit-cover" alt="${this.manufacture}">
+          <div class="cars__card-body card-body">
+            <h5 class="cars__name">${this.manufacture}/${this.model}</h5>
+            <h3 class="cars__price">Rp ${this.rentPerDay} / hari</h3>
+            <p class="cars__description">${this.description}</p>
+            <div class="car__spec">
+              <section class="cars__spec d-flex align-self-center">
+                <img class="cars__spec-icon" src="./assets/icons/cars/fi_users.png" alt="">
+                <p class="car__spec-text">${this.capacity} orang</p>
+              </section>
+              <section class="cars__spec d-flex align-self-center">
+                <img class="cars__spec-icon" src="./assets/icons/cars/fi_settings.png" alt="">
+                <p class="car__spec-text">${this.transmission}</p>
+              </section>
+              <section class="cars__spec d-flex align-self-center">
+                <img class="cars__spec-icon" src="./assets/icons/cars/fi_calendar.png" alt="">
+                <p class="car__spec-text">Tahun ${this.year}</p>
+              </section>
+            </div>
+          </div>
+          <button class="btn cars__button">Pilih Mobil</button>
+        </div>
     `;
   }
 }
