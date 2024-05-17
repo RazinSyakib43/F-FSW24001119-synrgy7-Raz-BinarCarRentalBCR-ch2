@@ -78,9 +78,6 @@
             <p class="hero__description">Selamat datang di Binar Car Rental.
               Kami menyediakan mobil kualitas terbaik dengan harga terjangkau.
               Selalu siap melayani kebutuhanmu untuk sewa mobil selama 24 jam.</p>
-            <a href="public/index.example.html" target="_blank">
-              <button type="button" class="btn hero__button">Mulai Sewa Mobil</button>
-            </a>
           </section>
           <section class="col-lg-6 col-12" style="background-color: #F1F3FF;">
             <img src="../assets/images/img_car.png" class="hero__img-car" alt="">
@@ -91,39 +88,44 @@
     <!-- End of Hero Section -->
 
     <!-- Search Section -->
-    <article class="search" id="search">
-      <section class="tipe_driver">
-        <p class="tipe_driver__title">Tipe Driver</p>
-        <select class="form-select h-75" name="" id="">
-          <option value="1">Dengan Sopir</option>
-          <option value="0">Tanpa Sopir (Lepas Kunci)</option>
-        </select>
-      </section>
-      <section class="pilih-tanggal">
-        <p class="pilih-tanggal__title">Tanggal</p>
-        <input type="date" class="form-control h-75" placeholder="Pilih Tanggal" name="" id="">
-      </section>
-      <section class="waktu_jemput">
-        <p class="waktu_jemput__title">Waktu Jemput/Ambil</p>
-        <input type="time" class="form-control h-75" placeholder="Pilih Tanggal" name="" id="">
-      </section>
-      <section class="jumlah_penumpang">
-        <p class="jumlah_penumpang__title">Jumlah Penumpang (Optional)</p>
-        <input type="text" class="form-control h-75" placeholder="Jumlah Penumpang" name="" id="">
-      </section>
-      <section class="search__button">
-        <p class="jumlah_penumpang__title" style="color: transparent;">P</p>
-        <button type="button" class="search__button-btn h-75" id="load-btn">Cari Mobil</button>
-      </section>
+    <article id="search">
+      <form name="search_form" class="search">
+        <section class="tipe_driver">
+          <p class="tipe_driver__title">Tipe Driver</p>
+          <select class="form-select h-75" name="tipe_driver__form" id="">
+            <option value="">Pilih Driver</option>
+            <option value="1">Dengan Supir</option>
+            <option value="0">Lepas kunci</option>
+          </select>
+        </section>
+        <section class="pilih-tanggal">
+          <p class="pilih-tanggal__title">Tanggal</p>
+          <input type="date" class="form-control h-75" placeholder="Pilih Tanggal" name="pilih_tanggal__form" id="date">
+        </section>
+        <section class="waktu_jemput">
+          <p class="waktu_jemput__title">Waktu Jemput/Ambil</p>
+          <input type="time" class="form-control h-75" placeholder="Pilih Waktu" name="waktu_jemput__form" id="time">
+        </section>
+        <section class="jumlah_penumpang">
+          <p class="jumlah_penumpang__title">Jumlah Penumpang (Optional)</p>
+          <input type="text" class="form-control h-75" placeholder="Jumlah Penumpang" name="jumlah_penumpang__form"
+            id="qty">
+        </section>
+        <section class="search__bar">
+          <p class="jumlah_penumpang__title" style="color: transparent;">P</p>
+          <button class="btn search__button " name="search__button" id="search__button">
+            Cari Mobil
+          </button>
+          <button class="btn edit__button" name="edit__button" id="edit__button" hidden>Edit</button>
+        </section>
+      </form>
     </article>
     <!-- End of Search Section -->
 
     <!-- Car Container -->
-    <section id="cars-container"></section>
-
     <!-- <button id="load-btn">Load</button>
-    <button id="clear-btn">Clear</button>
-    <section id="cars-container"></section> -->
+    <button id="clear-btn">Clear</button> -->
+    <section id="cars-container"></section>
   </main>
 
   <!-- Footer Section-->
@@ -168,9 +170,9 @@
 
   <!-- Example Javascript -->
   <script type="text/javascript" src="./scripts/binar.js"></script>
-  <script type="text/javascript" src="./scripts/app.example.js"></script>
-  <script type="text/javascript" src="./scripts/car.example.js"></script>
-  <script type="text/javascript" src="./scripts/main.example.js"></script>
+  <script type="text/javascript" src="./scripts/app.js"></script>
+  <script type="text/javascript" src="./scripts/car.js"></script>
+  <script type="text/javascript" src="./scripts/main.js"></script>
 </body>
 
 </html>
