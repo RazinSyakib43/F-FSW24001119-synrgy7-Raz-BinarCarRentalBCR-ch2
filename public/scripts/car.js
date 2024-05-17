@@ -42,7 +42,7 @@ class Car {
   render() {
     return `
         <div class="cars-card card px-0">
-          <img src="${this.image}" class="card-img-top object-fit-cover" alt="${this.manufacture}">
+          <img src="${this.image}" class="cars-card-img object-fit-cover" alt="${this.manufacture}">
           <div class="cars__card-body card-body">
             <h5 class="cars__name">${this.manufacture}/${this.model}</h5>
             <h3 class="cars__price">Rp ${this.rentPerDay} / hari</h3>
