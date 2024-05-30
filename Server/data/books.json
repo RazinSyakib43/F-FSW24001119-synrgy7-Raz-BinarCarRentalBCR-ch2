@@ -1,0 +1,84 @@
+[
+  {
+    "id": 1,
+    "title": "Buku NodeJS dan Express",
+    "isbn": 23432423423,
+    "price": 200000,
+    "author": "RazinSyakib"
+  },
+  {
+    "id": 2,
+    "title": "Buku ReactJS dan Redux",
+    "isbn": 23432423424,
+    "price": 250000,
+    "author": "RazinSyakib"
+  },
+  {
+    "id": 3,
+    "title": "Buku React Native",
+    "isbn": 23432423425,
+    "price": 300000,
+    "author": "RazinSyakib"
+  },
+  {
+    "id": 4,
+    "title": "Buku AngularJS",
+    "isbn": 23432423426,
+    "price": 150000,
+    "author": "RazinSyakib"
+  },
+  {
+    "id": 5,
+    "title": "Buku VueJS",
+    "isbn": 23432423427,
+    "price": 200000,
+    "author": "RazinSyakib"
+  },
+  {
+    "id": 6,
+    "title": "Buku MySQL",
+    "isbn": "234324234234543",
+    "price": "210000",
+    "author": "Syakib"
+  },
+  {
+    "id": 7,
+    "title": "Buku MySQL",
+    "isbn": "234324234234543",
+    "price": "210000",
+    "author": "Syakib",
+    "cover": "/public/uploads/img-1716854182434-780467073.png"
+  },
+  {
+    "id": 8,
+    "title": "Buku MySQL",
+    "isbn": "234324234234543",
+    "price": "210000",
+    "author": "Syakib",
+    "cover": "/public/uploads/img-1716859812984-198277134.png"
+  },
+  {
+    "id": 9,
+    "title": "Buku MySQL",
+    "isbn": "234324234234543",
+    "price": "210000",
+    "author": "Syakib",
+    "cover": "/public/uploads/img-1716859852174-691337920.png"
+  },
+  {
+    "id": 10,
+    "title": "Buku MySQL",
+    "isbn": "234324234234543",
+    "price": "403000",
+    "author": "Syakib",
+    "cover": "/public/uploads/img-1716860196556-977098740.png"
+  },
+  {
+    "id": 11,
+    "title": "Buku Cloud Computing - Google Cloud",
+    "isbn": "324543534",
+    "price": "345345",
+    "author": "Muhammad Razin",
+    "cover": "https://res.cloudinary.com/dowiubuw3/image/upload/v1717078197/o6ynx4ff9spdfuxrbuef.jpg"
+  }
+]
