@@ -1,16 +1,12 @@
 {
-  "name": "binar-fsw-challenge-04",
+  "name": "fsw_synrgy-7_muhammad-razin-syakib_challenge-chapter-5",
   "version": "1.0.0",
-  "description": "Project HTTP Server dan DOM",
-  "main": "server/index.js",
-  "author": "Fikri Rahmat Nurhidayat <fnurhidayat@binar.co.id>",
-  "license": "MIT",
-  "private": false,
+  "description": "Binar Car Rental - Car Management Dashboard",
+  "main": "index.js",
   "scripts": {
-    "start": "node server/index.js",
-    "dev": "nodemon server/index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
-    "nodemon": "^3.1.0"
-  }
+  "keywords": [],
+  "author": "Muhammad Razin Syakib",
+  "license": "ISC"
 }
