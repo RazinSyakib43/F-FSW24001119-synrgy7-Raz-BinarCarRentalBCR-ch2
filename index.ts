@@ -6,9 +6,9 @@ import express, {Express, Request, Response, NextFunction} from "express";
 import path from "path"; // For file paths
 
 // Import the multer middleware module
-import upload from "./Server/middleware/multer";
+import upload from "./middleware/multer";
 // Import the  multer middleware module for memory storage
-import uploadOnMemory from "./Server/middleware/multerMemory";
+import uploadOnMemory from "./middleware/multerMemory";
 
 // Import the books function module
 import {
@@ -18,16 +18,16 @@ import {
   addBook,
   editBookById,
   deleteBookById,
-} from "./Server/api/books/index";
+} from "./controllers/index";
 
 // Middleware
-import { handleImageUpload } from "./Server/middleware/errorHandler";
-import isAdmin from "./Server/middleware/isAdmin";
+import { handleImageUpload } from "./middleware/errorHandler";
+import isAdmin from "./middleware/isAdmin";
 
 const app = express();
 
 // Set static folder
-app.set("views", path.join(__dirname, "Server/views"));
+app.set("views", path.join(__dirname, "/views"));
 // Set EJS as templating engine
 app.set("view engine", "ejs");
 

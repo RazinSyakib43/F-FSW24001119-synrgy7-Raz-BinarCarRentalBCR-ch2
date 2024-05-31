@@ -5,8 +5,9 @@
 * TypeScript
 * Node.js
 * Express
-* Knex
 * PostgreSQL
+* Knex
+* Objection.js
 
 ## How To Run:
 
@@ -23,45 +24,91 @@ Diagram source: [Razin -Car Management Dashboard (dbdiagram.io)](https://dbdiagr
 
 ## Installation
 
-### Repositori
+1. Clone repository:
 
-1. Clone repositori:
    ```
-   git clone https://github.com/RazinSyakib43/f-fsw24001119-synrgy7-raz-bcr-ch5
+   https://github.com/RazinSyakib43/Car-Management-Dashboard.git
    ```
-2. Menginstall depedencies
+2. Install project dependencies:
+
    ```
    npm install
    ```
+3. Start the server:
 
-### Database
+- For development mode (with ts-node-dev for auto-reloading):
 
-1. Buat database PostgreSQL bernama `car_rental_db `atau nama lain sesuai keinginan
-2. Update database, username, dan password pada section **connection** di file **knexfile.ts**
-3. Jalankan command dibawah ini untuk migrasi database schema:
+  ```
+  npm run dev
+  ```
+
+3. Configure your database settings by editing the `knexfile.ts`. You can set the `user`, `password`, and `database`. Then save your changes. Example:
+
+   ```
+    development: {
+       client: "postgresql",
+       connection: {
+         database: "car_rental_db",
+         user: "your-username",
+         password: "your-password"
+       },
+       pool: {
+         min: 2,
+         max: 10
+       },
+       migrations: {
+         tableName: "knex_migrations"
+       }
+     },
+   ```
+4. Apply database schema migration:
 
    ```
    npx knex migrate:latest
    ```
-4. Jalankan command dibawah ini untuk menginisiasi data awalan:
+5. Create initial data:
 
    ```
    npx knex seed:run
    ```
-
-### Running
-
-1. Jalankan command dibawah ini untuk menjalankan program:
-
-   ```
-   npm run dev
-   ```
-2. Untuk melakukan pengembangan atau penyesuaian, edit sesuai kebutuhan Anda.
+6. Run the server again to apply the new database configurations.
 
 ## API Endpoints
 
+### Cars
+
+#### [GET] /cars
+
+> This endpoint is used to get a list of all available cars.
+
+Request:
+
+```
+curl -X GET http://api/v1/dashboard/cars
+```
+
+Response:
+
+```
+[
+  {
+    "id": 1,
+    "name": "Toyota Avanza",
+    "category": "Sedan",
+    "price": 500000,
+    "image": "https://res.cloudinary.com/dowiubuw3/image/upload/v1717012914/mhuwr8irhwqnjw7pxlmc.jpg",
+    "created_at": "2024-06-01T12:00:00.000Z",
+    "updated_at": "2024-06-01T12:00:00.000Z",
+    "start_rent": "2024-06-01",
+    "finish_rent": "2024-06-05"
+  },
+  ...
+]
+
+```
+
 ## Kontribusi
 
-Kontribusi dipersilakan! Jika Anda menemukan bug atau memiliki saran untuk perbaikan, silakan open issue atau submit pull request
+Contributions are welcome! If you find a bug or have suggestions for improvements, please open an issue or submit a pull request.
 
 [**@2024 Muhammad Razin Syakib**](https://www.linkedin.com/in/muhammad-razin-syakib/)

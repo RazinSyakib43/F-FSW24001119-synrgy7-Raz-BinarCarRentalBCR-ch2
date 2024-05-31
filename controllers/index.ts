@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import fs from 'fs';
 import { UploadApiResponse, UploadApiErrorResponse } from 'cloudinary';
-import cloudinary from '../../config/cloudinary';
+import cloudinary from '../config/cloudinary';
 
-const booksDataPath: string = "Server/data/books.json";
+const booksDataPath: string = "data/books.json";
 
 async function getBooks(req: Request, res: Response) {
   const books: string = fs.readFileSync(booksDataPath, "utf8");
