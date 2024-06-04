@@ -4,15 +4,17 @@ import type { Knex } from "knex";
 
 const config: { [key: string]: Knex.Config } = {
   development: {
-    client: "postgresql",
+    client: "pg",
     connection: {
+      host: "localhost",
+      port: 5432,
       database: "car_rental_db",
       user: "postgres",
-      password: "yessgood123"
+      password: "yessgood123",
     },
     pool: {
-      min: 2,
-      max: 10
+      min: 0,
+      max: 7
     },
     migrations: {
       tableName: "knex_migrations"

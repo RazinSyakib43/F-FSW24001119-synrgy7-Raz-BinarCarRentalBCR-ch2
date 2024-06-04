@@ -7,8 +7,8 @@ export class CarModel extends Model {
     category!: string;
     price!: number;
     image!: string;
-    created_at!: Date;
-    updated_at!: Date;
+    created_at!: string;
+    updated_at!: string;
 
     static get tableName() {
         return 'car';
