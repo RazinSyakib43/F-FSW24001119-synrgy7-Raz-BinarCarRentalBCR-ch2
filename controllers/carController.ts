@@ -146,7 +146,7 @@ async function addCar(req: Request, res: Response) {
                 res.status(201).send({
                     code: 201,
                     status: "success",
-                    message: "Book added successfully",
+                    message: "Car added successfully",
                     data: car,
                 });
             }

@@ -5,9 +5,6 @@ dotenv.config(); // Load .env file
 import express, {Express, Request, Response, NextFunction} from "express";
 import path from "path"; // For file paths
 
-
-// Import the multer middleware module
-import upload from "./middleware/multer";
 // Import the  multer middleware module for memory storage
 import uploadOnMemory from "./middleware/multerMemory";
 
@@ -16,7 +13,6 @@ import router from "./routes";
 
 // Middleware
 import { handleImageUpload } from "./middleware/errorHandler";
-import isAdmin from "./middleware/isAdmin";
 
 const app = express();
 
@@ -35,7 +31,7 @@ const PORT = process.env.PORT || 3000;
 // Hello World Route
 app.get("/", (req: express.Request, res: express.Response) => {
   res.render("index", {
-    title: "BookLibrary - Hello World!",
+    title: "BCR Car Management Dashboard - Hello World!",
     name: req.query.name || "Guest",
   });
 });

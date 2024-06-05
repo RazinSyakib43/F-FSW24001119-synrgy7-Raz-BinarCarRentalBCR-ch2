@@ -34,14 +34,6 @@ Diagram source: [Razin -Car Management Dashboard (dbdiagram.io)](https://dbdiagr
    ```
    npm install
    ```
-3. Start the server:
-
-- For development mode (with ts-node-dev for auto-reloading):
-
-  ```
-  npm run dev
-  ```
-
 3. Configure your database settings by editing the `knexfile.ts`. You can set the `user`, `password`, and `database`. Then save your changes. Example:
 
    ```
@@ -71,7 +63,10 @@ Diagram source: [Razin -Car Management Dashboard (dbdiagram.io)](https://dbdiagr
    ```
    npx knex seed:run
    ```
-6. Run the server again to apply the new database configurations.
+6. Run the server (with ts-node-dev for auto-reloading):
+   ```
+   npm run dev
+   ```
 
 ## API Endpoints
 
@@ -107,7 +102,7 @@ Response:
 
 ```
 
-## Kontribusi
+## Contribution
 
 Contributions are welcome! If you find a bug or have suggestions for improvements, please open an issue or submit a pull request.
 
