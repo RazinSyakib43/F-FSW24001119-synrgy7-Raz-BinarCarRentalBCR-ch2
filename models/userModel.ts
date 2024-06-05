@@ -5,8 +5,8 @@ export class UserModel extends Model {
     id!: number;
     name!: string;
     email!: string;
-    created_at!: Date;
-    updated_at!: Date;
+    created_at!: string;
+    updated_at!: string;
 
     static get tableName() {
         return 'user';
