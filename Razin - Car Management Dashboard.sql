@@ -2,7 +2,7 @@ CREATE TABLE "order" (
   "id" integer PRIMARY KEY,
   "id_car" integer,
   "id_user" integer,
-  "email" varchar(255),
+  "email" varchar,
   "start_rent" date,
   "finish_rent" date,
   "total_price" float,
@@ -13,18 +13,18 @@ CREATE TABLE "order" (
 
 CREATE TABLE "car" (
   "id" integer PRIMARY KEY,
-  "name" varchar(255),
-  "category" varchar(100),
+  "name" varchar,
+  "category" varchar,
   "price" float,
-  "image" varchar(255),
+  "image" varchar,
   "created_at" timestamp,
   "updated_at" timestamp
 );
 
 CREATE TABLE "user" (
   "id" integer PRIMARY KEY,
-  "name" varchar(255),
-  "email" varchar(255),
+  "name" varchar,
+  "email" varchar,
   "created_at" timestamp,
   "updated_at" timestamp
 );

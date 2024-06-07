@@ -1,5 +1,7 @@
 # Binar Car Rental - Car Management Dashboard
 
+Welcome to the  **Binar Car Rental - Car Management Dashboard** . This dashboard is designed to provide a comprehensive solution for managing car rentals efficiently. It offers a user-friendly interface for administrators to manage cars, users, and rental orders seamlessly.
+
 ## Technologies Used
 
 * TypeScript
@@ -8,17 +10,20 @@
 * PostgreSQL
 * Knex
 * Objection.js
+* Multer
+* Cloudinary
 
 ## How To Run:
 
 - Local Host: Run with Postman, localhost IP, and Port:3000:
   - `http://127.0.0.1:3000/api/v1/dashboard` or
   - `http://localhost:3000/api/v1/dashboard`
+    * `/cars`
+    * `/users`
+    * `/orders`
 - Online Domain: not deployed yet
 
 ## Entity Relationship Diagram (ERD)
-
-![1717178913798](image/README/1717178913798.png)
 
 Diagram source: [Razin -Car Management Dashboard (dbdiagram.io)](https://dbdiagram.io/d/Razin-Car-Management-Dashboard-6658ded2b65d933879209fe4)
 
@@ -70,14 +75,18 @@ Diagram source: [Razin -Car Management Dashboard (dbdiagram.io)](https://dbdiagr
    ```
 
 ## API Endpoints
+* [Postman Documentation](https://documenter.getpostman.com/view/24273397/2sA3XJn5Sb)
 
 * Base URL:
+
   ```
   http://localhost:3000/api/v1/dashboard/
   ```
+
   * `/cars`
   * `/users`
   * `/orders`
+  
 * Status Code:
 
   * **200 OK** : The request was successful.
@@ -184,6 +193,7 @@ Response Body:
 ```
 
 #### [GET] Get a Car by Id
+
 > Retrieves detailed information about a specific car by its ID.
 
 Endpoint: `/api/v1/cars/:id`
@@ -216,6 +226,7 @@ Response Body:
 ```
 
 #### [POST] Create a Car
+
 > Adds a new car to the system.
 
 Endpoint: `/api/v1/cars/`
@@ -250,6 +261,7 @@ Response Body:
 ```
 
 #### [PUT] Edit a Car Data
+
 > Updates the details of a specific car by its ID.
 
 Endpoint: `/api/v1/cars/:id`
@@ -286,6 +298,7 @@ Response Body:
 ```
 
 #### [DEL] Delete a Car
+
 > Deletes a specific car from the system by its ID.
 
 Endpoint: `/api/v1/cars/:id`
@@ -354,6 +367,7 @@ Response Body:
 ```
 
 #### [GET] Get a User by Id
+
 > Retrieves detailed information about a specific user by their ID.
 
 Endpoint: `/api/v1/users/:id`
@@ -381,6 +395,7 @@ Response Body:
 ```
 
 #### [POST] Create a User
+
 > Registers a new user in the system.
 
 Endpoint: `/api/v1/users/`
@@ -410,6 +425,7 @@ Response Body:
 ```
 
 #### [PUT] Edit a User Data
+
 > Updates the details of a specific user by their ID.
 
 Endpoint: `/api/v1/users/:id`
@@ -439,6 +455,7 @@ Response Body:
 ```
 
 #### [DEL] Delete a User
+
 > Deletes a specific user from the system by their ID.
 
 Endpoint: `/api/v1/users/:id`
@@ -462,6 +479,7 @@ Response Body:
 ### Orders
 
 #### [GET] Get All Orders
+
 > Retrieves a list of all orders in the system.
 
 Endpoint: `/api/v1/orders/`
@@ -508,6 +526,7 @@ Response Body:
 ```
 
 #### [GET] Get an Order by Id
+
 > Retrieves detailed information about a specific order by its ID.
 
 Endpoint: `/api/v1/orders/:id`
@@ -540,6 +559,7 @@ Response Body:
 ```
 
 #### [POST] Create an Order
+
 > Creates a new order for renting a car.
 
 Endpoint: `/api/v1/orders/`
@@ -554,6 +574,13 @@ curl --location 'http://localhost:3000/api/v1/dashboard/orders' \
 --form 'rent_duration="5"' \
 --form 'status="active"'
 ```
+
+Note:
+
+* "status": The status of the order. Acceptable values are:
+  * "active": The order is currently active and the car is being rented.
+  * "completed": The rental period has ended and the order is completed.
+  * "cancelled": The order has been cancelled.
 
 Response Body:
 
@@ -575,7 +602,6 @@ Response Body:
 }
 ```
 
-
 #### [PUT] Edit an Order Data
 
 > Updates the details of a specific order by its ID.
@@ -592,6 +618,13 @@ curl --location --request PUT 'http://localhost:3000/api/v1/dashboard/orders/3' 
 --form 'rent_duration=""' \
 --form 'status="cancelled"'
 ```
+
+Note:
+
+* "status": The status of the order. Acceptable values are:
+  * "active": The order is currently active and the car is being rented.
+  * "completed": The rental period has ended and the order is completed.
+  * "cancelled": The order has been cancelled.
 
 Response Body:
 
@@ -615,7 +648,9 @@ Response Body:
 ```
 
 #### [DEL] Delete an Order
+
 > Deletes a specific order from the system by its ID.
+
 Endpoint: `/api/v1/orders/:id`
 
 Request Body:
