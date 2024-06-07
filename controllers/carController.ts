@@ -244,48 +244,30 @@ async function updateCar(req: Request, res: Response) {
                 status: "fail",
                 message: "Car not found",
             });
-        } else if (file) {
+        } else {
             cloudinary.uploader.upload(file, async function (error: UploadApiErrorResponse, result: UploadApiResponse) {
+                const image = req.file ? result.secure_url : selectedCar.image;
                 await CarModel.query().findById(id).patch({
-                    image: result.secure_url
+                    name: name || selectedCar.name,
+                    category: category || selectedCar.category,
+                    price: price || selectedCar.price,
+                    image: image || selectedCar.image,
+                    updated_at: new Date()
                 });
-
                 res.status(200).send({
                     code: 200,
                     status: "success",
                     message: "Car updated successfully",
                     data: {
-                        id: selectedCar.id,
-                        name: selectedCar.name,
-                        category: selectedCar.category,
-                        price: selectedCar.price,
-                        image: result.secure_url,
+                        id: id,
+                        name: name || selectedCar.name,
+                        category: category || selectedCar.category,
+                        price: price || selectedCar.price,
+                        image: image || selectedCar.image,
                         createdAt: selectedCar.created_at,
-                        updatedAt: selectedCar.updated_at
-                    },
+                        updatedAt: new Date()
+                    }
                 });
-            });
-        } else {
-            await CarModel.query().findById(id).patch({
-                name: name || selectedCar.name,
-                category: category || selectedCar.category,
-                price: price || selectedCar.price,
-                updated_at: new Date()
-            });
-
-            res.status(200).send({
-                code: 200,
-                status: "success",
-                message: "Car updated successfully",
-                data: {
-                    id: id,
-                    name: name || selectedCar.name,
-                    category: category || selectedCar.category,
-                    price: price || selectedCar.price,
-                    image: selectedCar.image,
-                    createdAt: selectedCar.created_at,
-                    updatedAt: new Date().toISOString()
-                },
             });
         }
     } catch (error: any) {

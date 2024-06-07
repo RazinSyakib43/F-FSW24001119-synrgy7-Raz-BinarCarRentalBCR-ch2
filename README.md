@@ -260,8 +260,8 @@ Request Body:
 curl --location --request PUT 'http://localhost:3000/api/v1/dashboard/cars/6' \
 --form 'name=""' \
 --form 'category=""' \
---form 'price="3500000"' \
---form 'image=@"/C:/Users/muham/OneDrive/Desktop/images/car11.min.jpg"'
+--form 'price=""' \
+--form 'image=@"/C:/Users/muham/OneDrive/Desktop/images/car09.min.jpg"'
 
 ```
 
@@ -276,10 +276,10 @@ Response Body:
         "id": "6",
         "name": "Honda NSX 2024",
         "category": "Supercar",
-        "price": "3500000",
-        "image": "https://res.cloudinary.com/dowiubuw3/image/upload/v1717794363/td0bkaoqo63vazbldxaf.jpg",
-        "createdAt": "2024-06-07T21:02:40.257Z",
-        "updatedAt": "2024-06-07T21:06:28.862Z"
+        "price": 2500000,
+        "image": "https://res.cloudinary.com/dowiubuw3/image/upload/v1717802631/rlwgszbxkiqh6nxnapnr.jpg",
+        "createdAt": "2024-06-07T23:13:18.435Z",
+        "updatedAt": "2024-06-07T23:23:51.335Z"
     }
 }
 
