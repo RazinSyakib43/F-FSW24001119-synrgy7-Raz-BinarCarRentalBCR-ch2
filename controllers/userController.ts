@@ -6,17 +6,26 @@ import { UserModel } from '../models/userModel';
 async function getUsers(req: Request, res: Response) {
     try {
         const users = await UserModel.query();
-        res.status(200).send({
-            code: 200,
-            status: 'success',
-            data: users
-        });
 
         if (users.length === 0) {
             res.status(404).send({
                 code: 404,
                 status: 'fail',
                 message: 'Users not found'
+            });
+        } else {
+            const usersData = users.map(userItem => ({
+                id: userItem.id,
+                name: userItem.name,
+                email: userItem.email,
+                created_at: userItem.created_at,
+                updated_at: userItem.updated_at
+            }));
+
+            res.status(200).send({
+                code: 200,
+                status: 'success',
+                data: usersData
             });
         }
 
@@ -43,16 +52,18 @@ async function getUserById(req: Request, res: Response) {
                 message: 'User not found'
             });
         } else {
+            const userData = {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                created_at: user.created_at,
+                updated_at: user.updated_at
+            };
+
             res.status(200).send({
                 code: 200,
                 status: 'success',
-                data: {
-                    id: user.id,
-                    name: user.name,
-                    email: user.email,
-                    createdAt: user.created_at,
-                    updatedAt: user.updated_at
-                }
+                data: userData
             });
         }
 
@@ -88,15 +99,17 @@ async function createUser(req: Request, res: Response) {
                 email: email
             });
 
+            const userData = {
+                id: newUser.id,
+                name: newUser.name,
+                email: newUser.email
+            };
+
             res.status(201).send({
                 code: 201,
                 status: 'success',
                 message: 'User created successfully',
-                data: {
-                    id: newUser.id,
-                    name: newUser.name,
-                    email: newUser.email
-                }
+                data: userData
             });
 
             console.log('createUser : ', newUser);

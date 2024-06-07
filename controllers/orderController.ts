@@ -13,16 +13,16 @@ async function getOrders(req: Request, res: Response) {
                 message: 'orders not found'
             });
         } else {
-            const ordersData = orders.map(order => ({
-                id: order.id,
-                user_email: order.user.email,
-                car_name: order.car.name,
-                start_rent: order.start_rent,
-                finish_rent: order.finish_rent,
-                price: order.car.price,
-                status: order.status,
-                created_at: order.created_at,
-                updated_at: order.updated_at
+            const ordersData = orders.map(orderItem => ({
+                id: orderItem.id,
+                user_email: orderItem.user.email,
+                car_name: orderItem.car.name,
+                start_rent: orderItem.start_rent,
+                finish_rent: orderItem.finish_rent,
+                price: orderItem.car.price,
+                status: orderItem.status,
+                created_at: orderItem.created_at,
+                updated_at: orderItem.updated_at
             }));
 
             res.status(200).send({
@@ -55,20 +55,22 @@ async function getOrderById(req: Request, res: Response) {
                 message: 'order not found'
             });
         } else {
+            const orderData = {
+                id: order.id,
+                user_email: order.user.email,
+                car_name: order.car.name,
+                start_rent: order.start_rent,
+                finish_rent: order.finish_rent,
+                price: order.car.price,
+                status: order.status,
+                created_at: order.created_at,
+                updated_at: order.updated_at
+            };
+
             res.status(200).send({
                 code: 200,
                 status: 'success',
-                data: {
-                    id: order.id,
-                    user_email: order.user.email,
-                    car_name: order.car.name,
-                    start_rent: order.start_rent,
-                    finish_rent: order.finish_rent,
-                    price: order.car.price,
-                    status: order.status,
-                    created_at: order.created_at,
-                    updated_at: order.updated_at
-                }
+                data: orderData
             });
         }
 
@@ -101,21 +103,24 @@ async function createOrder(req: Request, res: Response) {
 
         await order.$query().patch();
 
+        const orderData = {
+            id: order.id,
+            user_email: order.user.email,
+            car_name: order.car.name,
+            start_rent: order.start_rent,
+            finish_rent: order.finish_rent,
+            price: order.car.price,
+            total_price: order.total_price,
+            status: order.status,
+            created_at: order.created_at,
+            updated_at: order.updated_at
+        };
+
         res.status(201).send({
             code: 201,
             status: 'success',
-            data: {
-                id: order.id,
-                user_email: order.user.email,
-                car_name: order.car.name,
-                start_rent: order.start_rent,
-                finish_rent: order.finish_rent,
-                price: order.car.price,
-                total_price: order.total_price,
-                status: order.status,
-                created_at: order.created_at,
-                updated_at: order.updated_at
-            }
+            message: 'Order created successfully',
+            data: orderData
         });
 
         console.log('createOrder:', order);

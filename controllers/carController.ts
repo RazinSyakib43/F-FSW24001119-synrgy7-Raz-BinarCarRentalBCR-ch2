@@ -10,17 +10,28 @@ import cloudinary from '../config/cloudinary';
 async function getCars(req: Request, res: Response) {
     try {
         const cars = await CarModel.query();
-        res.status(200).send({
-            code: 200,
-            status: 'success',
-            data: cars
-        });
 
         if (cars.length === 0) {
             res.status(404).send({
                 code: 404,
                 status: 'fail',
                 message: 'Cars not found'
+            });
+        } else {
+            const carsData = cars.map(carItem => ({
+                id: carItem.id,
+                name: carItem.name,
+                category: carItem.category,
+                price: carItem.price,
+                image: carItem.image,
+                createdAt: carItem.created_at,
+                updatedAt: carItem.updated_at
+            }));
+
+            res.status(200).send({
+                code: 200,
+                status: 'success',
+                data: carsData
             });
         }
 
@@ -47,10 +58,20 @@ async function searchCar(req: Request, res: Response) {
                 message: 'Car not found'
             });
         } else {
+            const carsData = cars.map(carItem => ({
+                id: carItem.id,
+                name: carItem.name,
+                category: carItem.category,
+                price: carItem.price,
+                image: carItem.image,
+                createdAt: carItem.created_at,
+                updatedAt: carItem.updated_at
+            }));
+
             res.status(200).send({
                 code: 200,
                 status: 'success',
-                data: cars
+                data: carsData
             });
         }
 
@@ -77,18 +98,20 @@ async function getCarById(req: Request, res: Response) {
                 message: 'Car not found'
             });
         } else {
+            const carsData = {
+                id: car.id,
+                name: car.name,
+                category: car.category,
+                price: car.price,
+                image: car.image,
+                createdAt: car.created_at,
+                updatedAt: car.updated_at
+            };
+
             res.status(200).send({
                 code: 200,
                 status: 'success',
-                data: {
-                    id: car.id,
-                    name: car.name,
-                    category: car.category,
-                    price: car.price,
-                    image: car.image,
-                    createdAt: car.created_at,
-                    updatedAt: car.updated_at
-                }
+                data: carsData
             });
         }
 
@@ -143,11 +166,21 @@ async function addCar(req: Request, res: Response) {
                     image: result.secure_url
                 });
 
+                const carsData = {
+                    id: car.id,
+                    name: car.name,
+                    category: car.category,
+                    price: car.price,
+                    image: car.image,
+                    createdAt: car.created_at,
+                    updatedAt: car.updated_at
+                };
+
                 res.status(201).send({
                     code: 201,
                     status: "success",
                     message: "Car added successfully",
-                    data: car,
+                    data: carsData
                 });
             }
         } catch (error: any) {
@@ -187,6 +220,15 @@ async function updateCar(req: Request, res: Response) {
                     code: 200,
                     status: "success",
                     message: "Car updated successfully",
+                    data: {
+                        id: selectedCar.id,
+                        name: selectedCar.name,
+                        category: selectedCar.category,
+                        price: selectedCar.price,
+                        image: result.secure_url,
+                        createdAt: selectedCar.created_at,
+                        updatedAt: selectedCar.updated_at
+                    },
                 });
             });
         } else {
@@ -201,6 +243,15 @@ async function updateCar(req: Request, res: Response) {
                 code: 200,
                 status: "success",
                 message: "Car updated successfully",
+                data: {
+                    id: id,
+                    name: name || selectedCar.name,
+                    category: category || selectedCar.category,
+                    price: price || selectedCar.price,
+                    image: selectedCar.image,
+                    createdAt: selectedCar.created_at,
+                    updatedAt: new Date().toISOString()
+                },
             });
         }
     } catch (error: any) {
