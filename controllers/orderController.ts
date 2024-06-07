@@ -90,42 +90,97 @@ async function createOrder(req: Request, res: Response) {
     const { id_car, id_user, start_rent, rent_duration, status } = req.body;
 
     try {
-        const order = await OrderModel.query().insert({
-            id_car,
-            id_user,
-            start_rent,
-            rent_duration,
-            finish_rent: new Date(new Date(start_rent).getTime() + rent_duration * 24 * 60 * 60 * 1000),
-            total_price: 0,
-            status
-        }).withGraphFetched("[car, user]");
+        if (!id_car && !id_user && !start_rent && !rent_duration && !status) {
+            res.status(400).send({
+                code: 400,
+                status: 'fail',
+                message: 'All fields are required'
+            });
+        } else if (!id_car) {
+            res.status(400).send({
+                code: 400,
+                status: 'fail',
+                message: 'Car is required'
+            });
+        } else if (!id_user) {
+            res.status(400).send({
+                code: 400,
+                status: 'fail',
+                message: 'User is required'
+            });
+        } else if (!start_rent) {
+            res.status(400).send({
+                code: 400,
+                status: 'fail',
+                message: 'Start rent is required'
+            });
+        } else if (!rent_duration) {
+            res.status(400).send({
+                code: 400,
+                status: 'fail',
+                message: 'Rent duration is required'
+            });
+        } else if (!status) {
+            res.status(400).send({
+                code: 400,
+                status: 'fail',
+                message: 'Status is required'
+            });
+        } else if (status !== 'active' && status !== 'completed' && status !== 'cancelled') {
+            res.status(400).send({
+                code: 400,
+                status: 'fail',
+                message: 'Status must be active, completed, or cancelled'
+            });
+        } else {
+            const activeCar = await OrderModel.query().where('id_car', id_car).andWhere('status', 'active').first();
 
-        const carPrice = order.car.price;
-        order.total_price = carPrice * rent_duration;
+            if (activeCar) {
+                res.status(400).send({
+                    code: 400,
+                    status: 'fail',
+                    message: 'Car is already rentedd'
+                });
+                return;
+            }
 
-        await order.$query().patch();
+            const order = await OrderModel.query().insert({
+                id_car,
+                id_user,
+                start_rent,
+                rent_duration,
+                finish_rent: new Date(new Date(start_rent).getTime() + rent_duration * 24 * 60 * 60 * 1000),
+                total_price: 0,
+                status
+            }).withGraphFetched("[car, user]");
 
-        const orderData = {
-            id: order.id,
-            user_email: order.user.email,
-            car_name: order.car.name,
-            start_rent: order.start_rent,
-            finish_rent: order.finish_rent,
-            price: order.car.price,
-            total_price: order.total_price,
-            status: order.status,
-            created_at: order.created_at,
-            updated_at: order.updated_at
-        };
+            const carPrice = order.car.price;
+            order.total_price = carPrice * rent_duration;
 
-        res.status(201).send({
-            code: 201,
-            status: 'success',
-            message: 'Order created successfully',
-            data: orderData
-        });
+            await order.$query().patch();
 
-        console.log('createOrder:', order);
+            const orderData = {
+                id: order.id,
+                user_email: order.user.email,
+                car_name: order.car.name,
+                start_rent: order.start_rent,
+                finish_rent: order.finish_rent,
+                price: order.car.price,
+                total_price: order.total_price,
+                status: order.status,
+                created_at: order.created_at,
+                updated_at: order.updated_at
+            };
+
+            res.status(201).send({
+                code: 201,
+                status: 'success',
+                message: 'Order created successfully',
+                data: orderData
+            });
+
+            console.log('createOrder:', order);
+        }
     } catch (error: any) {
         res.status(500).send({
             code: 500,
@@ -135,13 +190,12 @@ async function createOrder(req: Request, res: Response) {
     }
 }
 
-async function updateOrder(req: Request, res: Response) {   
+async function updateOrder(req: Request, res: Response) {
     const { id } = req.params;
     const { id_car, id_user, start_rent, rent_duration, status } = req.body;
 
     try {
         const selectedOrder = await OrderModel.query().findById(id);
-
         console.log('selectedOrder : ', selectedOrder);
 
         if (!selectedOrder) {
@@ -151,6 +205,17 @@ async function updateOrder(req: Request, res: Response) {
                 message: 'Order not found'
             });
         } else {
+            const activeCar = await OrderModel.query().where('id_car', id_car).andWhere('status', 'active').first();
+
+            if (activeCar) {
+                res.status(400).send({
+                    code: 400,
+                    status: 'fail',
+                    message: 'Car is already rentedd'
+                });
+                return;
+            }
+
             await OrderModel.query().findById(id).patch({
                 id_car: id_car || selectedOrder?.id_car,
                 id_user: id_user || selectedOrder?.id_user,
