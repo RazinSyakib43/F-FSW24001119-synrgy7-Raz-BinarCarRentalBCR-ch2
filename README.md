@@ -89,9 +89,10 @@ Diagram source: [Razin -Car Management Dashboard (dbdiagram.io)](https://dbdiagr
 ### 1. Cars (/cars)
 
 #### [GET] Get All Cars
-Endpoint: `/api/v1/cars/`
 
 > Retrieves a list of all available cars in the system.
+
+Endpoint: `/api/v1/cars/`
 
 Request Body:
 
@@ -150,6 +151,7 @@ Response Body:
 #### [GET] Search a Car
 
 > Searches for cars based on car name.
+
 Endpoint: `/api/v1/cars/search?title=`
 
 Request Body:
@@ -183,6 +185,7 @@ Response Body:
 
 #### [GET] Get a Car by Id
 > Retrieves detailed information about a specific car by its ID.
+
 Endpoint: `/api/v1/cars/:id`
 
 Request Body:
@@ -214,7 +217,9 @@ Response Body:
 
 #### [POST] Create a Car
 > Adds a new car to the system.
+
 Endpoint: `/api/v1/cars/`
+
 Request Body:
 
 ```
@@ -246,7 +251,9 @@ Response Body:
 
 #### [PUT] Edit a Car Data
 > Updates the details of a specific car by its ID.
+
 Endpoint: `/api/v1/cars/:id`
+
 Request Body:
 
 ```
@@ -280,7 +287,9 @@ Response Body:
 
 #### [DEL] Delete a Car
 > Deletes a specific car from the system by its ID.
+
 Endpoint: `/api/v1/cars/:id`
+
 Request Body:
 
 ```
@@ -303,7 +312,9 @@ Response Body:
 #### [GET] Get All Users
 
 > Retrieves a list of all users registered in the system.
+
 Endpoint: `/api/v1/users/`
+
 Request Body:
 
 ```
@@ -344,7 +355,9 @@ Response Body:
 
 #### [GET] Get a User by Id
 > Retrieves detailed information about a specific user by their ID.
+
 Endpoint: `/api/v1/users/:id`
+
 Request Body:
 
 ```
@@ -369,6 +382,7 @@ Response Body:
 
 #### [POST] Create a User
 > Registers a new user in the system.
+
 Endpoint: `/api/v1/users/`
 
 Request Body:
@@ -397,6 +411,7 @@ Response Body:
 
 #### [PUT] Edit a User Data
 > Updates the details of a specific user by their ID.
+
 Endpoint: `/api/v1/users/:id`
 
 Request Body:
@@ -425,6 +440,7 @@ Response Body:
 
 #### [DEL] Delete a User
 > Deletes a specific user from the system by their ID.
+
 Endpoint: `/api/v1/users/:id`
 
 Request Body:
@@ -447,6 +463,7 @@ Response Body:
 
 #### [GET] Get All Orders
 > Retrieves a list of all orders in the system.
+
 Endpoint: `/api/v1/orders/`
 
 Request Body:
@@ -492,6 +509,7 @@ Response Body:
 
 #### [GET] Get an Order by Id
 > Retrieves detailed information about a specific order by its ID.
+
 Endpoint: `/api/v1/orders/:id`
 
 Request Body:
@@ -523,6 +541,7 @@ Response Body:
 
 #### [POST] Create an Order
 > Creates a new order for renting a car.
+
 Endpoint: `/api/v1/orders/`
 
 Request Body:
@@ -557,6 +576,7 @@ Response Body:
 ```
 
 #### [DEL] Delete an Order
+> Deletes a specific order from the system by its ID.
 Endpoint: `/api/v1/orders/:id`
 
 Request Body:
