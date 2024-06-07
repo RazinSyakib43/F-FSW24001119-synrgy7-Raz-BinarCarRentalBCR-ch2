@@ -129,7 +129,7 @@ async function updateUser(req: Request, res: Response) {
             await UserModel.query().findById(id).patch({
                 name: name || selectedUser?.name,
                 email: email || selectedUser?.email,
-                updated_at: new Date().toISOString()
+                updated_at: new Date()
             });
 
             res.status(200).send({

@@ -193,7 +193,8 @@ async function updateCar(req: Request, res: Response) {
             await CarModel.query().findById(id).patch({
                 name: name || selectedCar.name,
                 category: category || selectedCar.category,
-                price: price || selectedCar.price
+                price: price || selectedCar.price,
+                updated_at: new Date()
             });
 
             res.status(200).send({
