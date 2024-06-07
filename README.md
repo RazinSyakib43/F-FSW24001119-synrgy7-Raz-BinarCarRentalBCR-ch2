@@ -575,6 +575,45 @@ Response Body:
 }
 ```
 
+
+#### [PUT] Edit an Order Data
+
+> Updates the details of a specific order by its ID.
+
+Endpoint: `/api/v1/orders/:id`
+
+Request Body:
+
+```
+curl --location --request PUT 'http://localhost:3000/api/v1/dashboard/orders/3' \
+--form 'id_car=""' \
+--form 'id_user=""' \
+--form 'start_rent=""' \
+--form 'rent_duration=""' \
+--form 'status="cancelled"'
+```
+
+Response Body:
+
+```
+{
+    "code": 200,
+    "status": "success",
+    "message": "Order with id 3 updated successfully",
+    "data": {
+        "id": "3",
+        "id_car": 4,
+        "id_user": 3,
+        "start_rent": "2024-06-07T08:20:00.000Z",
+        "rent_duration": 5,
+        "total_price": 2000000,
+        "finish_rent": "2024-06-12T08:20:00.000Z",
+        "status": "cancelled",
+        "updatedAt": "2024-06-07T22:59:56.426Z"
+    }
+}
+```
+
 #### [DEL] Delete an Order
 > Deletes a specific order from the system by its ID.
 Endpoint: `/api/v1/orders/:id`

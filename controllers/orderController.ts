@@ -205,15 +205,16 @@ async function updateOrder(req: Request, res: Response) {
                 message: 'Order not found'
             });
         } else {
-            const activeCar = await OrderModel.query().where('id_car', id_car).andWhere('status', 'active').first();
+            if (id_car) {
+                const activeCar = await OrderModel.query().where('id_car', id_car).andWhere('status', 'active').first();
 
-            if (activeCar) {
-                res.status(400).send({
-                    code: 400,
-                    status: 'fail',
-                    message: 'Car is already rentedd'
-                });
-                return;
+                if (activeCar) {
+                    return res.status(400).send({
+                        code: 400,
+                        status: 'fail',
+                        message: 'Car is already rented'
+                    });
+                }
             }
 
             await OrderModel.query().findById(id).patch({
@@ -228,9 +229,9 @@ async function updateOrder(req: Request, res: Response) {
             });
 
             // Update total_price
-            const updatedOrder = await OrderModel.query().findById(id).withGraphFetched("[car]");
+            const updatedOrder = await OrderModel.query().findById(id).withGraphFetched("car");
             const carPrice = updatedOrder?.car.price;
-            const total_price = carPrice * (rent_duration || updatedOrder?.rent_duration);
+            const total_price = carPrice * (rent_duration || selectedOrder?.rent_duration);
 
             await updatedOrder?.$query().patch({
                 total_price: total_price
