@@ -20,6 +20,7 @@ async function getOrders(req: Request, res: Response) {
                 start_rent: orderItem.start_rent,
                 finish_rent: orderItem.finish_rent,
                 price: orderItem.car.price,
+                total_price: orderItem.total_price,
                 status: orderItem.status,
                 created_at: orderItem.created_at,
                 updated_at: orderItem.updated_at
@@ -62,6 +63,7 @@ async function getOrderById(req: Request, res: Response) {
                 start_rent: order.start_rent,
                 finish_rent: order.finish_rent,
                 price: order.car.price,
+                total_price: order.total_price,
                 status: order.status,
                 created_at: order.created_at,
                 updated_at: order.updated_at
@@ -155,8 +157,18 @@ async function updateOrder(req: Request, res: Response) {
                 start_rent: start_rent || selectedOrder?.start_rent,
                 rent_duration: rent_duration || selectedOrder?.rent_duration,
                 finish_rent: new Date(new Date(start_rent || selectedOrder?.start_rent).getTime() + (rent_duration || selectedOrder?.rent_duration) * 24 * 60 * 60 * 1000),
+                total_price: 0,
                 status: status || selectedOrder?.status,
                 updated_at: new Date()
+            });
+
+            // Update total_price
+            const updatedOrder = await OrderModel.query().findById(id).withGraphFetched("[car]");
+            const carPrice = updatedOrder?.car.price;
+            const total_price = carPrice * (rent_duration || updatedOrder?.rent_duration);
+
+            await updatedOrder?.$query().patch({
+                total_price: total_price
             });
 
             res.status(200).send({
@@ -169,6 +181,7 @@ async function updateOrder(req: Request, res: Response) {
                     id_user: id_user || selectedOrder?.id_user,
                     start_rent: start_rent || selectedOrder?.start_rent,
                     rent_duration: rent_duration || selectedOrder?.rent_duration,
+                    total_price: total_price,
                     finish_rent: new Date(new Date(start_rent || selectedOrder?.start_rent).getTime() + (rent_duration || selectedOrder?.rent_duration) * 24 * 60 * 60 * 1000),
                     status: status || selectedOrder?.status,
                     updatedAt: new Date()
