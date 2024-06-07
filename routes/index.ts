@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import carRouter from './carRouter';
 import userRouter from './userRouter';
-// import orderRouter from './orderRouter';
+import orderRouter from './orderRouter';
 
 import knex from 'knex'
 import { Model } from 'objection';
@@ -23,6 +23,6 @@ const baseURL = '/api/v1/dashboard';
 
 router.use(`${baseURL}/cars`, carRouter);
 router.use(`${baseURL}/users`, userRouter);
-// router.use(`${baseURL}/orders`, orderRouter);
+router.use(`${baseURL}/orders`, orderRouter);
 
 export default router;
