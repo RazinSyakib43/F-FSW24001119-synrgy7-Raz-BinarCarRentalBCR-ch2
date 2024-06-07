@@ -9,6 +9,7 @@ export class CarModel extends Model {
     image!: string;
     created_at!: Date;
     updated_at!: Date;
+    order: any;
 
     static get tableName() {
         return 'car';
@@ -16,12 +17,12 @@ export class CarModel extends Model {
 
     static get relationMappings() {
         return {
-            orders: {
-                relation: Model.HasManyRelation,
+            order: {
+                relation: Model.BelongsToOneRelation,
                 modelClass: OrderModel,
                 join: {
                     from: 'car.id',
-                    to: 'order.car_id'
+                    to: 'order.id_car'
                 }
             }
         }

@@ -9,7 +9,7 @@ import cloudinary from '../config/cloudinary';
 // Get all cars
 async function getCars(req: Request, res: Response) {
     try {
-        const cars = await CarModel.query();
+        const cars = await CarModel.query().withGraphFetched("order");
 
         if (cars.length === 0) {
             res.status(404).send({
@@ -23,15 +23,27 @@ async function getCars(req: Request, res: Response) {
                 name: carItem.name,
                 category: carItem.category,
                 price: carItem.price,
+                start_rent: carItem.order?.start_rent || null,
+                finish_rent: carItem.order?.finish_rent || null,
                 image: carItem.image,
+                status: carItem.order?.status || null,
                 createdAt: carItem.created_at,
                 updatedAt: carItem.updated_at
             }));
 
+            // if status are 'completed' or 'cancelled' then start_rent, finish_rent, status will be null
+            carsData.forEach(carItem => {
+                if (carItem.status === 'completed' || carItem.status === 'cancelled') {
+                    carItem.start_rent = null;
+                    carItem.finish_rent = null;
+                    carItem.status = null;
+                }
+            });
+
             res.status(200).send({
                 code: 200,
                 status: 'success',
-                data: carsData
+                data: carsData,
             });
         }
 
@@ -49,7 +61,7 @@ async function searchCar(req: Request, res: Response) {
     const { title }: { title: string } = req.query as { title: string };
 
     try {
-        const cars = await CarModel.query().where('name', 'like', `%${title}%`);
+        const cars = await CarModel.query().where('name', 'like', `%${title}%`).withGraphFetched("order");
 
         if (cars.length === 0) {
             res.status(404).send({
@@ -63,10 +75,22 @@ async function searchCar(req: Request, res: Response) {
                 name: carItem.name,
                 category: carItem.category,
                 price: carItem.price,
+                start_rent: carItem.order?.start_rent || null,
+                finish_rent: carItem.order?.finish_rent || null,
                 image: carItem.image,
+                status: carItem.order?.status || null,
                 createdAt: carItem.created_at,
                 updatedAt: carItem.updated_at
             }));
+
+            // if status are 'completed' or 'cancelled' then start_rent, finish_rent, status will be null
+            carsData.forEach(carItem => {
+                if (carItem.status === 'completed' || carItem.status === 'cancelled') {
+                    carItem.start_rent = null;
+                    carItem.finish_rent = null;
+                    carItem.status = null;
+                }
+            });
 
             res.status(200).send({
                 code: 200,
@@ -89,7 +113,7 @@ async function getCarById(req: Request, res: Response) {
     const { id }: { id: string } = req.params as { id: string };
 
     try {
-        const car = await CarModel.query().findById(id);
+        const car = await CarModel.query().findById(id).withGraphFetched("order");
 
         if (!car) {
             res.status(404).send({
@@ -103,10 +127,20 @@ async function getCarById(req: Request, res: Response) {
                 name: car.name,
                 category: car.category,
                 price: car.price,
+                start_rent: car.order?.start_rent || null,
+                finish_rent: car.order?.finish_rent || null,
                 image: car.image,
+                status: car.order?.status || null,
                 createdAt: car.created_at,
                 updatedAt: car.updated_at
             };
+
+            // if status are 'completed' or 'cancelled' then start_rent, finish_rent, status will be null
+            if (car.order?.status === 'completed' || car.order?.status === 'cancelled') {
+                carsData.start_rent = null;
+                carsData.finish_rent = null;
+                carsData.status = null;
+            }
 
             res.status(200).send({
                 code: 200,
