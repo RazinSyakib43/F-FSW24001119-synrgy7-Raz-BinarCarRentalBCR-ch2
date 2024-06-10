@@ -5,6 +5,11 @@ export class UserModel extends Model {
     id!: number;
     name!: string;
     email!: string;
+    password!: string;
+    avatar!: string;
+    role!: string;
+    created_by!: string;
+    updated_by!: string;
     created_at!: Date;
     updated_at!: Date;
 
