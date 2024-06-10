@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 
 import { encryptPassword, checkPassword } from '../utils/encrypt';
+import { generateToken } from '../utils/token';
 
 import { UploadApiResponse, UploadApiErrorResponse } from 'cloudinary';
 import cloudinary from '../config/cloudinary';
@@ -93,6 +94,7 @@ async function login(req: Request, res: Response) {
                     message: 'Password is incorrect'
                 });
             } else {
+                const token = await generateToken(user.email);
                 res.status(200).send({
                     code: 200,
                     status: 'success',
@@ -102,7 +104,8 @@ async function login(req: Request, res: Response) {
                         name: user.name,
                         email: user.email,
                         avatar: user.avatar,
-                        role: user.role
+                        role: user.role,
+                        token: token
                     }
                 });
             }
