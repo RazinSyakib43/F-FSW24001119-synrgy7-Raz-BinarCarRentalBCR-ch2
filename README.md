@@ -25,9 +25,9 @@ Welcome to the  **Binar Car Rental - Car Management Dashboard** . This dashboard
 
 ## Entity Relationship Diagram (ERD)
 
-![1717804699943](image/README/1717804699943.png)
+![1718265278822](image/README/1718265278822.png)
 
-Diagram source: [Razin -Car Management Dashboard (dbdiagram.io)](https://dbdiagram.io/d/Razin-Car-Management-Dashboard-6658ded2b65d933879209fe4)
+Diagram source: [Razin -Car Management Dashboard API (dbdiagram.io)](https://dbdiagram.io/d/Razin-Car-Management-Dashboard-API-666aa385a179551be6c66564)
 
 ## Installation
 

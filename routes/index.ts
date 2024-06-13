@@ -23,7 +23,7 @@ Model.knex(knexInstance);
 const router = Router();
 const baseURL = '/api/v1/dashboard';
 
-router.use(`${baseURL}/cars`, authorize, carRouter);
+router.use(`${baseURL}/cars`, carRouter);
 router.use(`${baseURL}/users`, userRouter);
 router.use(`${baseURL}/orders`, authorize, orderRouter);
 
