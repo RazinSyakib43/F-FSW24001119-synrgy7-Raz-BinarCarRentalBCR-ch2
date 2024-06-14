@@ -1,7 +1,7 @@
 import express, { Router } from "express";
 import multer from "multer";
 
-import { getUsers, getUserById, createUser, updateUser, deleteUser, registerAdmin, registerMember, loginSuperadmin, loginAdmin, loginMember } from "../controllers/userController";
+import { getUsers, getUserById, getCurrentUser, createUser, updateUser, deleteUser, registerAdmin, registerMember, loginSuperadmin, loginAdmin, loginMember } from "../controllers/userController";
 
 import uploadOnMemory from "../middleware/multerMemory";
 import { handleImageUpload } from "../middleware/errorHandler";
@@ -13,7 +13,8 @@ const upload = multer();
 
 // User CRUD routes
 userRouter.get("/", [authorize, validateRoles(["admin", "superadmin"])], getUsers);
-userRouter.get("/:id", [authorize, validateRoles(["admin", "superadmin"])], getUserById);
+userRouter.get("/by-id/:id", [authorize, validateRoles(["admin", "superadmin"])], getUserById);
+userRouter.get("/me", [authorize], getCurrentUser);
 userRouter.post("/", [authorize, validateRoles(["superadmin"])], upload.none(), createUser);
 userRouter.put("/:id", [authorize, validateRoles(["member", "admin", "superadmin"])], upload.none(), updateUser);
 userRouter.delete("/:id", [authorize, validateRoles(["superadmin"])], deleteUser);

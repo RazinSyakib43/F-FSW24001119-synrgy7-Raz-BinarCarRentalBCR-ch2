@@ -384,6 +384,43 @@ async function getUserById(req: Request, res: Response) {
     }
 }
 
+async function getCurrentUser(req: Request, res: Response) {
+    try {
+        const user = (req as any).user;
+
+        console.log('getCurrentUser : ', user);
+
+        if (!user) {
+            res.status(404).send({
+                code: 404,
+                status: 'fail',
+                message: 'User not found'
+            });
+        } else {
+            const userData = {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                created_at: user.created_at,
+                updated_at: user.updated_at
+            };
+
+            res.status(200).send({
+                code: 200,
+                status: 'success',
+                data: userData
+            });
+        }
+    } catch (error: any) {
+        res.status(500).send({
+            code: 500,
+            status: 'error',
+            message: error.message
+        });
+    }
+}
+
 async function createUser(req: Request, res: Response) {
     const { name, email, password, avatar, role }: { name: string, email: string, password: string, avatar: string, role: string } = req.body;
     try {
@@ -533,6 +570,7 @@ async function deleteUser(req: Request, res: Response) {
 export {
     getUsers,
     getUserById,
+    getCurrentUser,
     createUser,
     updateUser,
     deleteUser,

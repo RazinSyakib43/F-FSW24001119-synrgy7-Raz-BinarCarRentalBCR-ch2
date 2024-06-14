@@ -14,6 +14,14 @@ export async function authorize(req: any, res: Response, next: NextFunction) {
 
         req.user = await UserModel.query().findOne({ email: tokenPayload.email });
 
+        if (!req.user) {
+            return res.status(401).send({
+                code: 401,
+                status: "Unauthorized",
+                message: "Token expired or invalid"
+            });
+        }
+
         next();
 
     } catch (err: any) {
