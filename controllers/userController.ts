@@ -13,6 +13,9 @@ async function registerAdmin(req: Request, res: Response) {
     const fileBase64: string = req.file?.buffer.toString("base64") || ""; // berfungsi untuk convert file buffer menjadi base64, supaya bisa dibaca dan dikembalikan ke client
     const file: string = req.file ? `data:${req.file.mimetype};base64,${fileBase64}` : ""; // membuat url image yang bisa diakses oleh client, dengan format data:image/jpeg;base64,base64String
 
+    const actorRole = (req as any).user.role;
+    const actorName = (req as any).user.name;
+
     cloudinary.uploader.upload(file, async function (error: UploadApiErrorResponse, result: UploadApiResponse) {
         try {
             const { name, email, password }: { name: string, email: string, password: string, avatar: string } = req.body;
@@ -44,7 +47,11 @@ async function registerAdmin(req: Request, res: Response) {
                     email: email,
                     password: encryptedPassword as string,
                     avatar: result.url,
-                    role: role
+                    role: role,
+                    created_at: new Date(),
+                    created_by: actorRole + " - " + actorName,
+                    updated_at: new Date(),
+                    updated_by: actorRole + " - " + actorName
                 });
 
                 console.log('newUser : ', newUser);
@@ -54,7 +61,11 @@ async function registerAdmin(req: Request, res: Response) {
                     name: newUser.name,
                     email: newUser.email,
                     avatar: newUser.avatar,
-                    role: newUser.role
+                    role: newUser.role,
+                    created_at: newUser.created_at,
+                    created_by: newUser.created_by,
+                    updated_at: newUser.updated_at,
+                    updated_by: newUser.updated_by
                 };
 
                 res.status(201).send({
@@ -111,7 +122,11 @@ async function registerMember(req: Request, res: Response) {
                     email: email,
                     password: encryptedPassword as string,
                     avatar: result.url,
-                    role: role
+                    role: role,
+                    created_at: new Date(),
+                    created_by: "member",
+                    updated_at: new Date(),
+                    updated_by: "member"
                 });
 
                 console.log('newUser : ', newUser);
@@ -121,7 +136,11 @@ async function registerMember(req: Request, res: Response) {
                     name: newUser.name,
                     email: newUser.email,
                     avatar: newUser.avatar,
-                    role: newUser.role
+                    role: newUser.role,
+                    created_at: newUser.created_at,
+                    created_by: newUser.created_by,
+                    updated_at: newUser.updated_at,
+                    updated_by: newUser.updated_by
                 };
 
                 res.status(201).send({
@@ -323,8 +342,8 @@ async function getUsers(req: Request, res: Response) {
                 avatar: userItem.avatar,
                 role: userItem.role,
                 created_at: userItem.created_at,
-                updated_at: userItem.updated_at,
                 created_by: userItem.created_by,
+                updated_at: userItem.updated_at,
                 updated_by: userItem.updated_by
             }));
 
@@ -363,7 +382,9 @@ async function getUserById(req: Request, res: Response) {
                 name: user.name,
                 email: user.email,
                 created_at: user.created_at,
-                updated_at: user.updated_at
+                created_by: user.created_by,
+                updated_at: user.updated_at,
+                updated_by: user.updated_by
             };
 
             res.status(200).send({
@@ -403,7 +424,9 @@ async function getCurrentUser(req: Request, res: Response) {
                 email: user.email,
                 role: user.role,
                 created_at: user.created_at,
-                updated_at: user.updated_at
+                created_by: user.created_by,
+                updated_at: user.updated_at,
+                updated_by: user.updated_by
             };
 
             res.status(200).send({
@@ -423,6 +446,10 @@ async function getCurrentUser(req: Request, res: Response) {
 
 async function createUser(req: Request, res: Response) {
     const { name, email, password, avatar, role }: { name: string, email: string, password: string, avatar: string, role: string } = req.body;
+
+    const actorRole = (req as any).user.role;
+    const actorName = (req as any).user.name;
+
     try {
         if (!name) {
             res.status(400).send({
@@ -461,7 +488,10 @@ async function createUser(req: Request, res: Response) {
                 password: password,
                 avatar: avatar || "null",
                 role: role,
-                created_by: "superadmin",
+                created_at: new Date(),
+                created_by: actorRole + " - " + actorName,
+                updated_at: new Date(),
+                updated_by: actorRole + " - " + actorName
             });
 
             const userData = {
@@ -470,7 +500,10 @@ async function createUser(req: Request, res: Response) {
                 email: newUser.email,
                 avatar: newUser.avatar,
                 role: newUser.role,
+                created_at: newUser.created_at,
                 created_by: newUser.created_by,
+                updated_at: newUser.updated_at,
+                updated_by: newUser.updated_by
             };
 
             res.status(201).send({

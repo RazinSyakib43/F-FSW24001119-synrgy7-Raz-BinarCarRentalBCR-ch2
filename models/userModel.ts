@@ -8,10 +8,10 @@ export class UserModel extends Model {
     password!: string;
     avatar!: string;
     role!: string;
-    created_by!: string;
-    updated_by!: string;
     created_at!: Date;
+    created_by!: string;
     updated_at!: Date;
+    updated_by!: string;
 
     static get tableName() {
         return 'user';

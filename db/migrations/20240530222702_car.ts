@@ -9,7 +9,9 @@ export async function up(knex: Knex): Promise<void> {
         table.float('price').notNullable();
         table.string('image').notNullable();
         table.timestamp('created_at').defaultTo(knex.fn.now());
+        table.string("created_by").notNullable().defaultTo('system');
         table.timestamp('updated_at').defaultTo(knex.fn.now());
+        table.string("updated_by").notNullable().defaultTo('system');
     });
 }
 

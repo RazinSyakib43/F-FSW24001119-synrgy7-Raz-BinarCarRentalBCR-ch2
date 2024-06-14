@@ -9,10 +9,10 @@ export async function up(knex: Knex): Promise<void> {
         table.string('password').notNullable();
         table.text('avatar').notNullable();
         table.enum('role', ['member', 'admin', 'superadmin']).notNullable();
-        table.string("created_by").notNullable().defaultTo('system');
-        table.string("updated_by").notNullable().defaultTo('system');
         table.timestamp('created_at').defaultTo(knex.fn.now());
+        table.string("created_by").notNullable().defaultTo('system');
         table.timestamp('updated_at').defaultTo(knex.fn.now());
+        table.string("updated_by").notNullable().defaultTo('system');
     });
 }
 

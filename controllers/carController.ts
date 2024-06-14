@@ -28,7 +28,9 @@ async function getCars(req: Request, res: Response) {
                 image: carItem.image,
                 status: carItem.order?.status || null,
                 createdAt: carItem.created_at,
-                updatedAt: carItem.updated_at
+                createdBy: carItem.created_by,
+                updatedAt: carItem.updated_at,
+                updatedBy: carItem.updated_by
             }));
 
             // if status are 'completed' or 'cancelled' then start_rent, finish_rent, status will be null
@@ -80,7 +82,9 @@ async function searchCar(req: Request, res: Response) {
                 image: carItem.image,
                 status: carItem.order?.status || null,
                 createdAt: carItem.created_at,
-                updatedAt: carItem.updated_at
+                createdBy: carItem.created_by,
+                updatedAt: carItem.updated_at,
+                updatedBy: carItem.updated_by
             }));
 
             // if status are 'completed' or 'cancelled' then start_rent, finish_rent, status will be null
@@ -132,7 +136,9 @@ async function getCarById(req: Request, res: Response) {
                 image: car.image,
                 status: car.order?.status || null,
                 createdAt: car.created_at,
-                updatedAt: car.updated_at
+                createdBy: car.created_by,
+                updatedAt: car.updated_at,
+                updatedBy: car.updated_by
             };
 
             // if status are 'completed' or 'cancelled' then start_rent, finish_rent, status will be null
@@ -162,6 +168,9 @@ async function getCarById(req: Request, res: Response) {
 
 async function addCar(req: Request, res: Response) {
     const { name, category, price }: { name: string; category: string; price: number } = req.body;
+
+    const actorRole = (req as any).user.role;
+    const actorName = (req as any).user.name;
 
     const fileBase64: string = req.file?.buffer.toString("base64") || ""; // berfungsi untuk convert file buffer menjadi base64, supaya bisa dibaca dan dikembalikan ke client
     const file: string = req.file ? `data:${req.file.mimetype};base64,${fileBase64}` : ""; // membuat url image yang bisa diakses oleh client, dengan format data:image/jpeg;base64,base64String
@@ -197,7 +206,11 @@ async function addCar(req: Request, res: Response) {
                     name: name,
                     category: category,
                     price: price,
-                    image: result.secure_url
+                    image: result.secure_url,
+                    created_at: new Date(),
+                    created_by: actorRole + " - " + actorName,
+                    updated_at: new Date(),
+                    updated_by: actorRole + " - " + actorName
                 });
 
                 const carsData = {
@@ -207,7 +220,9 @@ async function addCar(req: Request, res: Response) {
                     price: car.price,
                     image: car.image,
                     createdAt: car.created_at,
-                    updatedAt: car.updated_at
+                    createdBy: car.created_by,
+                    updatedAt: car.updated_at,
+                    updatedBy: car.updated_by
                 };
 
                 res.status(201).send({
@@ -231,6 +246,9 @@ async function updateCar(req: Request, res: Response) {
     const { id }: { id: string } = req.params as { id: string };
     const { name, category, price }: { name?: string; category?: string; price?: number; } = req.body;
 
+    const actorRole = (req as any).user.role;
+    const actorName = (req as any).user.name;
+
     const fileBase64: string = req.file?.buffer.toString("base64") || ""; // berfungsi untuk convert file buffer menjadi base64, supaya bisa dibaca dan dikembalikan ke client
     const file: string = req.file ? `data:${req.file.mimetype};base64,${fileBase64}` : ""; // membuat url image yang bisa diakses oleh client, dengan format data:image/jpeg;base64,base64String
 
@@ -252,7 +270,8 @@ async function updateCar(req: Request, res: Response) {
                     category: category || selectedCar.category,
                     price: price || selectedCar.price,
                     image: image || selectedCar.image,
-                    updated_at: new Date()
+                    updated_at: new Date(),
+                    updated_by: actorRole + " " + actorName
                 });
                 res.status(200).send({
                     code: 200,
@@ -265,7 +284,9 @@ async function updateCar(req: Request, res: Response) {
                         price: price || selectedCar.price,
                         image: image || selectedCar.image,
                         createdAt: selectedCar.created_at,
-                        updatedAt: new Date()
+                        createdBy: selectedCar.created_by,
+                        updatedAt: new Date(),
+                        updatedBy: actorRole + " - " + actorName
                     }
                 });
             });
