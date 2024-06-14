@@ -205,8 +205,12 @@ async function getUsers(req: Request, res: Response) {
                 id: userItem.id,
                 name: userItem.name,
                 email: userItem.email,
+                avatar: userItem.avatar,
+                role: userItem.role,
                 created_at: userItem.created_at,
-                updated_at: userItem.updated_at
+                updated_at: userItem.updated_at,
+                created_by: userItem.created_by,
+                updated_by: userItem.updated_by
             }));
 
             res.status(200).send({
@@ -266,7 +270,7 @@ async function getUserById(req: Request, res: Response) {
 }
 
 async function createUser(req: Request, res: Response) {
-    const { name, email }: { name: string, email: string } = req.body;
+    const { name, email, password, avatar, role }: { name: string, email: string, password: string, avatar: string, role: string } = req.body;
     try {
         if (!name) {
             res.status(400).send({
@@ -280,22 +284,47 @@ async function createUser(req: Request, res: Response) {
                 status: 'fail',
                 message: 'Please provide email'
             });
+        } else if (!password) {
+            res.status(400).send({
+                code: 400,
+                status: 'fail',
+                message: 'Please provide password'
+            });
+        } else if (!role) {
+            res.status(400).send({
+                code: 400,
+                status: 'fail',
+                message: 'Please provide role'
+            });
+        } else if (role !== "member" && role !== "admin" && role !== "superadmin") {
+            res.status(400).send({
+                code: 400,
+                status: 'fail',
+                message: 'Role must be member, admin, or superadmin'
+            });
         } else {
             const newUser = await UserModel.query().insert({
                 name: name,
-                email: email
+                email: email,
+                password: password,
+                avatar: avatar || "null",
+                role: role,
+                created_by: "superadmin",
             });
 
             const userData = {
                 id: newUser.id,
                 name: newUser.name,
-                email: newUser.email
+                email: newUser.email,
+                avatar: newUser.avatar,
+                role: newUser.role,
+                created_by: newUser.created_by,
             };
 
             res.status(201).send({
                 code: 201,
                 status: 'success',
-                message: 'User created successfully',
+                message: 'User (' + role + ') created successfully',
                 data: userData
             });
 
