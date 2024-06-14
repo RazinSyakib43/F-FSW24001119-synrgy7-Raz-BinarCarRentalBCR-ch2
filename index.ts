@@ -5,14 +5,11 @@ dotenv.config(); // Load .env file
 import express, {Express, Request, Response, NextFunction} from "express";
 import path from "path"; // For file paths
 
-// Import the  multer middleware module for memory storage
-import uploadOnMemory from "./middleware/multerMemory";
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from './openapi.json';
 
 // Import the router module
 import router from "./routes";
-
-// Middleware
-import { handleImageUpload } from "./middleware/errorHandler";
 
 const app = express();
 
@@ -35,6 +32,10 @@ app.get("/", (req: express.Request, res: express.Response) => {
     name: req.query.name || "Guest",
   });
 });
+
+// Swagger UI
+app.use('/api-docs', swaggerUi.serve);
+app.get('/api-docs', swaggerUi.setup(swaggerDocument));
 
 // Server Listening
 app.listen(PORT, () => {
