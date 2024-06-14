@@ -6,9 +6,14 @@ const SECRET_KEY = '77719d1f20ad7752933c6c00c1d18218b3fa3257612378920e93ae1b336e
 
 export async function authorize(req: any, res: Response, next: NextFunction) {
     try {
-        const bearerToken = req.headers.authorization;
+        let bearerToken = req.headers.authorization;
 
-        console.log(bearerToken)
+        // if bareerToken has 'Bearer ' at the beginning, remove it
+        if (bearerToken.startsWith('Bearer ')) {
+            bearerToken = bearerToken.slice(7, bearerToken.length);
+        }
+        
+        console.log("bearerToken", bearerToken);
 
         const tokenPayload = jwt.verify(bearerToken, SECRET_KEY) as any;
 

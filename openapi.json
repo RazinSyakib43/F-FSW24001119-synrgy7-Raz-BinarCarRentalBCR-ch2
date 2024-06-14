@@ -19,8 +19,16 @@
       "description": "Endpoints related to User Authentication (Login) for member, admin, and superadmin"
     },
     {
+      "name": "Auth (Register)",
+      "description": "Endpoints related to User Authentication (Register) to register a new member and admin"
+    },
+    {
       "name": "Cars",
       "description": "Endpoints related to car management"
+    },
+    {
+      "name": "Users",
+      "description": "Endpoints related to user management"
     }
   ],
   "paths": {
@@ -440,6 +448,161 @@
           }
         }
       }
+    },
+    "/users/register/admin": {
+      "post": {
+        "tags": [
+          "Auth (Register)"
+        ],
+        "summary": "Register Admin",
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "description": "This endpoint is used to register a new admin. Only superadmins are authorized to access this endpoint.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Sebastian Vettel"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "vettel@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "iamvettel"
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User (Admin) created successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 15
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Sebastian Vettel"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "vettel@gmail.com"
+                        },
+                        "avatar": {
+                          "type": "string",
+                          "example": "http://res.cloudinary.com/dowiubuw3/image/upload/v1718371585/zwrjqdcx5q9cj8nm536v.jpg"
+                        },
+                        "role": {
+                          "type": "string",
+                          "example": "admin"
+                        },
+                        "created_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-06-14T13:26:25.636Z"
+                        },
+                        "created_by": {
+                          "type": "string",
+                          "example": "superadmin - Ayanokoji Kiyotaka"
+                        },
+                        "updated_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-06-14T13:26:25.636Z"
+                        },
+                        "updated_by": {
+                          "type": "string",
+                          "example": "superadmin - Ayanokoji Kiyotaka"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Unauthorized"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Please login first or register if you don't have an account"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "You are not an admin",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Forbidden"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "You're not allowed to access this endpoint"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -447,7 +610,9 @@
       "auth": {
         "type": "http",
         "scheme": "bearer",
-        "bearerFormat": "JWT"
+        "bearer": {
+          "format": "JWT"
+        }
       }
     }
   }

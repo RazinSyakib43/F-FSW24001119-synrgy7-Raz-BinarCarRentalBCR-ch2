@@ -12,6 +12,7 @@ Welcome to the  **Binar Car Rental - Car Management Dashboard** . This dashboard
 * Objection.js
 * Multer
 * Cloudinary
+* Swagger
 
 ## How To Run:
 
@@ -75,6 +76,16 @@ Diagram source: [Razin -Car Management Dashboard API (dbdiagram.io)](https://dbd
    ```
    npm run dev
    ```
+
+## API Documentations
+
+Full API documentation for this API is available at:
+
+```
+http://localhost:3000/api-docs/
+```
+
+**You can instantly try each endpoint**, complete with descriptions, parameters, and sample responses. **Open this URL using a web browser** to access an interactive interface that lets you experiment with the API.
 
 ## API Endpoints
 
