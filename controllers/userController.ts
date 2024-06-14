@@ -9,13 +9,15 @@ import cloudinary from '../config/cloudinary';
 // User Model
 import { UserModel } from '../models/userModel';
 
-async function register(req: Request, res: Response) {
+async function registerAdmin(req: Request, res: Response) {
     const fileBase64: string = req.file?.buffer.toString("base64") || ""; // berfungsi untuk convert file buffer menjadi base64, supaya bisa dibaca dan dikembalikan ke client
     const file: string = req.file ? `data:${req.file.mimetype};base64,${fileBase64}` : ""; // membuat url image yang bisa diakses oleh client, dengan format data:image/jpeg;base64,base64String
 
     cloudinary.uploader.upload(file, async function (error: UploadApiErrorResponse, result: UploadApiResponse) {
         try {
             const { name, email, password }: { name: string, email: string, password: string, avatar: string } = req.body;
+            const role = "admin"
+
             if (!name) {
                 res.status(400).send({
                     code: 400,
@@ -42,6 +44,7 @@ async function register(req: Request, res: Response) {
                     email: email,
                     password: encryptedPassword as string,
                     avatar: result.url,
+                    role: role
                 });
 
                 console.log('newUser : ', newUser);
@@ -51,12 +54,80 @@ async function register(req: Request, res: Response) {
                     name: newUser.name,
                     email: newUser.email,
                     avatar: newUser.avatar,
+                    role: newUser.role
                 };
 
                 res.status(201).send({
                     code: 201,
                     status: 'success',
-                    message: 'User created successfully',
+                    message: 'User (Admin) created successfully',
+                    data: userData
+                });
+
+                console.log('createUser : ', newUser);
+            }
+        } catch (error: any) {
+            res.status(500).send({
+                code: 500,
+                status: 'error',
+                message: error.message
+            });
+        }
+    });
+}
+
+async function registerMember(req: Request, res: Response) {
+    const fileBase64: string = req.file?.buffer.toString("base64") || ""; // berfungsi untuk convert file buffer menjadi base64, supaya bisa dibaca dan dikembalikan ke client
+    const file: string = req.file ? `data:${req.file.mimetype};base64,${fileBase64}` : ""; // membuat url image yang bisa diakses oleh client, dengan format data:image/jpeg;base64,base64String
+
+    cloudinary.uploader.upload(file, async function (error: UploadApiErrorResponse, result: UploadApiResponse) {
+        try {
+            const { name, email, password }: { name: string, email: string, password: string, avatar: string } = req.body;
+            const role = "member"
+
+            if (!name) {
+                res.status(400).send({
+                    code: 400,
+                    status: 'fail',
+                    message: 'Please provide name'
+                });
+            } else if (!email) {
+                res.status(400).send({
+                    code: 400,
+                    status: 'fail',
+                    message: 'Please provide email'
+                });
+            } else if (!password) {
+                res.status(400).send({
+                    code: 400,
+                    status: 'fail',
+                    message: 'Please provide password'
+                });
+            } else {
+                const encryptedPassword = await encryptPassword(password);
+
+                const newUser = await UserModel.query().insert({
+                    name: name,
+                    email: email,
+                    password: encryptedPassword as string,
+                    avatar: result.url,
+                    role: role
+                });
+
+                console.log('newUser : ', newUser);
+
+                const userData = {
+                    id: newUser.id,
+                    name: newUser.name,
+                    email: newUser.email,
+                    avatar: newUser.avatar,
+                    role: newUser.role
+                };
+
+                res.status(201).send({
+                    code: 201,
+                    status: 'success',
+                    message: 'User (Member) created successfully',
                     data: userData
                 });
 
@@ -315,4 +386,13 @@ async function deleteUser(req: Request, res: Response) {
     }
 }
 
-export { getUsers, getUserById, createUser, updateUser, deleteUser, register, login };
+export { 
+    getUsers, 
+    getUserById, 
+    createUser, 
+    updateUser, 
+    deleteUser, 
+    registerAdmin, 
+    registerMember, 
+    login 
+};
