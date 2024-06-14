@@ -143,7 +143,7 @@ async function registerMember(req: Request, res: Response) {
     });
 }
 
-async function login(req: Request, res: Response) {
+async function loginSuperadmin(req: Request, res: Response) {
     const { email, password }: { email: string, password: string } = req.body;
 
     try {
@@ -157,6 +157,116 @@ async function login(req: Request, res: Response) {
             });
         } else {
             const isPasswordMatch = await checkPassword(user.password, password);
+            const token = await generateToken(user.email);
+            const Role = user.role;
+
+            if (Role !== "superadmin") {
+                res.status(403).send({
+                    code: 403,
+                    status: 'Forbidden',
+                    message: 'You are not superadmin'
+                });
+            } else if (!isPasswordMatch) {
+                res.status(400).send({
+                    code: 400,
+                    status: 'fail',
+                    message: 'Password is incorrect'
+                });
+            } else {
+                res.status(200).send({
+                    code: 200,
+                    status: 'success',
+                    message: 'Login success',
+                    data: {
+                        id: user.id,
+                        name: user.name,
+                        email: user.email,
+                        avatar: user.avatar,
+                        role: user.role,
+                        token: token
+                    }
+                });
+            }
+        }
+    } catch (error: any) {
+        res.status(500).send({
+            code: 500,
+            status: 'error',
+            message: error.message
+        });
+    }
+}
+
+async function loginAdmin(req: Request, res: Response) {
+    const { email, password }: { email: string, password: string } = req.body;
+
+    try {
+        const user = await UserModel.query().findOne({ email: email });
+
+        if (!user) {
+            res.status(404).send({
+                code: 404,
+                status: 'fail',
+                message: 'Admin email not found'
+            });
+        } else {
+            const isPasswordMatch = await checkPassword(user.password, password);
+            const token = await generateToken(user.email);
+            const Role = user.role;
+
+            if (Role !== "admin") {
+                res.status(403).send({
+                    code: 403,
+                    status: 'Forbidden',
+                    message: 'You are not an admin'
+                });
+            } else if (!isPasswordMatch) {
+                res.status(400).send({
+                    code: 400,
+                    status: 'fail',
+                    message: 'Password is incorrect'
+                });
+            } else {
+                res.status(200).send({
+                    code: 200,
+                    status: 'success',
+                    message: 'Login success',
+                    data: {
+                        id: user.id,
+                        name: user.name,
+                        email: user.email,
+                        avatar: user.avatar,
+                        role: user.role,
+                        token: token
+                    }
+                });
+            }
+        }
+    } catch (error: any) {
+        res.status(500).send({
+            code: 500,
+            status: 'error',
+            message: error.message
+        });
+    }
+}
+
+async function loginMember(req: Request, res: Response) {
+    const { email, password }: { email: string, password: string } = req.body;
+
+    try {
+        const user = await UserModel.query().findOne({ email: email });
+
+        if (!user) {
+            res.status(404).send({
+                code: 404,
+                status: 'fail',
+                message: 'Member email not found'
+            });
+        } else {
+            const isPasswordMatch = await checkPassword(user.password, password);
+            const token = await generateToken(user.email);
+            const Role = user.role;
 
             if (!isPasswordMatch) {
                 res.status(400).send({
@@ -164,8 +274,13 @@ async function login(req: Request, res: Response) {
                     status: 'fail',
                     message: 'Password is incorrect'
                 });
+            } else if (Role !== "member") {
+                res.status(403).send({
+                    code: 403,
+                    status: 'Forbidden',
+                    message: 'You are not a member'
+                });
             } else {
-                const token = await generateToken(user.email);
                 res.status(200).send({
                     code: 200,
                     status: 'success',
@@ -415,13 +530,17 @@ async function deleteUser(req: Request, res: Response) {
     }
 }
 
-export { 
-    getUsers, 
-    getUserById, 
-    createUser, 
-    updateUser, 
-    deleteUser, 
-    registerAdmin, 
-    registerMember, 
-    login 
+export {
+    getUsers,
+    getUserById,
+    createUser,
+    updateUser,
+    deleteUser,
+
+    registerAdmin,
+    registerMember,
+
+    loginSuperadmin,
+    loginAdmin,
+    loginMember
 };
