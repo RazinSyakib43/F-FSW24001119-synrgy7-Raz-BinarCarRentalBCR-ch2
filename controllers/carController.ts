@@ -42,10 +42,16 @@ async function getCars(req: Request, res: Response) {
                 }
             });
 
+            const availableCars = carsData.filter(carItem => carItem.status === null);
+            const unavailableCars = carsData.filter(carItem => carItem.status === 'active');
+
             res.status(200).send({
                 code: 200,
                 status: 'success',
-                data: carsData,
+                data: {
+                    availableCars: availableCars,
+                    unavailableCars: unavailableCars
+                }
             });
         }
 
