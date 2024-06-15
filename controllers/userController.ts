@@ -642,6 +642,38 @@ async function updateUser(req: Request, res: Response) {
     }
 }
 
+async function deleteCurrentUser(req: Request, res: Response) {
+    try {
+        const user = (req as any).user;
+        const userID = user.id;
+
+        const selectedUser = await UserModel.query().findById(userID);
+
+        if (!user) {
+            res.status(404).send({
+                code: 404,
+                status: 'fail',
+                message: 'User not found'
+            });
+        } else {
+            await UserModel.query().deleteById(userID);
+            res.status(200).send({
+                code: 200,
+                status: 'success',
+                message: 'User with id ' + selectedUser?.id + ' deleted successfully'
+            });
+        }
+
+        console.log('deleteUser : ', user);
+    } catch (error: any) {
+        res.status(500).send({
+            code: 500,
+            status: 'error',
+            message: error.message
+        });
+    }
+}
+
 async function deleteUser(req: Request, res: Response) {
     const { id } = req.params;
 
@@ -682,6 +714,7 @@ export {
 
     getCurrentUser,
     updateCurrentUser,
+    deleteCurrentUser,
 
     registerAdmin,
     registerMember,

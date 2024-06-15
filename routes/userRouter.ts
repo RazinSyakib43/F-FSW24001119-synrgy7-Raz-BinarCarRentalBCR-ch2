@@ -10,6 +10,7 @@ import {
 
     getCurrentUser,
     updateCurrentUser,
+    deleteCurrentUser,
 
     registerAdmin,
     registerMember,
@@ -37,6 +38,7 @@ userRouter.delete("/by-id/:id", [authorize, validateRoles(["superadmin"])], dele
 // User CRUD routes (based on their token)
 userRouter.get("/me", [authorize], getCurrentUser);
 userRouter.put("/me", [authorize, validateRoles(["member", "admin", "superadmin"])], uploadOnMemory.single("avatar"), updateCurrentUser);
+userRouter.delete("/me", [authorize, validateRoles(["member", "admin", "superadmin"])], deleteCurrentUser);
 
 // Register route
 userRouter.post("/register/admin", [authorize, validateRoles(["superadmin"])], uploadOnMemory.single("avatar"), handleImageUpload, registerAdmin);
