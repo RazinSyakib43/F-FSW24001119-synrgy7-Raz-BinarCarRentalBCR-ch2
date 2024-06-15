@@ -524,9 +524,75 @@ async function createUser(req: Request, res: Response) {
     }
 }
 
+async function updateCurrentUser(req: Request, res: Response) {
+    const { name, email }: { name: string, email: string } = req.body;
+
+    const actorRole = (req as any).user.role;
+    const actorName = (req as any).user.name;
+
+    const fileBase64: string = req.file?.buffer.toString("base64") || ""; // berfungsi untuk convert file buffer menjadi base64, supaya bisa dibaca dan dikembalikan ke client
+    const file: string = req.file ? `data:${req.file.mimetype};base64,${fileBase64}` : ""; // membuat url image yang bisa diakses oleh client, dengan format data:image/jpeg;base64,base64String
+
+    try {
+        const user = (req as any).user;
+        const userID = user.id;
+
+        const selectedUser = await UserModel.query().findById(userID);
+
+        console.log('selectedUser : ', selectedUser);
+
+        if (!selectedUser) {
+            res.status(404).send({
+                code: 404,
+                status: 'fail',
+                message: 'User not found'
+            });
+        } else {
+            cloudinary.uploader.upload(file, async function (error: UploadApiErrorResponse, result: UploadApiResponse) {
+                const avatar = req.file ? result.secure_url : selectedUser.avatar;
+                await UserModel.query().findById(userID).patch({
+                    name: name || selectedUser?.name,
+                    email: email || selectedUser?.email,
+                    avatar: avatar || selectedUser?.avatar,
+                    updated_at: new Date(),
+                    updated_by: actorRole + " - " + actorName
+                });
+
+                res.status(200).send({
+                    code: 200,
+                    status: 'success',
+                    message: 'User (' + actorRole + ') with id ' + userID + ' updated successfully',
+                    data: {
+                        id: userID,
+                        name: name || selectedUser?.name,
+                        email: email  || selectedUser?.email,
+                        avatar: avatar || selectedUser?.avatar,
+                        updatedAt: new Date(),
+                        updatedBy: actorRole + " - " + actorName
+                    }
+                });
+
+                console.log('updateUser : ', userID);
+            });
+        }
+    } catch (error: any) {
+        res.status(500).send({
+            code: 500,
+            status: 'error',
+            message: error.message
+        });
+    }
+}
+
 async function updateUser(req: Request, res: Response) {
     const { id } = req.params;
     const { name, email }: { name: string, email: string } = req.body;
+
+    const actorRole = (req as any).user.role;
+    const actorName = (req as any).user.name;
+
+    const fileBase64: string = req.file?.buffer.toString("base64") || ""; // berfungsi untuk convert file buffer menjadi base64, supaya bisa dibaca dan dikembalikan ke client
+    const file: string = req.file ? `data:${req.file.mimetype};base64,${fileBase64}` : ""; // membuat url image yang bisa diakses oleh client, dengan format data:image/jpeg;base64,base64String
 
     try {
         const selectedUser = await UserModel.query().findById(id);
@@ -540,25 +606,32 @@ async function updateUser(req: Request, res: Response) {
                 message: 'User not found'
             });
         } else {
-            await UserModel.query().findById(id).patch({
-                name: name || selectedUser?.name,
-                email: email || selectedUser?.email,
-                updated_at: new Date()
-            });
-
-            res.status(200).send({
-                code: 200,
-                status: 'success',
-                message: 'User with id ' + id + ' updated successfully',
-                data: {
-                    id: id,
+            cloudinary.uploader.upload(file, async function (error: UploadApiErrorResponse, result: UploadApiResponse) {
+                const avatar = req.file ? result.secure_url : selectedUser.avatar;
+                await UserModel.query().findById(id).patch({
                     name: name || selectedUser?.name,
                     email: email || selectedUser?.email,
-                    updatedAt: new Date().toISOString()
-                }
-            });
+                    avatar: avatar || selectedUser?.avatar,
+                    updated_at: new Date(),
+                    updated_by: actorRole + " - " + actorName
+                });
 
-            console.log('updateUser : ', id);
+                res.status(200).send({
+                    code: 200,
+                    status: 'success',
+                    message: 'User (' + actorRole + ') with id ' + id + ' updated successfully',
+                    data: {
+                        id: id,
+                        name: name || selectedUser?.name,
+                        email: email || selectedUser?.email,
+                        avatar: avatar || selectedUser?.avatar,
+                        updatedAt: new Date(),
+                        updatedBy: actorRole + " - " + actorName
+                    }
+                });
+
+                console.log('updateUser : ', id);
+            });
         }
     } catch (error: any) {
         res.status(500).send({
@@ -603,10 +676,12 @@ async function deleteUser(req: Request, res: Response) {
 export {
     getUsers,
     getUserById,
-    getCurrentUser,
     createUser,
     updateUser,
     deleteUser,
+
+    getCurrentUser,
+    updateCurrentUser,
 
     registerAdmin,
     registerMember,
