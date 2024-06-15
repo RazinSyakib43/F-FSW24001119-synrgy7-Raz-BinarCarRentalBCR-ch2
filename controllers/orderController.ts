@@ -139,7 +139,7 @@ async function createOrder(req: Request, res: Response) {
                 res.status(400).send({
                     code: 400,
                     status: 'fail',
-                    message: 'Car is already rentedd'
+                    message: 'Car is already rented'
                 });
                 return;
             }

@@ -40,6 +40,17 @@ async function registerAdmin(req: Request, res: Response) {
                     message: 'Please provide password'
                 });
             } else {
+                const activeUser = await UserModel.query().where('email', email).first();
+
+                if (activeUser) {
+                    res.status(400).send({
+                        code: 400,
+                        status: 'fail',
+                        message: 'This email is already taken'
+                    });
+                    return;
+                }
+
                 const encryptedPassword = await encryptPassword(password);
 
                 const newUser = await UserModel.query().insert({
@@ -115,6 +126,17 @@ async function registerMember(req: Request, res: Response) {
                     message: 'Please provide password'
                 });
             } else {
+                const activeUser = await UserModel.query().where('email', email).first();
+
+                if (activeUser) {
+                    res.status(400).send({
+                        code: 400,
+                        status: 'fail',
+                        message: 'This email is already taken'
+                    });
+                    return;
+                }
+
                 const encryptedPassword = await encryptPassword(password);
 
                 const newUser = await UserModel.query().insert({
@@ -482,6 +504,17 @@ async function createUser(req: Request, res: Response) {
                 message: 'Role must be member, admin, or superadmin'
             });
         } else {
+            const activeUser = await UserModel.query().where('email', email).first();
+
+            if (activeUser) {
+                res.status(400).send({
+                    code: 400,
+                    status: 'fail',
+                    message: 'This email is already taken'
+                });
+                return;
+            }
+
             const newUser = await UserModel.query().insert({
                 name: name,
                 email: email,
@@ -565,7 +598,7 @@ async function updateCurrentUser(req: Request, res: Response) {
                     data: {
                         id: userID,
                         name: name || selectedUser?.name,
-                        email: email  || selectedUser?.email,
+                        email: email || selectedUser?.email,
                         avatar: avatar || selectedUser?.avatar,
                         updatedAt: new Date(),
                         updatedBy: actorRole + " - " + actorName
