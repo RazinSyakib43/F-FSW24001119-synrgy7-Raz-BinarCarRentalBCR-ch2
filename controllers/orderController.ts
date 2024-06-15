@@ -204,7 +204,15 @@ async function updateOrder(req: Request, res: Response) {
                 status: 'fail',
                 message: 'Order not found'
             });
-        } else {
+        } else if (status !== 'active' && status !== 'completed' && status !== 'cancelled') {
+            res.status(400).send({
+                code: 400,
+                status: 'fail',
+                message: 'Status must be active, completed, or cancelled'
+            });
+
+        } 
+        else {
             if (id_car) {
                 const activeCar = await OrderModel.query().where('id_car', id_car).andWhere('status', 'active').first();
 
