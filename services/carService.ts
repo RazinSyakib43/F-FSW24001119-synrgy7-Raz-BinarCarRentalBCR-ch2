@@ -52,16 +52,19 @@ export class CarService {
         return this.carsData(car);
     }
 
-    async addCar(carItem: any, file: any, user: any) {
+    async addCar(file: any, carItem: any, user: any) {
         const uploadResult: UploadApiResponse = await uploadToCloudinary(file);
+
+        const actorRole = user.role;
+        const actorName = user.name;
 
         const newCarData = {
             ...carItem,
             image: uploadResult.secure_url,
             created_at: new Date(),
-            created_by: `${user.role} - ${user.name}`,
+            created_by: `${actorRole} - ${actorName}`,
             updated_at: new Date(),
-            updated_by: `${user.role} - ${user.name}`,
+            updated_by: `${actorRole} - ${actorName}`,
         };
 
         const newCar = await this.carRepository.create(newCarData);
@@ -70,19 +73,26 @@ export class CarService {
 
     async updateCar(id: string, carItem: any, file: any, user: any) {
         const selectedCar = await this.carRepository.findById(id);
+        console.log("selectedCar", selectedCar);
 
-        let image = selectedCar?.image;
-        if (file) {
-            const uploadResult: UploadApiResponse = await uploadToCloudinary(file);
-            image = uploadResult.secure_url;
-        }
+        const actorRole = user.role;
+        const actorName = user.name;
+
+        const oldCarData = {
+            name: selectedCar?.name,
+            category: selectedCar?.category,
+            price: selectedCar?.price,
+            image: selectedCar?.image,
+        };
+        console.log("oldCarData", oldCarData);
 
         const updatedCarData = {
-            ...selectedCar,
-            ...carItem,
-            image,
+            name: carItem.name || oldCarData.name,
+            category: carItem.category || oldCarData.category,
+            price: carItem.price || oldCarData.price,
+            image: file ? (await uploadToCloudinary(file)).secure_url : oldCarData.image,
             updated_at: new Date(),
-            updated_by: `${user.role} - ${user.name}`,
+            updated_by: `${actorRole} - ${actorName}`,
         };
 
         await this.carRepository.update(id, updatedCarData);
