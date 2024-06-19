@@ -100,7 +100,6 @@ export async function addCar(req: Request, res: Response) {
     }
 }
 
-
 export async function updateCar(req: Request, res: Response) {
     const { id }: { id: string } = req.params as { id: string };
     const { name, category, price }: { name: string; category: string; price: number } = req.body;
@@ -116,15 +115,15 @@ export async function updateCar(req: Request, res: Response) {
                 status: 'fail',
                 message: 'Car not found',
             });
+        } else {
+            const updatedCar = await carService.updateCar(id, { name, category, price }, image, user);
+            res.status(200).send({
+                code: 200,
+                status: 'success',
+                message: `Car with id ${id} updated successfully`,
+                data: updatedCar,
+            });
         }
-
-        const updatedCar = await carService.updateCar(id, { name, category, price }, image, user);
-        res.status(200).send({
-            code: 200,
-            status: 'success',
-            message: `Car with id ${id} updated successfully`,
-            data: updatedCar,
-        });
     } catch (error: any) {
         res.status(500).send({
             code: 500,
@@ -145,14 +144,14 @@ export async function deleteCar(req: Request, res: Response) {
                 status: 'fail',
                 message: 'Car not found',
             });
+        } else {
+            await carService.deleteCar(id);
+            res.status(200).send({
+                code: 200,
+                status: 'success',
+                message: `Car with id ${id} deleted successfully`,
+            });
         }
-
-        await carService.deleteCar(id);
-        res.status(200).send({
-            code: 200,
-            status: 'success',
-            message: `Car with id ${id} deleted successfully`,
-        });
     } catch (error: any) {
         res.status(500).send({
             code: 500,

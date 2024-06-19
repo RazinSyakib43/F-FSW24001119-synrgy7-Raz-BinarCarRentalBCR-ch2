@@ -79,18 +79,20 @@ export class UserService {
             name: selectedUser?.name,
             email: selectedUser?.email,
             avatar: selectedUser?.avatar,
+            role: selectedUser?.role,
         };
 
         const updatedUserData = {
             name: userItem.name || oldUserData.name,
             email: userItem.email || oldUserData.email,
             avatar: file ? (await uploadToCloudinary(file)).url : oldUserData.avatar,
+            role: userItem.role || oldUserData.role,
             updated_at: new Date(),
             updated_by: `${actorRole} - ${actorName}`,
         };
 
-        const updatedUser = await this.userRepository.updateUser(id, updatedUserData);
-        return this.userData(updatedUser);
+        await this.userRepository.updateUser(id, updatedUserData);
+        return this.userData({ ...selectedUser, ...updatedUserData });
     }
 
     async deleteUser(id: string) {

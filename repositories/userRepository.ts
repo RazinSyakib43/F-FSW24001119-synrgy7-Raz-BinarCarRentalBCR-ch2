@@ -5,7 +5,6 @@ export class UserRepository {
         return await UserModel.query();
     }
 
-    
     async findUserById(id: string) {
         return await UserModel.query().findById(id);
     }
