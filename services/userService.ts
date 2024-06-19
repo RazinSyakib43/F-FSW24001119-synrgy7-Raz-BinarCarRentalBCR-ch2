@@ -4,6 +4,7 @@ import { uploadToCloudinary } from '../utils/uploadUtil';
 import { UploadApiResponse } from 'cloudinary';
 
 import { encryptPassword, checkPassword } from '../utils/encrypt';
+import { generateToken } from '../utils/token';
 
 export class UserService {
     private userRepository: UserRepository;
@@ -140,5 +141,101 @@ export class UserService {
 
         const newUser = await this.userRepository.createUser(newUserData);
         return this.userData(newUser);
+    }
+
+    async loginSuperadmin(email: string, password: string) {
+        const selectedUser = await this.userRepository.findActiveUserByEmail(email);
+        if (!selectedUser){
+            return {
+                code: 404,
+                status: 'fail',
+                message: 'Superadmin email not found'
+            }
+        }
+
+        const isPasswordMatch = await checkPassword(selectedUser.password, password);
+        if (!isPasswordMatch) {
+            return {
+                code: 400,
+                status: 'fail',
+                message: 'Password is incorrect'
+            };
+        }
+
+        const token = await generateToken(selectedUser.email);
+        if (token) {
+            return {
+                code: 200,
+                status: 'success',
+                message: 'Successfully login as superadmin! Welcome, ' + selectedUser.name + '!',
+                data: {
+                    token: token,
+                },
+            };
+        }
+    }
+
+    async loginAdmin(email: string, password: string) {
+        const selectedUser = await this.userRepository.findActiveUserByEmail(email);
+        if (!selectedUser) {
+            return {
+                code: 404,
+                status: 'fail',
+                message: 'Admin email not found'
+            }
+        }
+
+        const isPasswordMatch = await checkPassword(selectedUser.password, password);
+        if (!isPasswordMatch) {
+            return {
+                code: 400,
+                status: 'fail',
+                message: 'Password is incorrect'
+            };
+        }
+
+        const token = await generateToken(selectedUser.email);
+        if (token) {
+            return {
+                code: 200,
+                status: 'success',
+                message: 'Successfully login as admin! Welcome, ' + selectedUser.name + '!',
+                data: {
+                    token: token,
+                },
+            };
+        }
+    }
+
+    async loginMember(email: string, password: string) {
+        const selectedUser = await this.userRepository.findActiveUserByEmail(email);
+        if (!selectedUser) {
+            return {
+                code: 404,
+                status: 'fail',
+                message: 'Member email not found'
+            }
+        }
+
+        const isPasswordMatch = await checkPassword(selectedUser.password, password);
+        if (!isPasswordMatch) {
+            return {
+                code: 400,
+                status: 'fail',
+                message: 'Password is incorrect'
+            };
+        }
+
+        const token = await generateToken(selectedUser.email);
+        if (token) {
+            return {
+                code: 200,
+                status: 'success',
+                message: 'Successfully login as member! Welcome, ' + selectedUser.name + '!',
+                data: {
+                    token: token,
+                },
+            };
+        }
     }
 }

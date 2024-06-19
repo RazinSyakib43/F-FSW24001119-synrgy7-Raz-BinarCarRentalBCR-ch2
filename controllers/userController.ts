@@ -77,7 +77,6 @@ async function registerMember(req: Request, res: Response) {
     const role = "member"
 
     const avatar = req.file;
-    const user = (req as any).user;
 
     try {
         if (!name) {
@@ -110,7 +109,7 @@ async function registerMember(req: Request, res: Response) {
                 return;
             }
 
-            const newUser = await userService.registerMember(avatar, { name, email, password, avatar, role }, user);
+            const newUser = await userService.registerMember(avatar, { name, email, password, avatar, role });
 
             console.log('newUser : ', newUser);
             res.status(201).send({
@@ -135,46 +134,18 @@ async function loginSuperadmin(req: Request, res: Response) {
     const { email, password }: { email: string, password: string } = req.body;
 
     try {
-        const user = await UserModel.query().findOne({ email: email });
+        const selectedUser = await userService.getActiveUserByEmail(email);
+        const userRole = selectedUser?.role;
 
-        if (!user) {
-            res.status(404).send({
-                code: 404,
-                status: 'fail',
-                message: 'User email not found'
+        if (userRole !== "superadmin") {
+            res.status(403).send({
+                code: 403,
+                status: 'Forbidden',
+                message: 'You are not a superadmin'
             });
         } else {
-            const isPasswordMatch = await checkPassword(user.password, password);
-            const token = await generateToken(user.email);
-            const Role = user.role;
-
-            if (Role !== "superadmin") {
-                res.status(403).send({
-                    code: 403,
-                    status: 'Forbidden',
-                    message: 'You are not superadmin'
-                });
-            } else if (!isPasswordMatch) {
-                res.status(400).send({
-                    code: 400,
-                    status: 'fail',
-                    message: 'Password is incorrect'
-                });
-            } else {
-                res.status(200).send({
-                    code: 200,
-                    status: 'success',
-                    message: 'Login success',
-                    data: {
-                        id: user.id,
-                        name: user.name,
-                        email: user.email,
-                        avatar: user.avatar,
-                        role: user.role,
-                        token: token
-                    }
-                });
-            }
+            const loginSuperadmin: any = await userService.loginSuperadmin(email, password);
+            res.status(loginSuperadmin.code).send(loginSuperadmin);
         }
     } catch (error: any) {
         res.status(500).send({
@@ -185,50 +156,23 @@ async function loginSuperadmin(req: Request, res: Response) {
     }
 }
 
+
 async function loginAdmin(req: Request, res: Response) {
     const { email, password }: { email: string, password: string } = req.body;
 
     try {
-        const user = await UserModel.query().findOne({ email: email });
+        const selectedUser = await userService.getActiveUserByEmail(email);
+        const userRole = selectedUser?.role;
 
-        if (!user) {
-            res.status(404).send({
-                code: 404,
-                status: 'fail',
-                message: 'Admin email not found'
+        if (userRole !== "admin") {
+            res.status(403).send({
+                code: 403,
+                status: 'Forbidden',
+                message: 'You are not an admin'
             });
         } else {
-            const isPasswordMatch = await checkPassword(user.password, password);
-            const token = await generateToken(user.email);
-            const Role = user.role;
-
-            if (Role !== "admin") {
-                res.status(403).send({
-                    code: 403,
-                    status: 'Forbidden',
-                    message: 'You are not an admin'
-                });
-            } else if (!isPasswordMatch) {
-                res.status(400).send({
-                    code: 400,
-                    status: 'fail',
-                    message: 'Password is incorrect'
-                });
-            } else {
-                res.status(200).send({
-                    code: 200,
-                    status: 'success',
-                    message: 'Login success',
-                    data: {
-                        id: user.id,
-                        name: user.name,
-                        email: user.email,
-                        avatar: user.avatar,
-                        role: user.role,
-                        token: token
-                    }
-                });
-            }
+            const loginAdmin: any = await userService.loginAdmin(email, password);
+            res.status(loginAdmin.code).send(loginAdmin);
         }
     } catch (error: any) {
         res.status(500).send({
@@ -243,46 +187,18 @@ async function loginMember(req: Request, res: Response) {
     const { email, password }: { email: string, password: string } = req.body;
 
     try {
-        const user = await UserModel.query().findOne({ email: email });
+        const selectedUser = await userService.getActiveUserByEmail(email);
+        const userRole = selectedUser?.role;
 
-        if (!user) {
-            res.status(404).send({
-                code: 404,
-                status: 'fail',
-                message: 'Member email not found'
+        if (userRole !== "member") {
+            res.status(403).send({
+                code: 403,
+                status: 'Forbidden',
+                message: 'You are not a member'
             });
         } else {
-            const isPasswordMatch = await checkPassword(user.password, password);
-            const token = await generateToken(user.email);
-            const Role = user.role;
-
-            if (!isPasswordMatch) {
-                res.status(400).send({
-                    code: 400,
-                    status: 'fail',
-                    message: 'Password is incorrect'
-                });
-            } else if (Role !== "member") {
-                res.status(403).send({
-                    code: 403,
-                    status: 'Forbidden',
-                    message: 'You are not a member'
-                });
-            } else {
-                res.status(200).send({
-                    code: 200,
-                    status: 'success',
-                    message: 'Login success',
-                    data: {
-                        id: user.id,
-                        name: user.name,
-                        email: user.email,
-                        avatar: user.avatar,
-                        role: user.role,
-                        token: token
-                    }
-                });
-            }
+            const loginMember: any = await userService.loginMember(email, password);
+            res.status(loginMember.code).send(loginMember);
         }
     } catch (error: any) {
         res.status(500).send({
