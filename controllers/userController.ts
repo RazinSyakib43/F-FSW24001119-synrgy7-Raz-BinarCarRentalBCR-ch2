@@ -14,178 +14,121 @@ import { UserModel } from '../models/userModel';
 const userService = new UserService();
 
 async function registerAdmin(req: Request, res: Response) {
-    const fileBase64: string = req.file?.buffer.toString("base64") || ""; // berfungsi untuk convert file buffer menjadi base64, supaya bisa dibaca dan dikembalikan ke client
-    const file: string = req.file ? `data:${req.file.mimetype};base64,${fileBase64}` : ""; // membuat url image yang bisa diakses oleh client, dengan format data:image/jpeg;base64,base64String
+    const { name, email, password }: { name: string, email: string, password: string, avatar: string } = req.body;
+    const role = "admin"
 
-    const actorRole = (req as any).user.role;
-    const actorName = (req as any).user.name;
+    const avatar = req.file;
+    const user = (req as any).user;
 
-    cloudinary.uploader.upload(file, async function (error: UploadApiErrorResponse, result: UploadApiResponse) {
-        try {
-            const { name, email, password }: { name: string, email: string, password: string, avatar: string } = req.body;
-            const role = "admin"
-
-            if (!name) {
-                res.status(400).send({
-                    code: 400,
-                    status: 'fail',
-                    message: 'Please provide name'
-                });
-            } else if (!email) {
-                res.status(400).send({
-                    code: 400,
-                    status: 'fail',
-                    message: 'Please provide email'
-                });
-            } else if (!password) {
-                res.status(400).send({
-                    code: 400,
-                    status: 'fail',
-                    message: 'Please provide password'
-                });
-            } else {
-                const activeUser = await UserModel.query().where('email', email).first();
-
-                if (activeUser) {
-                    res.status(400).send({
-                        code: 400,
-                        status: 'fail',
-                        message: 'This email is already taken'
-                    });
-                    return;
-                }
-
-                const encryptedPassword = await encryptPassword(password);
-
-                const newUser = await UserModel.query().insert({
-                    name: name,
-                    email: email,
-                    password: encryptedPassword as string,
-                    avatar: result.url,
-                    role: role,
-                    created_at: new Date(),
-                    created_by: actorRole + " - " + actorName,
-                    updated_at: new Date(),
-                    updated_by: actorRole + " - " + actorName
-                });
-
-                console.log('newUser : ', newUser);
-
-                const userData = {
-                    id: newUser.id,
-                    name: newUser.name,
-                    email: newUser.email,
-                    avatar: newUser.avatar,
-                    role: newUser.role,
-                    created_at: newUser.created_at,
-                    created_by: newUser.created_by,
-                    updated_at: newUser.updated_at,
-                    updated_by: newUser.updated_by
-                };
-
-                res.status(201).send({
-                    code: 201,
-                    status: 'success',
-                    message: 'User (Admin) created successfully',
-                    data: userData
-                });
-
-                console.log('createUser : ', newUser);
-            }
-        } catch (error: any) {
-            res.status(500).send({
-                code: 500,
-                status: 'error',
-                message: error.message
+    try {
+        if (!name) {
+            res.status(400).send({
+                code: 400,
+                status: 'fail',
+                message: 'Please provide name'
             });
+        } else if (!email) {
+            res.status(400).send({
+                code: 400,
+                status: 'fail',
+                message: 'Please provide email'
+            });
+        } else if (!password) {
+            res.status(400).send({
+                code: 400,
+                status: 'fail',
+                message: 'Please provide password'
+            });
+        } else {
+            const activeUser = await userService.getActiveUserByEmail(email);
+
+            if (activeUser) {
+                res.status(400).send({
+                    code: 400,
+                    status: 'fail',
+                    message: 'This email is already taken'
+                });
+                return;
+            }
+
+            const newUser = await userService.registerAdmin(avatar, { name, email, password, avatar, role }, user);
+
+            console.log('newUser : ', newUser);
+            res.status(201).send({
+                code: 201,
+                status: 'success',
+                message: 'User (Admin) created successfully',
+                data: newUser
+            });
+
+            console.log('createUser : ', newUser);
         }
-    });
+    } catch (error: any) {
+        res.status(500).send({
+            code: 500,
+            status: 'error',
+            message: error.message
+        });
+    }
 }
 
 async function registerMember(req: Request, res: Response) {
-    const fileBase64: string = req.file?.buffer.toString("base64") || ""; // berfungsi untuk convert file buffer menjadi base64, supaya bisa dibaca dan dikembalikan ke client
-    const file: string = req.file ? `data:${req.file.mimetype};base64,${fileBase64}` : ""; // membuat url image yang bisa diakses oleh client, dengan format data:image/jpeg;base64,base64String
+    const { name, email, password }: { name: string, email: string, password: string, avatar: string } = req.body;
+    const role = "member"
 
-    cloudinary.uploader.upload(file, async function (error: UploadApiErrorResponse, result: UploadApiResponse) {
-        try {
-            const { name, email, password }: { name: string, email: string, password: string, avatar: string } = req.body;
-            const role = "member"
+    const avatar = req.file;
+    const user = (req as any).user;
 
-            if (!name) {
-                res.status(400).send({
-                    code: 400,
-                    status: 'fail',
-                    message: 'Please provide name'
-                });
-            } else if (!email) {
-                res.status(400).send({
-                    code: 400,
-                    status: 'fail',
-                    message: 'Please provide email'
-                });
-            } else if (!password) {
-                res.status(400).send({
-                    code: 400,
-                    status: 'fail',
-                    message: 'Please provide password'
-                });
-            } else {
-                const activeUser = await UserModel.query().where('email', email).first();
-
-                if (activeUser) {
-                    res.status(400).send({
-                        code: 400,
-                        status: 'fail',
-                        message: 'This email is already taken'
-                    });
-                    return;
-                }
-
-                const encryptedPassword = await encryptPassword(password);
-
-                const newUser = await UserModel.query().insert({
-                    name: name,
-                    email: email,
-                    password: encryptedPassword as string,
-                    avatar: result.url,
-                    role: role,
-                    created_at: new Date(),
-                    created_by: "member",
-                    updated_at: new Date(),
-                    updated_by: "member"
-                });
-
-                console.log('newUser : ', newUser);
-
-                const userData = {
-                    id: newUser.id,
-                    name: newUser.name,
-                    email: newUser.email,
-                    avatar: newUser.avatar,
-                    role: newUser.role,
-                    created_at: newUser.created_at,
-                    created_by: newUser.created_by,
-                    updated_at: newUser.updated_at,
-                    updated_by: newUser.updated_by
-                };
-
-                res.status(201).send({
-                    code: 201,
-                    status: 'success',
-                    message: 'User (Member) created successfully',
-                    data: userData
-                });
-
-                console.log('createUser : ', newUser);
-            }
-        } catch (error: any) {
-            res.status(500).send({
-                code: 500,
-                status: 'error',
-                message: error.message
+    try {
+        if (!name) {
+            res.status(400).send({
+                code: 400,
+                status: 'fail',
+                message: 'Please provide name'
             });
+        } else if (!email) {
+            res.status(400).send({
+                code: 400,
+                status: 'fail',
+                message: 'Please provide email'
+            });
+        } else if (!password) {
+            res.status(400).send({
+                code: 400,
+                status: 'fail',
+                message: 'Please provide password'
+            });
+        } else {
+            const activeUser = await userService.getActiveUserByEmail(email);
+
+            if (activeUser) {
+                res.status(400).send({
+                    code: 400,
+                    status: 'fail',
+                    message: 'This email is already taken'
+                });
+                return;
+            }
+
+            const newUser = await userService.registerMember(avatar, { name, email, password, avatar, role }, user);
+
+            console.log('newUser : ', newUser);
+            res.status(201).send({
+                code: 201,
+                status: 'success',
+                message: 'User (Admin) created successfully',
+                data: newUser
+            });
+
+            console.log('createUser : ', newUser);
         }
-    });
+    } catch (error: any) {
+        res.status(500).send({
+            code: 500,
+            status: 'error',
+            message: error.message
+        });
+    }
 }
 
 async function loginSuperadmin(req: Request, res: Response) {

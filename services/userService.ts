@@ -3,6 +3,8 @@ import { UserRepository } from "../repositories/userRepository";
 import { uploadToCloudinary } from '../utils/uploadUtil';
 import { UploadApiResponse } from 'cloudinary';
 
+import { encryptPassword, checkPassword } from '../utils/encrypt';
+
 export class UserService {
     private userRepository: UserRepository;
 
@@ -97,5 +99,46 @@ export class UserService {
 
     async deleteUser(id: string) {
         return await this.userRepository.deleteUser(id);
+    }
+
+    async registerAdmin(file: any, userItem: any, user: any) {
+        const uploadResult: UploadApiResponse = await uploadToCloudinary(file);
+
+        const actorRole = user.role;
+        const actorName = user.name;
+
+        const encryptedPassword = await encryptPassword(userItem.password);
+
+        const newUserData = {
+            ...userItem,
+            password: encryptedPassword,
+            avatar: uploadResult.url,
+            created_by: `${actorRole} - ${actorName}`,
+            created_at: new Date(),
+            updated_by: `${actorRole} - ${actorName}`,
+            updated_at: new Date(),
+        };
+
+        const newUser = await this.userRepository.createUser(newUserData);
+        return this.userData(newUser);
+    }
+
+    async registerMember(file: any, userItem: any) {
+        const uploadResult: UploadApiResponse = await uploadToCloudinary(file);
+
+        const encryptedPassword = await encryptPassword(userItem.password);
+
+        const newUserData = {
+            ...userItem,
+            password: encryptedPassword,
+            avatar: uploadResult.url,
+            created_by: 'member' + ' - ' + userItem.name,
+            created_at: new Date(),
+            updated_by: 'member' + ' - ' + userItem.name,
+            updated_at: new Date(),
+        };
+
+        const newUser = await this.userRepository.createUser(newUserData);
+        return this.userData(newUser);
     }
 }
