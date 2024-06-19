@@ -6,11 +6,19 @@ const carService = new CarService();
 export async function getCars(req: Request, res: Response) {
     try {
         const cars = await carService.getAllCars();
-        res.status(200).send({
-            code: 200,
-            status: 'success',
-            data: cars,
-        });
+        if (cars.length === 0) {
+            res.status(404).send({
+                code: 404,
+                status: 'fail',
+                message: 'Cars not found',
+            });
+        } else {
+            res.status(200).send({
+                code: 200,
+                status: 'success',
+                data: cars,
+            });
+        }
     } catch (error: any) {
         res.status(500).send({
             code: 500,
@@ -25,11 +33,19 @@ export async function searchCar(req: Request, res: Response) {
 
     try {
         const cars = await carService.searchCars(title);
-        res.status(200).send({
-            code: 200,
-            status: 'success',
-            data: cars,
-        });
+        if (cars.length === 0) {
+            res.status(404).send({
+                code: 404,
+                status: 'fail',
+                message: 'Car that you are looking for is not found',
+            });
+        } else {
+            res.status(200).send({
+                code: 200,
+                status: 'success',
+                data: cars,
+            });
+        }
     } catch (error: any) {
         res.status(500).send({
             code: 500,
@@ -81,16 +97,16 @@ export async function addCar(req: Request, res: Response) {
                 status: "fail",
                 message: "Please fill all required fields (name, category, price, image)",
             });
+        } else {
+            const newCar = await carService.addCar(image, { name, category, price }, user);
+
+            res.status(201).send({
+                code: 201,
+                status: "success",
+                message: "Car added successfully",
+                data: newCar,
+            });
         }
-
-        const newCar = await carService.addCar(image, { name, category, price }, user);
-
-        res.status(201).send({
-            code: 201,
-            status: "success",
-            message: "Car added successfully",
-            data: newCar,
-        });
     } catch (error: any) {
         res.status(500).send({
             code: 500,
