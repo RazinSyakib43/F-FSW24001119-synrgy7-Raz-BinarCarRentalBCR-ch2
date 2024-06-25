@@ -4,8 +4,9 @@ import { CarService } from '../services/carService';
 const carService = new CarService();
 
 export async function getCars(req: Request, res: Response) {
+    const { includeDeleted }: { includeDeleted: string } = req.query as { includeDeleted: string };
     try {
-        const cars = await carService.getAllCars();
+        const cars = await carService.getAllCars(includeDeleted === 'true' ? true : false);
         if (cars.length === 0) {
             res.status(404).send({
                 code: 404,

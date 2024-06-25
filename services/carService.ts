@@ -42,9 +42,14 @@ export class CarService {
         return carItem;
     }
 
-    async getAllCars() {
+    async getAllCars(includeDeleted: boolean = false) {
         const cars = await this.carRepository.findAll();
-        return cars.map(car => this.carsData(car));
+
+        if (includeDeleted) {
+            return cars.map(car => this.carsData(car));
+        } else {
+            return cars.filter(car => car.status === 'active').map(car => this.carsData(car));
+        }
     }
 
     async searchCars(title: string) {
