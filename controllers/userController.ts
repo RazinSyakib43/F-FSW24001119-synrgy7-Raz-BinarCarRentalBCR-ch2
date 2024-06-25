@@ -2,15 +2,6 @@ import { Request, Response } from 'express';
 
 import { UserService } from '../services/userService';
 
-import { encryptPassword, checkPassword } from '../utils/encrypt';
-import { generateToken } from '../utils/token';
-
-import { UploadApiResponse, UploadApiErrorResponse } from 'cloudinary';
-import cloudinary from '../config/cloudinary';
-
-// User Model
-import { UserModel } from '../models/userModel';
-
 const userService = new UserService();
 
 async function registerAdmin(req: Request, res: Response) {
@@ -263,28 +254,19 @@ async function getCurrentUser(req: Request, res: Response) {
 
         console.log('getCurrentUser : ', user);
 
-        if (!user) {
+        const selectedUser = await userService.getUserById(user.id);
+
+        if (!selectedUser) {
             res.status(404).send({
                 code: 404,
                 status: 'fail',
                 message: 'User not found'
             });
         } else {
-            const userData = {
-                id: user.id,
-                name: user.name,
-                email: user.email,
-                role: user.role,
-                created_at: user.created_at,
-                created_by: user.created_by,
-                updated_at: user.updated_at,
-                updated_by: user.updated_by
-            };
-
             res.status(200).send({
                 code: 200,
                 status: 'success',
-                data: userData
+                data: selectedUser
             });
         }
     } catch (error: any) {
@@ -368,17 +350,14 @@ async function createUser(req: Request, res: Response) {
 async function updateCurrentUser(req: Request, res: Response) {
     const { name, email }: { name: string, email: string } = req.body;
 
-    const actorRole = (req as any).user.role;
-    const actorName = (req as any).user.name;
+    const avatar = req.file;
+    const user = (req as any).user;
 
-    const fileBase64: string = req.file?.buffer.toString("base64") || ""; // berfungsi untuk convert file buffer menjadi base64, supaya bisa dibaca dan dikembalikan ke client
-    const file: string = req.file ? `data:${req.file.mimetype};base64,${fileBase64}` : ""; // membuat url image yang bisa diakses oleh client, dengan format data:image/jpeg;base64,base64String
+    const userID = user.id;
 
     try {
-        const user = (req as any).user;
-        const userID = user.id;
-
-        const selectedUser = await UserModel.query().findById(userID);
+        const selectedUser = await userService.getUserById(userID);
+        const userRole = selectedUser?.role;
 
         console.log('selectedUser : ', selectedUser);
 
@@ -389,32 +368,15 @@ async function updateCurrentUser(req: Request, res: Response) {
                 message: 'User not found'
             });
         } else {
-            cloudinary.uploader.upload(file, async function (error: UploadApiErrorResponse, result: UploadApiResponse) {
-                const avatar = req.file ? result.secure_url : selectedUser.avatar;
-                await UserModel.query().findById(userID).patch({
-                    name: name || selectedUser?.name,
-                    email: email || selectedUser?.email,
-                    avatar: avatar || selectedUser?.avatar,
-                    updated_at: new Date(),
-                    updated_by: actorRole + " - " + actorName
-                });
-
-                res.status(200).send({
-                    code: 200,
-                    status: 'success',
-                    message: 'User (' + actorRole + ') with id ' + userID + ' updated successfully',
-                    data: {
-                        id: userID,
-                        name: name || selectedUser?.name,
-                        email: email || selectedUser?.email,
-                        avatar: avatar || selectedUser?.avatar,
-                        updatedAt: new Date(),
-                        updatedBy: actorRole + " - " + actorName
-                    }
-                });
-
-                console.log('updateUser : ', userID);
+            const updatedUser = await userService.updateUser(userID, { name, email }, avatar, user);
+            res.status(200).send({
+                code: 200,
+                status: 'success',
+                message: 'User (' + userRole + ') with id ' + selectedUser?.id + ' updated successfully',
+                data: updatedUser
             });
+
+            console.log('updateUser : ', updatedUser);
         }
     } catch (error: any) {
         res.status(500).send({
@@ -463,22 +425,26 @@ async function updateUser(req: Request, res: Response) {
 async function deleteCurrentUser(req: Request, res: Response) {
     try {
         const user = (req as any).user;
+
         const userID = user.id;
 
-        const selectedUser = await UserModel.query().findById(userID);
+        const selectedUser = await userService.getUserById(userID);
+        const userRole = selectedUser?.role;
 
-        if (!user) {
+        console.log('selectedUser : ', selectedUser);
+
+        if (!selectedUser) {
             res.status(404).send({
                 code: 404,
                 status: 'fail',
                 message: 'User not found'
             });
         } else {
-            await UserModel.query().deleteById(userID);
+            await userService.deleteUser(userID);
             res.status(200).send({
                 code: 200,
                 status: 'success',
-                message: 'User with id ' + selectedUser?.id + ' deleted successfully'
+                message: 'User (' + userRole + ') with id ' + selectedUser?.id + ' deleted successfully'
             });
         }
 
