@@ -18,20 +18,25 @@ export class CarService {
             name: car.name,
             category: car.category,
             price: car.price,
-            start_rent: car.order?.start_rent || null,
-            finish_rent: car.order?.finish_rent || null,
             image: car.image,
-            status: car.order?.status || null,
             createdAt: car.created_at,
             createdBy: car.created_by,
             updatedAt: car.updated_at,
             updatedBy: car.updated_by,
+            status: car.status,
+            deletedAt: car.deleted_at,
+            deletedBy: car.deleted_by,
+            orderInfo: {
+                startRent: car.order?.start_rent || null,
+                finishRent: car.order?.finish_rent || null,
+                orderStatus: car.order?.status || null,
+            }
         };
 
-        if (carItem.status === 'completed' || carItem.status === 'cancelled') {
-            carItem.start_rent = null;
-            carItem.finish_rent = null;
-            carItem.status = null;
+        if (carItem.orderInfo.orderStatus === 'completed' || carItem.orderInfo.orderStatus === 'cancelled') {
+            carItem.orderInfo.startRent = null;
+            carItem.orderInfo.finishRent = null;
+            carItem.orderInfo.orderStatus = null;
         }
 
         return carItem;
@@ -99,7 +104,19 @@ export class CarService {
         return this.carsData({ ...selectedCar, ...updatedCarData });
     }
 
-    async deleteCar(id: string) {
-        await this.carRepository.delete(id);
+    async deleteCar(id: string, user: any) {
+        const selectedCar = await this.carRepository.findById(id);
+        console.log("selectedCar", selectedCar);
+
+        const actorRole = user.role;
+        const actorName = user.name;
+
+        const updatedCarData = {
+            status: 'deleted',
+            deleted_at: new Date(),
+            deleted_by: `${actorRole} - ${actorName}`,
+        };
+
+        await this.carRepository.delete(id, updatedCarData);
     }
 }

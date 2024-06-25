@@ -12,6 +12,9 @@ export async function up(knex: Knex): Promise<void> {
         table.string("created_by").notNullable().defaultTo('system');
         table.timestamp('updated_at').defaultTo(knex.fn.now());
         table.string("updated_by").notNullable().defaultTo('system');
+        table.enum('status', ['active', 'deleted']).notNullable().defaultTo('active');
+        table.timestamp('deleted_at').defaultTo(null);
+        table.string("deleted_by").defaultTo(null);
     });
 }
 

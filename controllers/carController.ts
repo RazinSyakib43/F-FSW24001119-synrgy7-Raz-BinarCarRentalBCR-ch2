@@ -152,6 +152,8 @@ export async function updateCar(req: Request, res: Response) {
 export async function deleteCar(req: Request, res: Response) {
     const { id }: { id: string } = req.params as { id: string };
 
+    const user = (req as any).user;
+
     try {
         const car = await carService.getCarById(id);
         if (!car) {
@@ -161,7 +163,7 @@ export async function deleteCar(req: Request, res: Response) {
                 message: 'Car not found',
             });
         } else {
-            await carService.deleteCar(id);
+            await carService.deleteCar(id, user);
             res.status(200).send({
                 code: 200,
                 status: 'success',

@@ -21,7 +21,7 @@ export class CarRepository {
         return await CarModel.query().findById(id).patch(carData);
     }
 
-    async delete(id: string) {
-        return await CarModel.query().deleteById(id);
+    async delete(id: string, carData: any) {
+        return await CarModel.query().findById(id).patch(carData);
     }
 }
