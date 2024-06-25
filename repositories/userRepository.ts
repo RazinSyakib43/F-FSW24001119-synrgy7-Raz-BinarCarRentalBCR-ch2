@@ -25,7 +25,7 @@ export class UserRepository {
         return await UserModel.query().findById(id).patch(userData);
     }
 
-    async deleteUser(id: string) {
-        return await UserModel.query().deleteById(id);
+    async deleteUser(id: string, userData: any) {
+        return await UserModel.query().findById(id).patch(userData);
     }
 }

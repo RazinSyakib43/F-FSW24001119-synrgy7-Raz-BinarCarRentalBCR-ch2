@@ -12,6 +12,9 @@ export class UserModel extends Model {
     created_by!: string;
     updated_at!: Date;
     updated_by!: string;
+    status!: string;
+    deleted_at!: Date;
+    deleted_by!: string;
 
     static get tableName() {
         return 'user';

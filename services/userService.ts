@@ -26,6 +26,9 @@ export class UserService {
             createdBy: user.created_by,
             updatedAt: user.updated_at,
             updatedBy: user.updated_by,
+            status: user.status,
+            deletedAt: user.deleted_at,
+            deletedBy: user.deleted_by,
         };
 
         return userItem;
@@ -98,8 +101,19 @@ export class UserService {
         return this.userData({ ...selectedUser, ...updatedUserData });
     }
 
-    async deleteUser(id: string) {
-        return await this.userRepository.deleteUser(id);
+    async deleteUser(id: string, user: any) {
+        const selectedUser = await this.userRepository.findUserById(id);
+        console.log(selectedUser);
+
+        const actorRole = user.role;
+        const actorName = user.name;
+
+        const deletedUserData = {
+            status: 'deleted',
+            deleted_at: new Date(),
+            deleted_by: `${actorRole} - ${actorName}`,
+        };
+        return await this.userRepository.deleteUser(id, deletedUserData);
     }
 
     async registerAdmin(file: any, userItem: any, user: any) {

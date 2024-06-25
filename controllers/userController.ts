@@ -440,7 +440,7 @@ async function deleteCurrentUser(req: Request, res: Response) {
                 message: 'User not found'
             });
         } else {
-            await userService.deleteUser(userID);
+            await userService.deleteUser(userID, user);
             res.status(200).send({
                 code: 200,
                 status: 'success',
@@ -461,8 +461,11 @@ async function deleteCurrentUser(req: Request, res: Response) {
 async function deleteUser(req: Request, res: Response) {
     const { id } = req.params;
 
+    const user = (req as any).user;
+
     try {
         const selectedUser = await userService.getUserById(id);
+        const userRole = selectedUser?.role;
         if (!selectedUser) {
             res.status(404).send({
                 code: 404,
@@ -470,11 +473,11 @@ async function deleteUser(req: Request, res: Response) {
                 message: 'User not found'
             });
         } else {
-            await userService.deleteUser(id);
+            await userService.deleteUser(id, user);
             res.status(200).send({
                 code: 200,
                 status: 'success',
-                message: 'User with id ' + selectedUser.id + ' deleted successfully'
+                message: 'User (' + userRole + ') with id ' + selectedUser?.id + ' deleted successfully'
             });
         }
         console.log('deleteUser : ', selectedUser);
