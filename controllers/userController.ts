@@ -201,8 +201,9 @@ async function loginMember(req: Request, res: Response) {
 }
 
 async function getUsers(req: Request, res: Response) {
+    const { includeDeleted }: { includeDeleted: string } = req.query as { includeDeleted: string };
     try {
-        const users = await userService.getAllUsers();
+        const users = await userService.getAllUsers(includeDeleted === 'true' ? true : false);
         res.status(200).send({
             code: 200,
             status: 'success',

@@ -34,9 +34,13 @@ export class UserService {
         return userItem;
     }
 
-    async getAllUsers() {
+    async getAllUsers(includeDeleted: boolean = false) {
         const users = await this.userRepository.findAllUsers();
-        return users.map(user => this.userData(user));
+        if (includeDeleted) {
+            return users.map(user => this.userData(user));
+        } else {
+            return users.filter(user => user.status === 'active').map(user => this.userData(user));
+        }
     }
 
     async getUserById(id: string) {
@@ -54,7 +58,7 @@ export class UserService {
         return this.userData(user);
     }
 
-    async addUser(file: any, userItem: any, user: any){
+    async addUser(file: any, userItem: any, user: any) {
         const uploadResult: UploadApiResponse = await uploadToCloudinary(file);
 
         const actorRole = user.role;
@@ -71,7 +75,7 @@ export class UserService {
 
         const newUser = await this.userRepository.createUser(newUserData);
         return this.userData(newUser);
-    
+
     }
 
     async updateUser(id: string, userItem: any, file: any, user: any) {
@@ -159,7 +163,7 @@ export class UserService {
 
     async loginSuperadmin(email: string, password: string) {
         const selectedUser = await this.userRepository.findActiveUserByEmail(email);
-        if (!selectedUser){
+        if (!selectedUser) {
             return {
                 code: 404,
                 status: 'fail',
