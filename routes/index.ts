@@ -3,6 +3,7 @@ import { Router } from 'express';
 import carRouter from './carRouter';
 import userRouter from './userRouter';
 import orderRouter from './orderRouter';
+import authRouter from './authRouter';
 
 import { authorize } from "../middleware/authorization";
 
@@ -26,5 +27,6 @@ const baseURL = '/api/v1/dashboard';
 router.use(`${baseURL}/cars`, carRouter);
 router.use(`${baseURL}/users`, userRouter);
 router.use(`${baseURL}/orders`, authorize, orderRouter);
+router.use(`${baseURL}/auth`, authRouter);
 
 export default router;

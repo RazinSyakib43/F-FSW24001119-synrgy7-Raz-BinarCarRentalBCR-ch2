@@ -11,13 +11,6 @@ import {
     getCurrentUser,
     updateCurrentUser,
     deleteCurrentUser,
-
-    registerAdmin,
-    registerMember,
-
-    loginSuperadmin,
-    loginAdmin,
-    loginMember
 } from "../controllers/userController";
 
 import uploadOnMemory from "../middleware/multerMemory";
@@ -39,14 +32,5 @@ userRouter.delete("/by-id/:id", [authorize, validateRoles(["superadmin"])], dele
 userRouter.get("/me", [authorize], getCurrentUser);
 userRouter.put("/me", [authorize, validateRoles(["member", "admin", "superadmin"])], uploadOnMemory.single("avatar"), updateCurrentUser);
 userRouter.delete("/me", [authorize, validateRoles(["member", "admin", "superadmin"])], deleteCurrentUser);
-
-// Register route
-userRouter.post("/register/admin", [authorize, validateRoles(["superadmin"])], uploadOnMemory.single("avatar"), handleImageUpload, registerAdmin);
-userRouter.post("/register/member", uploadOnMemory.single("avatar"), handleImageUpload, registerMember);
-
-// Login route
-userRouter.post("/login/superadmin", upload.none(), loginSuperadmin);
-userRouter.post("/login/admin", upload.none(), loginAdmin);
-userRouter.post("/login/member", upload.none(), loginMember);
 
 export default userRouter;
