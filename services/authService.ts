@@ -77,11 +77,21 @@ export class AuthService {
 
     async loginSuperadmin(email: string, password: string) {
         const selectedUser = await this.userRepository.findActiveUserByEmail(email);
+        const userRole = selectedUser?.role;
+
         if (!selectedUser) {
             return {
                 code: 404,
                 status: 'fail',
-                message: 'Superadmin email not found'
+                message: 'Your email not found or has been deleted, please register as superadmin first'
+            }
+        }
+
+        if (userRole !== "superadmin") {
+            return {
+                code: 403,
+                status: 'Forbidden',
+                message: 'You are not an admin'
             }
         }
 
@@ -109,11 +119,21 @@ export class AuthService {
 
     async loginAdmin(email: string, password: string) {
         const selectedUser = await this.userRepository.findActiveUserByEmail(email);
+        const userRole = selectedUser?.role;
+
         if (!selectedUser) {
             return {
                 code: 404,
                 status: 'fail',
-                message: 'Admin email not found'
+                message: 'Your email not found or has been deleted, please register as admin first'
+            }
+        }
+
+        if (userRole !== "admin") {
+            return {
+                code: 403,
+                status: 'Forbidden',
+                message: 'You are not an admin'
             }
         }
 
@@ -141,11 +161,21 @@ export class AuthService {
 
     async loginMember(email: string, password: string) {
         const selectedUser = await this.userRepository.findActiveUserByEmail(email);
+        const userRole = selectedUser?.role;
+
         if (!selectedUser) {
             return {
                 code: 404,
                 status: 'fail',
-                message: 'Member email not found'
+                message: 'Your email not found or has been deleted, please register as member first'
+            }
+        }
+
+        if (userRole !== "member") {
+            return {
+                code: 403,
+                status: 'Forbidden',
+                message: 'You are not a member'
             }
         }
 

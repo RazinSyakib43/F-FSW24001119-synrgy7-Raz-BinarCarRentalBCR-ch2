@@ -139,6 +139,35 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Email not found or deleted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Your email not found or has been deleted, please make a superadmin account first"
+                    }
+                  }
+                },
+                "example": {
+                  "code": 404,
+                  "status": "fail",
+                  "message": "Your email not found or has been deleted, please register as superadmin first"
+                }
+              }
+            }
           }
         }
       }
@@ -247,6 +276,35 @@
                       "example": "You are not an admin"
                     }
                   }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Email not found or deleted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Your email not found or has been deleted, please register as admin first"
+                    }
+                  }
+                },
+                "example": {
+                  "code": 404,
+                  "status": "fail",
+                  "message": "Your email not found or has been deleted, please register as admin first"
                 }
               }
             }
@@ -474,7 +532,7 @@
             }
           },
           "400": {
-            "description": "Fail - Email already exists",
+            "description": "Bad request.",
             "content": {
               "application/json": {
                 "schema": {
@@ -493,52 +551,46 @@
                       "example": "This email is already taken"
                     }
                   }
-                }
-              }
-            }
-          },
-          "400 (2)": {
-            "description": "Fail - Not provide a name, email, and or password",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer",
-                      "example": 400
-                    },
-                    "status": {
-                      "type": "string",
-                      "example": "fail"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Please provide name"
+                },
+                "examples": {
+                  "EmailAlreadyTaken": {
+                    "summary": "Email already taken",
+                    "value": {
+                      "code": 400,
+                      "status": "fail",
+                      "message": "This email is already taken"
                     }
-                  }
-                }
-              }
-            }
-          },
-          "400 (3)": {
-            "description": "Fail - Not provide an avatar",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer",
-                      "example": 400
-                    },
-                    "status": {
-                      "type": "string",
-                      "example": "fail"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "No image file uploaded"
+                  },
+                  "MissingFieldsName": {
+                    "summary": "Missing required fields: name",
+                    "value": {
+                      "code": 400,
+                      "status": "fail",
+                      "message": "Please provide name"
+                    }
+                  },
+                  "MissingFieldsEmail": {
+                    "summary": "Missing required fields: email",
+                    "value": {
+                      "code": 400,
+                      "status": "fail",
+                      "message": "Please provide email"
+                    }
+                  },
+                  "MissingFieldsPassword": {
+                    "summary": "Missing required fields: password",
+                    "value": {
+                      "code": 400,
+                      "status": "fail",
+                      "message": "Please provide password"
+                    }
+                  },
+                  "NoImageUploaded": {
+                    "summary": "No image file uploaded",
+                    "value": {
+                      "code": 400,
+                      "status": "fail",
+                      "message": "No image file uploaded"
                     }
                   }
                 }
@@ -700,7 +752,7 @@
             }
           },
           "400": {
-            "description": "Fail - Email already exists",
+            "description": "Bad request.",
             "content": {
               "application/json": {
                 "schema": {
@@ -719,52 +771,46 @@
                       "example": "This email is already taken"
                     }
                   }
-                }
-              }
-            }
-          },
-          "400 (2)": {
-            "description": "Fail - Not provide a name, email, and or password",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer",
-                      "example": 400
-                    },
-                    "status": {
-                      "type": "string",
-                      "example": "fail"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Please provide name"
+                },
+                "examples": {
+                  "EmailAlreadyTaken": {
+                    "summary": "Email already taken",
+                    "value": {
+                      "code": 400,
+                      "status": "fail",
+                      "message": "This email is already taken"
                     }
-                  }
-                }
-              }
-            }
-          },
-          "400 (3)": {
-            "description": "Fail - Not provide an avatar",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer",
-                      "example": 400
-                    },
-                    "status": {
-                      "type": "string",
-                      "example": "fail"
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "No image file uploaded"
+                  },
+                  "MissingFieldsName": {
+                    "summary": "Missing required fields: name",
+                    "value": {
+                      "code": 400,
+                      "status": "fail",
+                      "message": "Please provide name"
+                    }
+                  },
+                  "MissingFieldsEmail": {
+                    "summary": "Missing required fields: email",
+                    "value": {
+                      "code": 400,
+                      "status": "fail",
+                      "message": "Please provide email"
+                    }
+                  },
+                  "MissingFieldsPassword": {
+                    "summary": "Missing required fields: password",
+                    "value": {
+                      "code": 400,
+                      "status": "fail",
+                      "message": "Please provide password"
+                    }
+                  },
+                  "NoImageUploaded": {
+                    "summary": "No image file uploaded",
+                    "value": {
+                      "code": 400,
+                      "status": "fail",
+                      "message": "No image file uploaded"
                     }
                   }
                 }

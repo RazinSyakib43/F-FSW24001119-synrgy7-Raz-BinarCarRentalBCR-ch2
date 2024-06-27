@@ -127,19 +127,8 @@ async function loginSuperadmin(req: Request, res: Response) {
     const { email, password }: { email: string, password: string } = req.body;
 
     try {
-        const selectedUser = await userService.getActiveUserByEmail(email);
-        const userRole = selectedUser?.role;
-
-        if (userRole !== "superadmin") {
-            res.status(403).send({
-                code: 403,
-                status: 'Forbidden',
-                message: 'You are not a superadmin'
-            });
-        } else {
-            const loginSuperadmin: any = await authService.loginSuperadmin(email, password);
-            res.status(loginSuperadmin.code).send(loginSuperadmin);
-        }
+        const loginSuperadmin: any = await authService.loginSuperadmin(email, password);
+        res.status(loginSuperadmin.code).send(loginSuperadmin);
     } catch (error: any) {
         res.status(500).send({
             code: 500,
@@ -154,19 +143,8 @@ async function loginAdmin(req: Request, res: Response) {
     const { email, password }: { email: string, password: string } = req.body;
 
     try {
-        const selectedUser = await userService.getActiveUserByEmail(email);
-        const userRole = selectedUser?.role;
-
-        if (userRole !== "admin") {
-            res.status(403).send({
-                code: 403,
-                status: 'Forbidden',
-                message: 'You are not an admin'
-            });
-        } else {
-            const loginAdmin: any = await authService.loginAdmin(email, password);
-            res.status(loginAdmin.code).send(loginAdmin);
-        }
+        const loginAdmin: any = await authService.loginAdmin(email, password);
+        res.status(loginAdmin.code).send(loginAdmin);
     } catch (error: any) {
         res.status(500).send({
             code: 500,
@@ -180,19 +158,8 @@ async function loginMember(req: Request, res: Response) {
     const { email, password }: { email: string, password: string } = req.body;
 
     try {
-        const selectedUser = await userService.getActiveUserByEmail(email);
-        const userRole = selectedUser?.role;
-
-        if (userRole !== "member") {
-            res.status(403).send({
-                code: 403,
-                status: 'Forbidden',
-                message: 'You are not a member'
-            });
-        } else {
-            const loginMember: any = await authService.loginMember(email, password);
-            res.status(loginMember.code).send(loginMember);
-        }
+        const loginMember: any = await authService.loginMember(email, password);
+        res.status(loginMember.code).send(loginMember);
     } catch (error: any) {
         res.status(500).send({
             code: 500,

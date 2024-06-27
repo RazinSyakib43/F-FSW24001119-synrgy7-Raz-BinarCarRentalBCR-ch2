@@ -14,7 +14,7 @@ export class UserRepository {
     }
 
     async findActiveUserByEmail(email: string) {
-        return await UserModel.query().where('email', email).first();
+        return await UserModel.query().where('email', email).andWhere('status', 'active').first();
     }
 
     async createUser(userData: any) {
