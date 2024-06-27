@@ -92,7 +92,7 @@ export async function addCar(req: Request, res: Response) {
     console.log(req.body);
 
     try {
-        if (!name || !category || !price || !image) {
+        if (!name && !category && !price && !image) {
             return res.status(400).send({
                 code: 400,
                 status: "fail",
@@ -132,13 +132,19 @@ export async function updateCar(req: Request, res: Response) {
                 status: 'fail',
                 message: 'Car not found',
             });
-        } else {
+        } else if (name || category || price || image) {
             const updatedCar = await carService.updateCar(id, { name, category, price }, image, user);
             res.status(200).send({
                 code: 200,
                 status: 'success',
                 message: `Car with id ${id} updated successfully`,
                 data: updatedCar,
+            });
+        } else {
+            return res.status(400).send({
+                code: 400,
+                status: "fail",
+                message: "Please fill one of the required fields (name, category, price, image)",
             });
         }
     } catch (error: any) {

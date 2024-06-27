@@ -773,6 +773,1129 @@
           }
         }
       }
+    },
+    "/cars/": {
+      "get": {
+        "tags": [
+          "Cars"
+        ],
+        "summary": "Get All Cars",
+        "description": "Retrieves a list of all available cars in the system.",
+        "parameters": [
+          {
+            "name": "includeDeleted",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "Include deleted cars in the response (true or false). If not provided, the default value is false and only active cars will be shown."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of cars.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "Toyota Avanza"
+                          },
+                          "category": {
+                            "type": "string",
+                            "example": "MPV"
+                          },
+                          "price": {
+                            "type": "integer",
+                            "example": 200000
+                          },
+                          "image": {
+                            "type": "string",
+                            "example": "https://res.cloudinary.com/dowiubuw3/image/upload/v1717802244/gutvbvhpgapnheefhf6e.jpg"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2024-06-25T21:33:13.592Z"
+                          },
+                          "createdBy": {
+                            "type": "string",
+                            "example": "system"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2024-06-25T21:33:13.592Z"
+                          },
+                          "updatedBy": {
+                            "type": "string",
+                            "example": "system"
+                          },
+                          "status": {
+                            "type": "string",
+                            "example": "active"
+                          },
+                          "deletedAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "deletedBy": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "orderInfo": {
+                            "type": "object",
+                            "properties": {
+                              "startRent": {
+                                "type": "string",
+                                "format": "date-time",
+                                "example": "2024-05-30T15:27:12.000Z"
+                              },
+                              "finishRent": {
+                                "type": "string",
+                                "format": "date-time",
+                                "example": "2024-06-02T15:27:12.000Z"
+                              },
+                              "orderStatus": {
+                                "type": "string",
+                                "example": "active"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "code": 200,
+                  "status": "success",
+                  "data": [
+                    {
+                      "id": 1,
+                      "name": "Toyota Avanza",
+                      "category": "MPV",
+                      "price": 200000,
+                      "image": "https://res.cloudinary.com/dowiubuw3/image/upload/v1717802244/gutvbvhpgapnheefhf6e.jpg",
+                      "createdAt": "2024-06-25T21:33:13.592Z",
+                      "createdBy": "system",
+                      "updatedAt": "2024-06-25T21:33:13.592Z",
+                      "updatedBy": "system",
+                      "status": "active",
+                      "deletedAt": null,
+                      "deletedBy": null,
+                      "orderInfo": {
+                        "startRent": "2024-05-30T15:27:12.000Z",
+                        "finishRent": "2024-06-02T15:27:12.000Z",
+                        "orderStatus": "active"
+                      }
+                    },
+                    {
+                      "id": 2,
+                      "name": "Toyota Innova",
+                      "category": "MPV",
+                      "price": 300000,
+                      "image": "https://res.cloudinary.com/dowiubuw3/image/upload/v1717801998/jbpmiacuohmbgmxqckdr.jpg",
+                      "createdAt": "2024-06-25T21:33:13.592Z",
+                      "createdBy": "system",
+                      "updatedAt": "2024-06-25T21:33:13.592Z",
+                      "updatedBy": "system",
+                      "status": "active",
+                      "deletedAt": null,
+                      "deletedBy": null,
+                      "orderInfo": {
+                        "startRent": null,
+                        "finishRent": null,
+                        "orderStatus": null
+                      }
+                    },
+                    "(More cars...)"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Cars"
+        ],
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "summary": "Adds a new car to the system.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "category": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "price": {
+                    "type": "integer",
+                    "example": ""
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Car successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Car added successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 10
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Honda NSX 2024"
+                        },
+                        "category": {
+                          "type": "string",
+                          "example": "Supercar"
+                        },
+                        "price": {
+                          "type": "integer",
+                          "example": 2500000
+                        },
+                        "image": {
+                          "type": "string",
+                          "example": "https://res.cloudinary.com/dowiubuw3/image/upload/v1719436086/uf4bg5c7wbvpt7jyivjb.jpg"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-06-27T12:00:00.000Z"
+                        },
+                        "createdBy": {
+                          "type": "string",
+                          "example": "admin - Naruto"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-06-27T12:00:00.000Z"
+                        },
+                        "updatedBy": {
+                          "type": "string",
+                          "example": "admin - Naruto"
+                        },
+                        "status": {
+                          "type": "string",
+                          "example": "active"
+                        },
+                        "orderInfo": {
+                          "type": "object",
+                          "properties": {
+                            "startRent": {
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "finishRent": {
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "orderStatus": {
+                              "type": "string",
+                              "nullable": true
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "code": 200,
+                  "status": "success",
+                  "message": "Car successfully created",
+                  "data": {
+                    "id": 10,
+                    "name": "Honda NSX 2024",
+                    "category": "Supercar",
+                    "price": 2500000,
+                    "image": "https://example.com/path/to/image.jpg",
+                    "createdAt": "2024-06-27T12:00:00.000Z",
+                    "createdBy": "user",
+                    "updatedAt": "2024-06-27T12:00:00.000Z",
+                    "updatedBy": "user",
+                    "status": "active",
+                    "orderInfo": {
+                      "startRent": null,
+                      "finishRent": null,
+                      "orderStatus": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "Missing Fields": {
+                    "value": {
+                      "code": 400,
+                      "status": "fail",
+                      "message": "Please fill all required fields (name, category, price, image)"
+                    }
+                  },
+                  "No Image": {
+                    "value": {
+                      "code": 400,
+                      "status": "fail",
+                      "message": "No image file uploaded"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Unauthorized"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Please login first or register if you don't have an account"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Forbidden"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "You're not allowed to access this endpoint"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cars/search": {
+      "get": {
+        "tags": [
+          "Cars"
+        ],
+        "summary": "Searches for cars based on car name.",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The name of the car to search for."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of cars matching the search query.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 5
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "Toyota Alphard"
+                          },
+                          "category": {
+                            "type": "string",
+                            "example": "MPV"
+                          },
+                          "price": {
+                            "type": "integer",
+                            "example": 500000
+                          },
+                          "image": {
+                            "type": "string",
+                            "example": "https://res.cloudinary.com/dowiubuw3/image/upload/v1717802466/tkl29imqw6osiy1qmj7b.jpg"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2024-06-25T21:33:13.592Z"
+                          },
+                          "createdBy": {
+                            "type": "string",
+                            "example": "system"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2024-06-25T21:33:13.592Z"
+                          },
+                          "updatedBy": {
+                            "type": "string",
+                            "example": "system"
+                          },
+                          "status": {
+                            "type": "string",
+                            "example": "active"
+                          },
+                          "deletedAt": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "deletedBy": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "orderInfo": {
+                            "type": "object",
+                            "properties": {
+                              "startRent": {
+                                "type": "string",
+                                "nullable": true
+                              },
+                              "finishRent": {
+                                "type": "string",
+                                "nullable": true
+                              },
+                              "orderStatus": {
+                                "type": "string",
+                                "nullable": true
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "code": 200,
+                  "status": "success",
+                  "data": [
+                    {
+                      "id": 5,
+                      "name": "Toyota Alphard",
+                      "category": "MPV",
+                      "price": 500000,
+                      "image": "https://res.cloudinary.com/dowiubuw3/image/upload/v1717802466/tkl29imqw6osiy1qmj7b.jpg",
+                      "createdAt": "2024-06-25T21:33:13.592Z",
+                      "createdBy": "system",
+                      "updatedAt": "2024-06-25T21:33:13.592Z",
+                      "updatedBy": "system",
+                      "status": "active",
+                      "deletedAt": null,
+                      "deletedBy": null,
+                      "orderInfo": {
+                        "startRent": null,
+                        "finishRent": null,
+                        "orderStatus": null
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Car not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Car that you are looking for is not found"
+                    }
+                  }
+                },
+                "example": {
+                  "code": 404,
+                  "status": "fail",
+                  "message": "Car that you are looking for is not found"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cars/{id}": {
+      "get": {
+        "tags": [
+          "Cars"
+        ],
+        "summary": "Retrieves detailed information about a specific car by its ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID of the car to retrieve."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detailed information about the specified car.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 6
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Honda Civic"
+                        },
+                        "category": {
+                          "type": "string",
+                          "example": "Sedan"
+                        },
+                        "price": {
+                          "type": "integer",
+                          "example": 250000
+                        },
+                        "image": {
+                          "type": "string",
+                          "example": "https://res.cloudinary.com/dowiubuw3/image/upload/v1717802486/ovzqzqzqzqzqzqzqzqzq.jpg"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-06-25T21:33:13.592Z"
+                        },
+                        "createdBy": {
+                          "type": "string",
+                          "example": "system"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-06-25T21:33:13.592Z"
+                        },
+                        "updatedBy": {
+                          "type": "string",
+                          "example": "system"
+                        },
+                        "status": {
+                          "type": "string",
+                          "example": "deleted"
+                        },
+                        "deletedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-05-30T15:27:12.000Z"
+                        },
+                        "deletedBy": {
+                          "type": "string",
+                          "example": "system"
+                        },
+                        "orderInfo": {
+                          "type": "object",
+                          "properties": {
+                            "startRent": {
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "finishRent": {
+                              "type": "string",
+                              "nullable": true
+                            },
+                            "orderStatus": {
+                              "type": "string",
+                              "nullable": true
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "code": 200,
+                  "status": "success",
+                  "data": {
+                    "id": 6,
+                    "name": "Honda Civic",
+                    "category": "Sedan",
+                    "price": 250000,
+                    "image": "https://res.cloudinary.com/dowiubuw3/image/upload/v1717802486/ovzqzqzqzqzqzqzqzqzq.jpg",
+                    "createdAt": "2024-06-25T21:33:13.592Z",
+                    "createdBy": "system",
+                    "updatedAt": "2024-06-25T21:33:13.592Z",
+                    "updatedBy": "system",
+                    "status": "deleted",
+                    "deletedAt": "2024-05-30T15:27:12.000Z",
+                    "deletedBy": "system",
+                    "orderInfo": {
+                      "startRent": null,
+                      "finishRent": null,
+                      "orderStatus": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Car not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Car not found"
+                    }
+                  }
+                },
+                "example": {
+                  "code": 404,
+                  "status": "fail",
+                  "message": "Car not found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Cars"
+        ],
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "summary": "Updates the details of a specific car by its ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "category": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "price": {
+                    "type": "integer",
+                    "example": ""
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Car updated successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Car with id 9 updated successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 9
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Honda NSX 2025"
+                        },
+                        "category": {
+                          "type": "string",
+                          "example": "Supercar"
+                        },
+                        "price": {
+                          "type": "integer",
+                          "example": 3750000
+                        },
+                        "image": {
+                          "type": "string",
+                          "example": "https://res.cloudinary.com/dowiubuw3/image/upload/v1719436086/uf4bg5c7wbvpt7jyivjb.jpg"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-06-26T21:08:06.199Z"
+                        },
+                        "createdBy": {
+                          "type": "string",
+                          "example": "admin - Naruto"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-06-27T08:22:28.144Z"
+                        },
+                        "updatedBy": {
+                          "type": "string",
+                          "example": "superadmin - Ayanokoji Kiyotaka"
+                        },
+                        "status": {
+                          "type": "string",
+                          "example": "active"
+                        },
+                        "deletedAt": {
+                          "type": "string",
+                          "nullable": true,
+                          "example": null
+                        },
+                        "deletedBy": {
+                          "type": "string",
+                          "nullable": true,
+                          "example": null
+                        },
+                        "orderInfo": {
+                          "type": "object",
+                          "properties": {
+                            "startRent": {
+                              "type": "string",
+                              "nullable": true,
+                              "example": null
+                            },
+                            "finishRent": {
+                              "type": "string",
+                              "nullable": true,
+                              "example": null
+                            },
+                            "orderStatus": {
+                              "type": "string",
+                              "nullable": true,
+                              "example": null
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "code": 200,
+                  "status": "success",
+                  "message": "Car with id 9 updated successfully",
+                  "data": {
+                    "id": 9,
+                    "name": "Honda NSX 2025",
+                    "category": "Supercar",
+                    "price": 3750000,
+                    "image": "https://res.cloudinary.com/dowiubuw3/image/upload/v1719436086/uf4bg5c7wbvpt7jyivjb.jpg",
+                    "createdAt": "2024-06-26T21:08:06.199Z",
+                    "createdBy": "admin - Naruto",
+                    "updatedAt": "2024-06-27T08:22:28.144Z",
+                    "updatedBy": "superadmin - Ayanokoji Kiyotaka",
+                    "status": "active",
+                    "deletedAt": null,
+                    "deletedBy": null,
+                    "orderInfo": {
+                      "startRent": null,
+                      "finishRent": null,
+                      "orderStatus": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Unauthorized"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Please login first or register if you don't have an account"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Forbidden"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "You're not allowed to access this endpoint"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Car not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Car not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Cars"
+        ],
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "summary": "Deletes a specific car from the system by its ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Car deleted successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Car with id 10 deleted successfully"
+                    }
+                  }
+                },
+                "example": {
+                  "code": 200,
+                  "status": "success",
+                  "message": "Car with id 10 deleted successfully"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Unauthorized"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Please login first or register if you don't have an account"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Forbidden"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "You're not allowed to access this endpoint"
+                    }
+                  }
+                },
+                "example": {
+                  "code": 403,
+                  "status": "Forbidden",
+                  "message": "You're not allowed to access this endpoint"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Car not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Car not found"
+                    }
+                  }
+                },
+                "example": {
+                  "code": 404,
+                  "status": "fail",
+                  "message": "Car not found"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {

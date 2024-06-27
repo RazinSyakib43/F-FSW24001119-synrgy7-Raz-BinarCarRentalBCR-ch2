@@ -9,9 +9,9 @@ import { getCars, searchCar, getCarById, addCar, updateCar, deleteCar } from "..
 
 const carRouter = Router();
 
-carRouter.get("/", [authorize, validateRoles(["member", "admin", "superadmin"])], getCars);
-carRouter.get("/search", [authorize, validateRoles(["member", "admin", "superadmin"])], searchCar)
-carRouter.get("/:id", [authorize, validateRoles(["member", "admin", "superadmin"])], getCarById);
+carRouter.get("/", getCars);
+carRouter.get("/search", searchCar)
+carRouter.get("/:id", getCarById);
 carRouter.post("/", [authorize, validateRoles(["admin", "superadmin"])], uploadOnMemory.single("image"), handleImageUpload, addCar);
 carRouter.put("/:id", [authorize, validateRoles(["admin", "superadmin"])], uploadOnMemory.single("image"), updateCar);
 carRouter.delete("/:id", [authorize, validateRoles(["admin", "superadmin"])], deleteCar);
