@@ -33,7 +33,7 @@ export class CarService {
             }
         };
 
-        if (carItem.orderInfo.orderStatus === 'completed' || carItem.orderInfo.orderStatus === 'cancelled') {
+        if (carItem.orderInfo.orderStatus === 'completed' || carItem.orderInfo.orderStatus === 'cancelled' || carItem.orderInfo.orderStatus === 'deleted') {
             carItem.orderInfo.startRent = null;
             carItem.orderInfo.finishRent = null;
             carItem.orderInfo.orderStatus = null;

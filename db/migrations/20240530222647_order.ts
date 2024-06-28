@@ -10,9 +10,13 @@ export async function up(knex: Knex): Promise<void> {
         table.integer('rent_duration').notNullable();
         table.timestamp('finish_rent').notNullable();
         table.integer('total_price').notNullable();
-        table.enum('status', ['active', 'completed', 'cancelled']).defaultTo('active');
+        table.enum('status', ['active', 'completed', 'cancelled', 'deleted']).defaultTo('active');
         table.timestamp('created_at').defaultTo(knex.fn.now());
+        table.string("created_by").notNullable().defaultTo('system');
         table.timestamp('updated_at').defaultTo(knex.fn.now());
+        table.string("updated_by").notNullable().defaultTo('system');
+        table.timestamp('deleted_at').defaultTo(null);
+        table.string("deleted_by").defaultTo(null);
     });
 }
 

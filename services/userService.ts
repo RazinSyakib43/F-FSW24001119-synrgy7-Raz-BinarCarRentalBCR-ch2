@@ -3,8 +3,7 @@ import { UserRepository } from "../repositories/userRepository";
 import { uploadToCloudinary } from '../utils/uploadUtil';
 import { UploadApiResponse } from 'cloudinary';
 
-import { encryptPassword, checkPassword } from '../utils/encrypt';
-import { generateToken } from '../utils/token';
+import { encryptPassword } from '../utils/encrypt';
 
 export class UserService {
     private userRepository: UserRepository;

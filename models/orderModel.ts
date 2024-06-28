@@ -13,7 +13,11 @@ export class OrderModel extends Model {
     total_price!: number;
     status!: 'active' | 'completed' | 'cancelled';
     created_at!: Date;
+    created_by!: string;
     updated_at!: Date;
+    updated_by!: string;
+    deleted_at!: Date;
+    deleted_by!: string;
     car: any;
     user: any;
 
