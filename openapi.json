@@ -29,6 +29,10 @@
     {
       "name": "Users",
       "description": "Endpoints related to user management"
+    },
+    {
+      "name": "Orders",
+      "description": "Endpoints related to order management"
     }
   ],
   "paths": {
@@ -1942,15 +1946,940 @@
           }
         }
       }
-    }
-  },
-  "components": {
-    "securitySchemes": {
-      "auth": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearer": {
-          "format": "JWT"
+    },
+    "/users/": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "summary": "Get All Users",
+        "description": "Retrieves a list of all users registered in the system.",
+        "parameters": [
+          {
+            "name": "includeDeleted",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "Include deleted cars in the response (true or false). If not provided, the default value is false and only active cars will be shown."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "Razin"
+                          },
+                          "email": {
+                            "type": "string",
+                            "example": "razin@gmail.com"
+                          },
+                          "avatar": {
+                            "type": "string",
+                            "example": "https://res.cloudinary.com/dowiubuw3/image/upload/v1717802244/gutvbvhpgapnheefhf6e.jpg"
+                          },
+                          "role": {
+                            "type": "string",
+                            "example": "member"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2024-06-25T21:33:13.600Z"
+                          },
+                          "createdBy": {
+                            "type": "string",
+                            "example": "system"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2024-06-25T21:33:13.600Z"
+                          },
+                          "updatedBy": {
+                            "type": "string",
+                            "example": "system"
+                          },
+                          "status": {
+                            "type": "string",
+                            "example": "active"
+                          },
+                          "deletedAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "deletedBy": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Unauthorized"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Please login first or register if you don't have an account"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Forbidden"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "You're not allowed to access this endpoint"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "summary": "Create a User",
+        "description": "Registers a new user in the system.",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "role": {
+                    "type": "string",
+                    "example": ""
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User (superadmin) created successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 16
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Max Verstappen"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "max@gmail.com"
+                        },
+                        "avatar": {
+                          "type": "string",
+                          "example": "http://res.cloudinary.com/dowiubuw3/image/upload/v1719561284/xsd6vta05di8ugq7mof0.jpg"
+                        },
+                        "role": {
+                          "type": "string",
+                          "example": "superadmin"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-06-28T07:54:43.517Z"
+                        },
+                        "createdBy": {
+                          "type": "string",
+                          "example": "superadmin - Ayanokoji Kiyotaka"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-06-28T07:54:43.517Z"
+                        },
+                        "updatedBy": {
+                          "type": "string",
+                          "example": "superadmin - Ayanokoji Kiyotaka"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "This email is already taken"
+                    }
+                  }
+                },
+                "examples": {
+                  "EmailAlreadyTaken": {
+                    "summary": "Email already taken",
+                    "value": {
+                      "code": 400,
+                      "status": "fail",
+                      "message": "This email is already taken"
+                    }
+                  },
+                  "MissingFieldsName": {
+                    "summary": "Missing required fields: name",
+                    "value": {
+                      "code": 400,
+                      "status": "fail",
+                      "message": "Please provide name"
+                    }
+                  },
+                  "MissingFieldsEmail": {
+                    "summary": "Missing required fields: email",
+                    "value": {
+                      "code": 400,
+                      "status": "fail",
+                      "message": "Please provide email"
+                    }
+                  },
+                  "MissingFieldsPassword": {
+                    "summary": "Missing required fields: password",
+                    "value": {
+                      "code": 400,
+                      "status": "fail",
+                      "message": "Please provide password"
+                    }
+                  },
+                  "NoImageUploaded": {
+                    "summary": "No image file uploaded",
+                    "value": {
+                      "code": 400,
+                      "status": "fail",
+                      "message": "No image file uploaded"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Unauthorized"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Please login first or register if you don't have an account"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Forbidden"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "You're not allowed to access this endpoint"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "summary": "Get a User by Id",
+        "description": "Retrieves detailed information about a specific user by their ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A user object.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 14
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Mitsuha Miyamizu"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "mitsuha@gmail.com"
+                        },
+                        "avatar": {
+                          "type": "string",
+                          "example": "http://res.cloudinary.com/dowiubuw3/image/upload/v1719484840/yxkonqj2ocsmanlwxo8d.webp"
+                        },
+                        "role": {
+                          "type": "string",
+                          "example": "admin"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-06-27T10:40:40.227Z"
+                        },
+                        "createdBy": {
+                          "type": "string",
+                          "example": "superadmin - Ayanokoji Kiyotaka"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-06-27T10:40:40.227Z"
+                        },
+                        "updatedBy": {
+                          "type": "string",
+                          "example": "superadmin - Ayanokoji Kiyotaka"
+                        },
+                        "status": {
+                          "type": "string",
+                          "example": "active"
+                        },
+                        "deletedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "nullable": true,
+                          "example": null
+                        },
+                        "deletedBy": {
+                          "type": "string",
+                          "nullable": true,
+                          "example": null
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Unauthorized"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Please login first or register if you don't have an account"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Forbidden"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "You're not allowed to access this endpoint"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "summary": "Edit a User Data",
+        "description": "Updates the details of a specific user by their ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "role": {
+                    "type": "string",
+                    "example": ""
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User updated successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User with id 14 updated successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 14
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Mitsuha Miyamizu"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "mitsuha@gmail.com"
+                        },
+                        "avatar": {
+                          "type": "string",
+                          "example": "http://res.cloudinary.com/dowiubuw3/image/upload/v1719484840/yxkonqj2ocsmanlwxo8d.webp"
+                        },
+                        "role": {
+                          "type": "string",
+                          "example": "superadmin"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-06-27T10:40:40.227Z"
+                        },
+                        "createdBy": {
+                          "type": "string",
+                          "example": "superadmin - Ayanokoji Kiyotaka"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-06-28T07:59:47.889Z"
+                        },
+                        "updatedBy": {
+                          "type": "string",
+                          "example": "superadmin - Sebastian Vettel"
+                        },
+                        "status": {
+                          "type": "string",
+                          "example": "active"
+                        },
+                        "deletedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "nullable": true,
+                          "example": null
+                        },
+                        "deletedBy": {
+                          "type": "string",
+                          "nullable": true,
+                          "example": null
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "This email is already taken"
+                    }
+                  }
+                },
+                "examples": {
+                  "EmailAlreadyTaken": {
+                    "summary": "Email already taken",
+                    "value": {
+                      "code": 400,
+                      "status": "fail",
+                      "message": "This email is already taken"
+                    }
+                  },
+                  "MissingFields": {
+                    "summary": "Missing one of the required fields: name, email, role, avatar",
+                    "value": {
+                      "code": 400,
+                      "status": "fail",
+                      "message": "Please fill one of the required fields (name, email, role, avatar)"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Unauthorized"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Please login first or register if you don't have an account"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Forbidden"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "You're not allowed to access this endpoint"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "summary": "Delete a User",
+        "description": "Deletes a specific user from the system by their ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User (admin) with id 10 deleted successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Unauthorized"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Please login first or register if you don't have an account"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Forbidden"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "You're not allowed to access this endpoint"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "securitySchemes": {
+        "auth": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearer": {
+            "format": "JWT"
+          }
         }
       }
     }

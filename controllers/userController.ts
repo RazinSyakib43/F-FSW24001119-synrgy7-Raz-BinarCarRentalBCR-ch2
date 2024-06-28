@@ -209,13 +209,19 @@ async function updateUser(req: Request, res: Response) {
                 status: 'fail',
                 message: 'User not found'
             });
-        } else {
+        } else if (name || email || avatar || role) {
             const updatedUser = await userService.updateUser(id, { name, email, role }, avatar, user);
             res.status(200).send({
                 code: 200,
                 status: 'success',
                 message: 'User with id ' + id + ' updated successfully',
                 data: updatedUser
+            });
+        } else {
+            return res.status(400).send({
+                code: 400,
+                status: "fail",
+                message: "Please fill one of the required fields (name, email, role, avatar)",
             });
         }
     } catch (error: any) {
