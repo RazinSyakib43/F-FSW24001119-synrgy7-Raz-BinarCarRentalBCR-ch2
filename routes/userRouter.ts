@@ -29,8 +29,8 @@ userRouter.put("/by-id/:id", [authorize, validateRoles(["superadmin"])], uploadO
 userRouter.delete("/by-id/:id", [authorize, validateRoles(["superadmin"])], deleteUser);
 
 // User CRUD routes (based on their token)
-userRouter.get("/me", [authorize], getCurrentUser);
-userRouter.put("/me", [authorize, validateRoles(["member", "admin", "superadmin"])], uploadOnMemory.single("avatar"), updateCurrentUser);
-userRouter.delete("/me", [authorize, validateRoles(["member", "admin", "superadmin"])], deleteCurrentUser);
+userRouter.get("/me", authorize, getCurrentUser);
+userRouter.put("/me", authorize, uploadOnMemory.single("avatar"), updateCurrentUser);
+userRouter.delete("/me", authorize, deleteCurrentUser);
 
 export default userRouter;
