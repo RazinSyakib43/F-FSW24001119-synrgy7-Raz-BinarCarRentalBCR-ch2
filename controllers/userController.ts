@@ -26,23 +26,24 @@ async function getUserById(req: Request, res: Response) {
     const { id } = req.params;
 
     try {
-        const user = await userService.getUserById(id);
+        const selectedUser = await userService.getUserById(id);
+        const activeUser = await userService.getActiveUserByEmail(selectedUser?.email);
 
-        if (!user) {
+        if (!activeUser) {
             res.status(404).send({
                 code: 404,
                 status: 'fail',
-                message: 'User not found'
+                message: 'User not found or has been deleted'
             });
         } else {
             res.status(200).send({
                 code: 200,
                 status: 'success',
-                data: user
+                data: selectedUser
             });
         }
 
-        console.log('getUserById : ', user);
+        console.log('getUserById : ', selectedUser);
 
     } catch (error: any) {
         res.status(500).send({
@@ -59,13 +60,14 @@ async function getCurrentUser(req: Request, res: Response) {
 
         console.log('getCurrentUser : ', user);
 
-        const selectedUser = await userService.getUserById(user.id);
+        const selectedUser = await userService.getUserByEmail(user.email);
+        const activeUser = await userService.getActiveUserByEmail(selectedUser?.email);
 
-        if (!selectedUser) {
+        if (!activeUser) {
             res.status(404).send({
                 code: 404,
                 status: 'fail',
-                message: 'User not found'
+                message: 'Your account not found or has been deleted'
             });
         } else {
             res.status(200).send({
@@ -162,22 +164,20 @@ async function updateCurrentUser(req: Request, res: Response) {
 
     try {
         const selectedUser = await userService.getUserById(userID);
-        const userRole = selectedUser?.role;
+        const activeUser = await userService.getActiveUserByEmail(selectedUser?.email);
 
-        console.log('selectedUser : ', selectedUser);
-
-        if (!selectedUser) {
+        if (!activeUser) {
             res.status(404).send({
                 code: 404,
                 status: 'fail',
-                message: 'User not found'
+                message: 'Your account not found or has been deleted'
             });
         } else {
             const updatedUser = await userService.updateUser(userID, { name, email }, avatar, user);
             res.status(200).send({
                 code: 200,
                 status: 'success',
-                message: 'User (' + userRole + ') with id ' + selectedUser?.id + ' updated successfully',
+                message: 'Your profile updated successfully',
                 data: updatedUser
             });
 
@@ -201,13 +201,13 @@ async function updateUser(req: Request, res: Response) {
 
     try {
         const selectedUser = await userService.getUserById(id);
-        console.log('selectedUser : ', selectedUser);
+        const activeUser = await userService.getActiveUserByEmail(selectedUser?.email);
 
-        if (!selectedUser) {
+        if (!activeUser) {
             res.status(404).send({
                 code: 404,
                 status: 'fail',
-                message: 'User not found'
+                message: 'User not found or has been deleted'
             });
         } else if (name || email || avatar || role) {
             const updatedUser = await userService.updateUser(id, { name, email, role }, avatar, user);
@@ -240,22 +240,20 @@ async function deleteCurrentUser(req: Request, res: Response) {
         const userID = user.id;
 
         const selectedUser = await userService.getUserById(userID);
-        const userRole = selectedUser?.role;
+        const activeUser = await userService.getActiveUserByEmail(selectedUser?.email);
 
-        console.log('selectedUser : ', selectedUser);
-
-        if (!selectedUser) {
+        if (!activeUser) {
             res.status(404).send({
                 code: 404,
                 status: 'fail',
-                message: 'User not found'
+                message: 'Your account not found or has been deleted'
             });
         } else {
             await userService.deleteUser(userID, user);
             res.status(200).send({
                 code: 200,
                 status: 'success',
-                message: 'User (' + userRole + ') with id ' + selectedUser?.id + ' deleted successfully'
+                message: 'Your account deleted successfully'
             });
         }
 
@@ -276,19 +274,20 @@ async function deleteUser(req: Request, res: Response) {
 
     try {
         const selectedUser = await userService.getUserById(id);
-        const userRole = selectedUser?.role;
-        if (!selectedUser) {
+        const activeUser = await userService.getActiveUserByEmail(selectedUser?.email);
+
+        if (!activeUser) {
             res.status(404).send({
                 code: 404,
                 status: 'fail',
-                message: 'User not found'
+                message: 'User not found or has been deleted'
             });
         } else {
             await userService.deleteUser(id, user);
             res.status(200).send({
                 code: 200,
                 status: 'success',
-                message: 'User (' + userRole + ') with id ' + selectedUser?.id + ' deleted successfully'
+                message: 'User (' + selectedUser?.role + ') with id ' + selectedUser?.id + ' deleted successfully'
             });
         }
         console.log('deleteUser : ', selectedUser);

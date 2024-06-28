@@ -23,10 +23,10 @@ const upload = multer();
 
 // User CRUD routes (only admin or superadmin can access)
 userRouter.get("/", [authorize, validateRoles(["admin", "superadmin"])], getUsers);
-userRouter.get("/:id", [authorize, validateRoles(["admin", "superadmin"])], getUserById);
+userRouter.get("/by-id/:id", [authorize, validateRoles(["admin", "superadmin"])], getUserById);
 userRouter.post("/", [authorize, validateRoles(["superadmin"])], uploadOnMemory.single('avatar'), createUser);
-userRouter.put("/:id", [authorize, validateRoles(["superadmin"])], uploadOnMemory.single('avatar'), updateUser);
-userRouter.delete("/:id", [authorize, validateRoles(["superadmin"])], deleteUser);
+userRouter.put("/by-id/:id", [authorize, validateRoles(["superadmin"])], uploadOnMemory.single('avatar'), updateUser);
+userRouter.delete("/by-id/:id", [authorize, validateRoles(["superadmin"])], deleteUser);
 
 // User CRUD routes (based on their token)
 userRouter.get("/me", [authorize], getCurrentUser);

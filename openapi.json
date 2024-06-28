@@ -31,6 +31,10 @@
       "description": "Endpoints related to user management"
     },
     {
+      "name": "Users (Me)",
+      "description": "Endpoints related to the currently logged-in user, based on their token"
+    },
+    {
       "name": "Orders",
       "description": "Endpoints related to order management"
     }
@@ -2329,7 +2333,7 @@
         }
       }
     },
-    "/users/{id}": {
+    "/users/by-id/{id}": {
       "get": {
         "tags": [
           "Users"
@@ -2479,7 +2483,7 @@
             }
           },
           "404": {
-            "description": "Not Found",
+            "description": "Not Found or has been deleted",
             "content": {
               "application/json": {
                 "schema": {
@@ -2495,7 +2499,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "User not found"
+                      "example": "User not found or has been deleted"
                     }
                   }
                 }
@@ -2726,7 +2730,7 @@
             }
           },
           "404": {
-            "description": "Not Found",
+            "description": "Not Found or has been deleted",
             "content": {
               "application/json": {
                 "schema": {
@@ -2742,7 +2746,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "User not found"
+                      "example": "User not found or has been deleted"
                     }
                   }
                 }
@@ -2846,7 +2850,7 @@
             }
           },
           "404": {
-            "description": "Not Found",
+            "description": "Not Found or has been deleted",
             "content": {
               "application/json": {
                 "schema": {
@@ -2862,7 +2866,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "User not found"
+                      "example": "User not found or has been deleted"
                     }
                   }
                 }
@@ -2871,15 +2875,15 @@
           }
         }
       }
-    },
-    "components": {
-      "securitySchemes": {
-        "auth": {
-          "type": "http",
-          "scheme": "bearer",
-          "bearer": {
-            "format": "JWT"
-          }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "auth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearer": {
+          "format": "JWT"
         }
       }
     }
