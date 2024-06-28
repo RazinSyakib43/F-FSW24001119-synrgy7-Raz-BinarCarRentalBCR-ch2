@@ -3,6 +3,9 @@ import { UserRepository } from "../repositories/userRepository";
 import { uploadToCloudinary } from '../utils/uploadUtil';
 import { UploadApiResponse } from 'cloudinary';
 
+import { encryptPassword, checkPassword } from '../utils/encrypt';
+import { generateToken } from '../utils/token';
+
 export class UserService {
     private userRepository: UserRepository;
 
@@ -58,11 +61,14 @@ export class UserService {
     async addUser(file: any, userItem: any, user: any) {
         const uploadResult: UploadApiResponse = await uploadToCloudinary(file);
 
+        const encryptedPassword = await encryptPassword(userItem.password);
+
         const actorRole = user.role;
         const actorName = user.name;
 
         const newUserData = {
             ...userItem,
+            password: encryptedPassword,
             avatar: uploadResult.url,
             created_by: `${actorRole} - ${actorName}`,
             created_at: new Date(),
