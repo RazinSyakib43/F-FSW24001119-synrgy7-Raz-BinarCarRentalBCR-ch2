@@ -165,6 +165,7 @@ async function updateCurrentUser(req: Request, res: Response) {
     try {
         const selectedUser = await userService.getUserById(userID);
         const activeUser = await userService.getActiveUserByEmail(selectedUser?.email);
+        const anotherActiveUser = await userService.getActiveUserByEmail(email);
 
         if (!activeUser) {
             res.status(404).send({
@@ -172,7 +173,13 @@ async function updateCurrentUser(req: Request, res: Response) {
                 status: 'fail',
                 message: 'Your account not found or has been deleted'
             });
-        } else {
+        } else if (anotherActiveUser) {
+            res.status(400).send({
+                code: 400,
+                status: 'fail',
+                message: 'This email is already taken'
+            });
+        } else if (name || email || avatar) {
             const updatedUser = await userService.updateUser(userID, { name, email }, avatar, user);
             res.status(200).send({
                 code: 200,
@@ -180,8 +187,12 @@ async function updateCurrentUser(req: Request, res: Response) {
                 message: 'Your profile updated successfully',
                 data: updatedUser
             });
-
-            console.log('updateUser : ', updatedUser);
+        } else {
+            return res.status(400).send({
+                code: 400,
+                status: "fail",
+                message: "Please fill one of the required fields (name, email, role, avatar)",
+            });
         }
     } catch (error: any) {
         res.status(500).send({
@@ -202,12 +213,19 @@ async function updateUser(req: Request, res: Response) {
     try {
         const selectedUser = await userService.getUserById(id);
         const activeUser = await userService.getActiveUserByEmail(selectedUser?.email);
+        const anotherActiveUser = await userService.getActiveUserByEmail(email);
 
         if (!activeUser) {
             res.status(404).send({
                 code: 404,
                 status: 'fail',
                 message: 'User not found or has been deleted'
+            });
+        } else if (anotherActiveUser) {
+            res.status(400).send({
+                code: 400,
+                status: 'fail',
+                message: 'This email is already taken'
             });
         } else if (name || email || avatar || role) {
             const updatedUser = await userService.updateUser(id, { name, email, role }, avatar, user);
