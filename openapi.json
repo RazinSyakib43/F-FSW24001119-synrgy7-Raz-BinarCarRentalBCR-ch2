@@ -3312,6 +3312,978 @@
           }
         }
       }
+    },
+    "/orders": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "summary": "Get All Orders",
+        "description": "Retrieve a list of all orders, including details such as user information, car details, rental periods, pricing, and status.",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter orders by status ('active', 'completed', 'cancelled', or 'deleted')"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Orders retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "userName": {
+                            "type": "string",
+                            "example": "Razin"
+                          },
+                          "userEmail": {
+                            "type": "string",
+                            "example": "razin@gmail.com"
+                          },
+                          "carName": {
+                            "type": "string",
+                            "example": "Toyota Avanza"
+                          },
+                          "startRent": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2024-05-30T15:27:12.000Z"
+                          },
+                          "finishRent": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2024-06-02T15:27:12.000Z"
+                          },
+                          "price": {
+                            "type": "integer",
+                            "example": 200000
+                          },
+                          "total_price": {
+                            "type": "integer",
+                            "example": 600000
+                          },
+                          "status": {
+                            "type": "string",
+                            "example": "active"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2024-06-28T16:23:55.545Z"
+                          },
+                          "createdBy": {
+                            "type": "string",
+                            "example": "system"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2024-06-28T16:23:55.545Z"
+                          },
+                          "updatedBy": {
+                            "type": "string",
+                            "example": "system"
+                          },
+                          "deletedAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "nullable": true,
+                            "example": null
+                          },
+                          "deletedBy": {
+                            "type": "string",
+                            "nullable": true,
+                            "example": null
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Orders not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "orders not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Unauthorized"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Please login first or register if you don't have an account"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Forbidden"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "You're not allowed to access this endpoint"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Orders"
+        ],
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "summary": "Create an Order",
+        "description": "Creates a new order in the system.",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id_car": {
+                    "type": "integer",
+                    "description": "The ID of the car to be rented",
+                    "example": 2
+                  },
+                  "id_user": {
+                    "type": "integer",
+                    "description": "The ID of the user renting the car",
+                    "example": 3
+                  },
+                  "start_rent": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The start date and time of the rental",
+                    "example": "2024-06-07 15:20:00"
+                  },
+                  "rent_duration": {
+                    "type": "integer",
+                    "description": "The duration of the rental in days",
+                    "example": 2
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": "The status of the order",
+                    "example": "active"
+                  }
+                },
+                "required": [
+                  "id_car",
+                  "id_user",
+                  "start_rent",
+                  "rent_duration",
+                  "status"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Order created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Order created successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 5
+                        },
+                        "userName": {
+                          "type": "string",
+                          "example": "Frieren"
+                        },
+                        "userEmail": {
+                          "type": "string",
+                          "example": "frieren@gmail.com"
+                        },
+                        "carName": {
+                          "type": "string",
+                          "example": "Toyota Innova"
+                        },
+                        "startRent": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-06-07 15:20:00"
+                        },
+                        "finishRent": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-06-09T08:20:00.000Z"
+                        },
+                        "price": {
+                          "type": "integer",
+                          "example": 300000
+                        },
+                        "total_price": {
+                          "type": "integer",
+                          "example": 600000
+                        },
+                        "status": {
+                          "type": "string",
+                          "example": "active"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-07-01T22:33:06.820Z"
+                        },
+                        "createdBy": {
+                          "type": "string",
+                          "example": "superadmin - Ayanokoji Kiyotaka"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-07-01T22:33:06.820Z"
+                        },
+                        "updatedBy": {
+                          "type": "string",
+                          "example": "superadmin - Ayanokoji Kiyotaka"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "carAlreadyRented": {
+                    "summary": "Car is already rented",
+                    "value": {
+                      "code": 400,
+                      "status": "fail",
+                      "message": "Car is already rented"
+                    }
+                  },
+                  "carRequired": {
+                    "summary": "Car is required",
+                    "value": {
+                      "code": 400,
+                      "status": "fail",
+                      "message": "Car is required"
+                    }
+                  },
+                  "userRequired": {
+                    "summary": "User is required",
+                    "value": {
+                      "code": 400,
+                      "status": "fail",
+                      "message": "User is required"
+                    }
+                  },
+                  "startRentRequired": {
+                    "summary": "Start rent is required",
+                    "value": {
+                      "code": 400,
+                      "status": "fail",
+                      "message": "Start rent is required"
+                    }
+                  },
+                  "rentDurationRequired": {
+                    "summary": "Rent duration is required",
+                    "value": {
+                      "code": 400,
+                      "status": "fail",
+                      "message": "Rent duration is required"
+                    }
+                  },
+                  "statusRequired": {
+                    "summary": "Status is required",
+                    "value": {
+                      "code": 400,
+                      "status": "fail",
+                      "message": "Status is required"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Unauthorized"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Please login first or register if you don't have an account"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders/{id}": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "summary": "Get Order by ID",
+        "description": "Retrieve detailed information about a specific order by its ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the order to retrieve",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 1
+                        },
+                        "userName": {
+                          "type": "string",
+                          "example": "Razin"
+                        },
+                        "userEmail": {
+                          "type": "string",
+                          "example": "razin@gmail.com"
+                        },
+                        "carName": {
+                          "type": "string",
+                          "example": "Toyota Avanza"
+                        },
+                        "startRent": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-05-30T15:27:12.000Z"
+                        },
+                        "finishRent": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-06-02T15:27:12.000Z"
+                        },
+                        "price": {
+                          "type": "integer",
+                          "example": 200000
+                        },
+                        "total_price": {
+                          "type": "integer",
+                          "example": 600000
+                        },
+                        "status": {
+                          "type": "string",
+                          "example": "active"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-06-28T16:23:55.545Z"
+                        },
+                        "createdBy": {
+                          "type": "string",
+                          "example": "system"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-06-28T16:23:55.545Z"
+                        },
+                        "updatedBy": {
+                          "type": "string",
+                          "example": "system"
+                        },
+                        "deletedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "nullable": true,
+                          "example": null
+                        },
+                        "deletedBy": {
+                          "type": "string",
+                          "nullable": true,
+                          "example": null
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Order not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Order not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Unauthorized"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Please login first or register if you don't have an account"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Forbidden"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "You're not allowed to access this endpoint"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Orders"
+        ],
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "summary": "Update an Order by ID",
+        "description": "Updates the details of an existing order based on the provided ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "The ID of the order to update"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id_car": {
+                    "type": "integer",
+                    "description": "The ID of the car to be rented",
+                    "example": 2
+                  },
+                  "id_user": {
+                    "type": "integer",
+                    "description": "The ID of the user renting the car",
+                    "example": 3
+                  },
+                  "start_rent": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "The start date and time of the rental",
+                    "example": "2024-06-07 15:20:00"
+                  },
+                  "rent_duration": {
+                    "type": "integer",
+                    "description": "The duration of the rental in days",
+                    "example": 2
+                  },
+                  "status": {
+                    "type": "string",
+                    "description": "The status of the order",
+                    "example": "active"
+                  }
+                },
+                "required": [
+                  "id_car",
+                  "id_user",
+                  "start_rent",
+                  "rent_duration",
+                  "status"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Order updated successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Order updated successfully"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "example": 5
+                        },
+                        "userName": {
+                          "type": "string",
+                          "example": "Frieren"
+                        },
+                        "userEmail": {
+                          "type": "string",
+                          "example": "frieren@gmail.com"
+                        },
+                        "carName": {
+                          "type": "string",
+                          "example": "Toyota Innova"
+                        },
+                        "startRent": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-06-07 15:20:00"
+                        },
+                        "finishRent": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-06-09T08:20:00.000Z"
+                        },
+                        "price": {
+                          "type": "integer",
+                          "example": 300000
+                        },
+                        "total_price": {
+                          "type": "integer",
+                          "example": 600000
+                        },
+                        "status": {
+                          "type": "string",
+                          "example": "active"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-07-01T22:33:06.820Z"
+                        },
+                        "createdBy": {
+                          "type": "string",
+                          "example": "superadmin - Ayanokoji Kiyotaka"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-07-01T22:33:06.820Z"
+                        },
+                        "updatedBy": {
+                          "type": "string",
+                          "example": "superadmin - Ayanokoji Kiyotaka"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Please fill one of the required fields (car, user, start_rent, rent_duration, status)"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Unauthorized"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Please login first or register if you don't have an account"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Forbidden"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "You're not allowed to access this endpoint"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Orders"
+        ],
+        "security": [
+          {
+            "auth": []
+          }
+        ],
+        "summary": "Delete an Order by ID",
+        "description": "Deletes an existing order based on the provided ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "The ID of the order to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order deleted successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Order with id 5 deleted successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Unauthorized"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Please login first or register if you don't have an account"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Forbidden"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "You're not allowed to access this endpoint"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Order not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
