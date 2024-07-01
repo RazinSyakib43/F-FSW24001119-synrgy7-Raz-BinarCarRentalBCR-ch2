@@ -124,7 +124,7 @@ http://localhost:3000/api-docs/
 
 ##### Request Body:
 
-```
+```multipart/form-data
 {
   "email": "ayano@gmail.com",
   "password": "iamayano"
@@ -133,7 +133,7 @@ http://localhost:3000/api-docs/
 
 ##### Response Body:
 
-```
+```application/json
 {
   "code": 200,
   "status": "success",
@@ -153,7 +153,7 @@ http://localhost:3000/api-docs/
 
 ##### Request Body:
 
-```
+```multipart/form-data
 {
   "email": "naruto@gmail.com",
   "password": "iamnaruto"
@@ -162,7 +162,7 @@ http://localhost:3000/api-docs/
 
 ##### Response Body:
 
-```
+```application/json
 {
   "code": 200,
   "status": "success",
@@ -183,7 +183,7 @@ http://localhost:3000/api-docs/
 
 ##### Request Body:
 
-```
+```multipart/form-data
 {
   "email": "razin@gmail.com",
   "password": "iamrazin"
@@ -193,7 +193,7 @@ http://localhost:3000/api-docs/
 
 ##### Response Body:
 
-```
+```application/json
 {
   "code": 200,
   "status": "success",
@@ -204,6 +204,9 @@ http://localhost:3000/api-docs/
 }
 
 ```
+
+
+
 
 ## Contribution
 
