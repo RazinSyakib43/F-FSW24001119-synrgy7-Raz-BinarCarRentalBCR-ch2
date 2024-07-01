@@ -5,8 +5,9 @@ const carService = new CarService();
 
 export async function getCars(req: Request, res: Response) {
     const { includeDeleted }: { includeDeleted: string } = req.query as { includeDeleted: string };
+    const { isAvailable }: { isAvailable: string } = req.query as { isAvailable: string };
     try {
-        const cars = await carService.getAllCars(includeDeleted === 'true' ? true : false);
+        const cars = await carService.getAllCars(includeDeleted === 'true' ? true : false, isAvailable === 'true' ? true : false);
         if (cars.length === 0) {
             res.status(404).send({
                 code: 404,

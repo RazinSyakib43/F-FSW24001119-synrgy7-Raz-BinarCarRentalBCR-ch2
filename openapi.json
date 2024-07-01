@@ -844,6 +844,15 @@
               "type": "boolean"
             },
             "description": "Include deleted cars in the response (true or false). If not provided, the default value is false and only active cars will be shown."
+          },
+          {
+            "name": "isAvailable",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "Show only available cars in the response (true or false). If not provided, the default value is false and all cars will be shown."
           }
         ],
         "responses": {

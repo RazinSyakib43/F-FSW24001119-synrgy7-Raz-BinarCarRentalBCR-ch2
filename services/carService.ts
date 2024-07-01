@@ -42,13 +42,17 @@ export class CarService {
         return carItem;
     }
 
-    async getAllCars(includeDeleted: boolean = false) {
+    async getAllCars(includeDeleted: boolean = false, isAvailable: boolean = false) {
         const cars = await this.carRepository.findAll();
 
         if (includeDeleted) {
             return cars.map(car => this.carsData(car));
+        } else if (isAvailable) {
+            const availableCars = cars.filter(car => car.order?.status === 'completed' || car.order?.status === 'cancelled' || car.order?.status === 'deleted');
+            return availableCars.map(car => this.carsData(car));
         } else {
-            return cars.filter(car => car.status === 'active').map(car => this.carsData(car));
+            const activeCars = cars.filter(car => car.status !== 'deleted');
+            return activeCars.map(car => this.carsData(car));
         }
     }
 
