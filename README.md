@@ -114,7 +114,7 @@ http://localhost:3000/api-docs/
   - **404 Not Found** : Data not found.
   - **500 Internal Server Error** : Server error.
 
-### 1. Auth
+### 1. Auth (Login)
 
 #### Auth (Login) - Superadmin
 
@@ -790,6 +790,260 @@ Response Body:
     "code": 200,
     "status": "success",
     "message": "Your account deleted successfully"
+}
+```
+
+### 6. Orders (/orders)
+
+#### [GET] Get All Orders
+
+> Retrieve a list of all orders, including details such as user information, car details, rental periods, pricing, and status.
+
+- **Endpoint**: `/api/v1/orders`
+
+- **Security**: Requires authentication token as superadmin or admin (`auth`).
+
+| Parameter     | Type      | Value                                            | Description  |
+| :------------ | :-------- | :----------------------------------------------- |              |
+| `status`      | `enum`    | 'active', 'completed', 'cancelled', or 'deleted' | **Optional** |
+
+Request Body:
+
+```
+curl --location 'http://localhost:3000/api/v1/dashboard/orders?status=active' \
+--header 'Authorization: {{superadmin token}}'
+```
+
+Response Body:
+
+```
+{
+    "code": 200,
+    "status": "success",
+    "data": [
+        {
+            "id": 1,
+            "userName": "Razin",
+            "userEmail": "razin@gmail.com",
+            "carName": "Toyota Avanza",
+            "startRent": "2024-05-30T15:27:12.000Z",
+            "finishRent": "2024-06-02T15:27:12.000Z",
+            "price": 200000,
+            "total_price": 600000,
+            "status": "active",
+            "createdAt": "2024-06-28T16:23:55.545Z",
+            "createdBy": "system",
+            "updatedAt": "2024-06-28T16:23:55.545Z",
+            "updatedBy": "system",
+            "deletedAt": null,
+            "deletedBy": null
+        },
+        {
+            "id": 2,
+            "userName": "Kanda Sorata",
+            "userEmail": "kandasorata@gmail.com",
+            "carName": "Toyota Yaris",
+            "startRent": "2024-05-30T15:27:12.000Z",
+            "finishRent": "2024-06-06T15:27:12.000Z",
+            "price": 150000,
+            "total_price": 2100000,
+            "status": "active",
+            "createdAt": "2024-06-28T16:23:55.545Z",
+            "createdBy": "system",
+            "updatedAt": "2024-06-28T16:23:55.545Z",
+            "updatedBy": "system",
+            "deletedAt": null,
+            "deletedBy": null
+        },
+        {
+            "id": 4,
+            "userName": "Frieren",
+            "userEmail": "frieren@gmail.com",
+            "carName": "Toyota Alphard",
+            "startRent": "2024-06-07T08:20:00.000Z",
+            "finishRent": "2024-06-14T08:20:00.000Z",
+            "price": 500000,
+            "total_price": 2100000,
+            "status": "active",
+            "createdAt": "2024-06-28T16:24:20.546Z",
+            "createdBy": "superadmin - Ayanokoji Kiyotaka",
+            "updatedAt": "2024-06-29T07:21:34.334Z",
+            "updatedBy": "superadmin - Ayanokoji Kiyotaka",
+            "deletedAt": null,
+            "deletedBy": null
+        }
+    ]
+}
+```
+
+#### [GET] Get an Order by Id
+
+> Retrieves detailed information about a specific order by its ID.
+
+- **Endpoint**: `/api/v1/orders/{{id}}`
+
+- **Security**: Requires authentication token as superadmin or admin (`auth`).
+
+| Parameter | Type      | Description                        |
+| :-------- | :-------- | :--------------------------------- |
+| `id`      | `integer` | **Required**. Id of order to fetch |
+
+Request Body:
+
+```
+curl --location 'http://localhost:3000/api/v1/dashboard/2' \
+--header 'Authorization: {{superadmin token}}'
+```
+
+Response Body:
+
+```
+{
+    "code": 200,
+    "status": "success",
+    "data": {
+        "id": 2,
+        "userName": "Kanda Sorata",
+        "userEmail": "kandasorata@gmail.com",
+        "carName": "Toyota Yaris",
+        "startRent": "2024-05-30T15:27:12.000Z",
+        "finishRent": "2024-06-06T15:27:12.000Z",
+        "price": 150000,
+        "total_price": 2100000,
+        "status": "active",
+        "createdAt": "2024-06-28T16:23:55.545Z",
+        "createdBy": "system",
+        "updatedAt": "2024-06-28T16:23:55.545Z",
+        "updatedBy": "system",
+        "deletedAt": null,
+        "deletedBy": null
+    }
+}
+```
+
+#### [POST] Create an Order
+
+> Creates a new order for renting a car.
+
+- **Endpoint**: `/api/v1/orders/`
+
+Request Body:
+
+```
+curl --location 'http://localhost:3000/api/v1/dashboard/orders' \
+--header 'Authorization: {{member token}}' \
+--form 'id_car="3"' \
+--form 'id_user="2"' \
+--form 'start_rent="2024-06-07 15:20:00"' \
+--form 'rent_duration="2"' \
+--form 'status="active"'
+```
+
+Note:
+
+- "status": The status of the order. Acceptable values are:
+  - "active": The order is currently active and the car is being rented.
+  - "completed": The rental period has ended and the order is completed.
+  - "cancelled": The order has been cancelled.
+
+Response Body:
+
+```
+{
+    "code": 201,
+    "status": "success",
+    "message": "Order created successfully",
+    "data": {
+        "id": 3,
+        "user_email": "frieren@gmail.com",
+        "car_name": "Toyota Fortuner",
+        "start_rent": "2024-06-07 15:20:00",
+        "finish_rent": "2024-06-12T08:20:00.000Z",
+        "price": 400000,
+        "total_price": 2000000,
+        "status": "active"
+    }
+}
+```
+
+#### [PUT] Edit an Order Data
+
+> Updates the details of a specific order by its ID.
+
+- **Endpoint**: `/api/v1/orders/{{id}}`
+
+- **Security**: Requires authentication token as superadmin or admin (`auth`).
+
+| Parameter | Type      | Description                        |
+| :-------- | :-------- | :--------------------------------- |
+| `id`      | `integer` | **Required**. Id of order to fetch |
+
+Request Body:
+
+```
+curl --location --request PUT 'http://localhost:3000/api/v1/dashboard/orders/3' \
+--header 'Authorization: {{superadmin token}}' \
+--form 'id_car=""' \
+--form 'id_user=""' \
+--form 'start_rent=""' \
+--form 'rent_duration=""' \
+--form 'status="cancelled"'
+```
+
+Note:
+
+- "status": The status of the order. Acceptable values are:
+  - "active": The order is currently active and the car is being rented.
+  - "completed": The rental period has ended and the order is completed.
+  - "cancelled": The order has been cancelled.
+
+Response Body:
+
+```
+{
+    "code": 200,
+    "status": "success",
+    "message": "Order with id 3 updated successfully",
+    "data": {
+        "id": "3",
+        "id_car": 4,
+        "id_user": 3,
+        "start_rent": "2024-06-07T08:20:00.000Z",
+        "rent_duration": 5,
+        "total_price": 2000000,
+        "finish_rent": "2024-06-12T08:20:00.000Z",
+        "status": "cancelled",
+        "updatedAt": "2024-06-07T22:59:56.426Z"
+    }
+}
+```
+
+#### [DEL] Delete an Order
+
+> Deletes a specific order from the system by its ID.
+
+- **Endpoint**: `/api/v1/orders/{{id}}`
+
+- **Security**: Requires authentication token as superadmin or admin (`auth`).
+
+| Parameter | Type      | Description                        |
+| :-------- | :-------- | :--------------------------------- |
+| `id`      | `integer` | **Required**. Id of order to fetch |
+
+Request Body:
+
+```
+curl --location --request DELETE 'http://localhost:3000/api/v1/dashboard/orders/3'
+--header 'Authorization: {{superadmin token}}' \
+```
+
+Response Body:
+
+```
+{
+    "code": 200,
+    "status": "success",
+    "message": "Order with id 3 deleted successfully"
 }
 ```
 
