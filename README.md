@@ -19,6 +19,7 @@ Welcome to the **Binar Car Rental - Car Management Dashboard** . This dashboard 
 - Local Host: Run with Postman, localhost IP, and Port:3000:
   - `http://127.0.0.1:3000/api/v1/dashboard` or
   - `http://localhost:3000/api/v1/dashboard`
+    - `/auth`
     - `/cars`
     - `/users`
     - `/orders`
@@ -26,7 +27,7 @@ Welcome to the **Binar Car Rental - Car Management Dashboard** . This dashboard 
 
 ## Entity Relationship Diagram (ERD)
 
-![1718265278822](image/README/1718265278822.png)
+![1719878363234](image/README/1719878363234.png)
 
 Diagram source: [Razin -Car Management Dashboard API (dbdiagram.io)](https://dbdiagram.io/d/Razin-Car-Management-Dashboard-API-666aa385a179551be6c66564)
 
@@ -205,8 +206,84 @@ http://localhost:3000/api-docs/
 
 ```
 
+### 2. Auth (Register)
 
+#### Register Admin
 
+- **Endpoint**: `/auth/register/admin`
+- **Method**: POST
+- **Description**: This endpoint is used to register a new admin. Only superadmins are authorized to access this endpoint.
+- **Security**: Requires authentication token as superadmin (`auth`).
+
+##### Request Body
+
+```multipart/form-data
+{
+  "name": "Sebastian Vettel",
+  "email": "vettel@gmail.com",
+  "password": "iamvettel",
+  "avatar": "binary-data"
+}
+```
+
+##### Response Body:
+
+```application/json
+{
+  "code": 201,
+  "status": "success",
+  "message": "User (Admin) created successfully",
+  "data": {
+    "id": 15,
+    "name": "Sebastian Vettel",
+    "email": "vettel@gmail.com",
+    "avatar": "http://res.cloudinary.com/dowiubuw3/image/upload/v1718371585/zwrjqdcx5q9cj8nm536v.jpg",
+    "role": "admin",
+    "created_at": "2024-06-14T13:26:25.636Z",
+    "created_by": "superadmin - Ayanokoji Kiyotaka",
+    "updated_at": "2024-06-14T13:26:25.636Z",
+    "updated_by": "superadmin - Ayanokoji Kiyotaka"
+  }
+}
+```
+
+#### Register Member
+
+- **Endpoint**: `/auth/register/member`
+- **Method**: POST
+- **Description**: This endpoint is used to register a new member.
+
+##### Request Body
+
+```multipart/form-data
+{
+  "name": "Mitsuha Miyamizu",
+  "email": "mitsuha@gmail.com",
+  "password": "iammitsuha",
+  "avatar": "binary-data"
+}
+```
+
+##### Response Body:
+
+```application/json
+{
+  "code": 201,
+  "status": "success",
+  "message": "User (Member) created successfully",
+  "data": {
+    "id": 15,
+    "name": "Mitsuha Miyamizu",
+    "email": "mitsuha@gmail.com",
+    "avatar": "http://res.cloudinary.com/dowiubuw3/image/upload/v1719425557/mr16viuotnwfavwr1bpu.gif",
+    "role": "member",
+    "created_at": "2024-06-14T13:26:25.636Z",
+    "created_by": "member - Mitsuha Miyamizu",
+    "updated_at": "2024-06-14T13:26:25.636Z",
+    "updated_by": "member - Mitsuha Miyamizu"
+  }
+}
+```
 
 ## Contribution
 
