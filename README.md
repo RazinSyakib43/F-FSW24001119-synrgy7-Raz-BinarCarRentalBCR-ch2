@@ -2,6 +2,25 @@
 
 Welcome to the **Binar Car Rental - Car Management Dashboard** . This dashboard is designed to provide a comprehensive solution for managing car rentals efficiently. It offers a user-friendly interface for administrators to manage cars, users, and rental orders seamlessly.
 
+# Table of Contents
+
+1. [Binar Car Rental - Car Management Dashboard](#binar-car-rental---car-management-dashboard)
+2. [Technologies Used](#technologies-used)
+3. [How To Run](#how-to-run)
+4. [Entity Relationship Diagram (ERD)](#entity-relationship-diagram-erd)
+5. [Installation](#installation)
+6. [Password for Testing](#password-for-testing)
+7. [API Documentations](#api-documentations)
+8. [API Endpoints](#api-endpoints)
+   a. [Auth (Login)](#1-auth-login)
+   b. [Auth (Register)](#2-auth-register)
+   c. [Cars (/cars)](#3-cars-cars)
+   d. [Users (/users)](#4-users-users)
+   e. [Users - Current (Me) (/users/me)](#5-users---current-me-usersme)
+   f. [Orders (/orders)](#6-orders-orders)
+9. [Contribution](#contribution)
+
+
 ## Technologies Used
 
 - TypeScript
@@ -82,6 +101,24 @@ Diagram source: [Razin -Car Management Dashboard API (dbdiagram.io)](https://dbd
    ```
    npm run dev
    ```
+
+## Password for Testing
+1. Superadmin
+```
+- email: ayano@gmail.com
+- password: iamayano
+```
+
+2. Admin
+```
+- email: naruto@gmail.com
+- password: iamnaruto
+```
+3. Member
+```
+- email: razin@gmail.com
+- password: iamrazin
+```
 
 ## API Documentations
 
