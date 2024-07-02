@@ -686,6 +686,113 @@ Response Body:
 }
 ```
 
+### 5. Users - Current (Me) (/users/me)
+
+#### [GET] Get Current User Data
+
+> Get Current User Profile, based on their token.
+
+- **Endpoint**: `/api/v1/users/me`
+
+- **Security**: Requires authentication token as user account (any roles) (`auth`).
+
+Request Body:
+
+```
+curl --location 'http://localhost:3000/api/v1/dashboard/users/me' \
+--header 'Authorization: {{user token}}'
+```
+
+Response Body:
+
+```
+{
+    "code": 200,
+    "status": "success",
+    "data": {
+        "id": 1,
+        "name": "Razin",
+        "email": "razin@gmail.com",
+        "avatar": "https://res.cloudinary.com/dowiubuw3/image/upload/v1717802244/gutvbvhpgapnheefhf6e.jpg",
+        "role": "member",
+        "createdAt": "2024-06-25T21:33:13.600Z",
+        "createdBy": "system",
+        "updatedAt": "2024-06-25T21:33:13.600Z",
+        "updatedBy": "system",
+        "status": "active",
+        "deletedAt": null,
+        "deletedBy": null
+    }
+}
+```
+
+#### [PUT] Edit Current User Data
+
+> Updates the details of their profile, based on their token.
+
+- **Endpoint**: `/api/v1/users/me`
+
+- **Security**: Requires authentication token as user account (any roles) (`auth`).
+
+Request Body:
+
+```
+curl --location --request PUT 'http://localhost:3000/api/v1/dashboard/users/me' \
+--header 'Authorization: {{user token}}' \
+--form 'name=""' \
+--form 'email=""' \
+--form 'avatar=@"/path/to/file"' \
+```
+
+Response Body:
+
+```
+{
+    "code": 200,
+    "status": "success",
+    "message": "Your profile updated successfully",
+    "data": {
+        "id": 1,
+        "name": "Muhammad Razin Syakib",
+        "email": "razin@gmail.com",
+        "avatar": "https://res.cloudinary.com/dowiubuw3/image/upload/v1717802244/gutvbvhpgapnheefhf6e.jpg",
+        "role": "member",
+        "createdAt": "2024-06-25T21:33:13.600Z",
+        "createdBy": "system",
+        "updatedAt": "2024-06-28T09:23:20.312Z",
+        "updatedBy": "member - Muhammad Razin Syakib",
+        "status": "active",
+        "deletedAt": null,
+        "deletedBy": null
+    }
+}
+```
+
+#### [DEL] Delete Current User Account
+
+> Deletes current user account, based on their token.
+
+- **Endpoint**: `/api/v1/users/me`
+
+- **Security**: Requires authentication token as user account (any roles) (`auth`).
+
+Request Body:
+
+```
+curl --location --request DELETE 'http://localhost:3000/api/v1/dashboard/users/me' \
+--header 'Authorization: {{user token}}'
+```
+
+Response Body:
+
+```
+{
+    "code": 200,
+    "status": "success",
+    "message": "Your account deleted successfully"
+}
+```
+
 ## Contribution
 
 Contributions are welcome! If you find a bug or have suggestions for improvements, please open an issue or submit a pull request.
