@@ -510,7 +510,181 @@ Response Body:
 
 ```
 
+### 4. Users (/users)
 
+#### [GET] Get All Users
+
+> Retrieves a list of all users registered in the system.
+
+- **Endpoint**: `/api/v1/users/`
+
+- **Security**: Requires authentication token as superadmin or admin (`auth`).
+
+Request Body:
+
+```
+curl --location 'http://localhost:3000/api/v1/dashboard/users' \
+--header 'Authorization: {{admin token}}'
+```
+
+Response Body:
+
+```
+{
+    "code": 200,
+    "status": "success",
+    "data": [
+        {
+            "id": 1,
+            "name": "Razin",
+            "email": "razin@gmail.com",
+            "created_at": "2024-06-07T19:33:12.374Z",
+            "updated_at": "2024-06-07T19:33:12.374Z"
+        },
+        {
+            "id": 2,
+            "name": "Kanda Sorata",
+            "email": "kandasorata@gmail.com",
+            "created_at": "2024-06-07T19:33:12.374Z",
+            "updated_at": "2024-06-07T19:33:12.374Z"
+        },
+        {
+            "id": 3,
+            "name": "Frieren",
+            "email": "frieren@gmail.com",
+            "created_at": "2024-06-07T19:33:12.374Z",
+            "updated_at": "2024-06-07T19:33:12.374Z"
+        }
+    ]
+}
+```
+
+#### [GET] Get a User by Id
+
+> Retrieves detailed information about a specific user by their ID.
+
+- **Endpoint**: `/api/v1/users/by-id/{id}`
+
+- **Security**: Requires authentication token as superadmin or admin (`auth`).
+
+Request Body:
+
+```
+curl --location 'http://localhost:3000/api/v1/dashboard/users/by-id/23' \
+--header 'Authorization: {{admin token}}'
+```
+
+Response Body:
+
+```
+{
+    "code": 200,
+    "status": "success",
+    "data": {
+        "id": 1,
+        "name": "Razin",
+        "email": "razin@gmail.com",
+        "created_at": "2024-06-07T19:33:12.374Z",
+        "updated_at": "2024-06-07T19:33:12.374Z"
+    }
+}
+```
+
+#### [POST] Create a User
+
+> Registers a new user in the system.
+
+- **Endpoint**: `/api/v1/users/`
+
+- **Security**: Requires authentication token as superadmin (`auth`).
+
+Request Body:
+
+```
+curl --location 'http://localhost:3000/api/v1/dashboard/users' \
+--header 'Authorization: {{superadmin token}}' \
+--form 'name="Kakashi"' \
+--form 'email="kakashi@gmail.com"' \
+--form 'password="iamkakashi"' \
+--form 'avatar=@"/C:/Users/muham/OneDrive/Desktop/images/car20.min.jpg"' \
+--form 'role="superadmin"'
+```
+
+Response Body:
+
+```
+{
+    "code": 201,
+    "status": "success",
+    "message": "User created successfully",
+    "data": {
+        "id": 4,
+        "name": "Himmel",
+        "email": "himmel@gmail.com"
+    }
+}
+
+```
+
+#### [PUT] Edit a User Data
+
+> Updates the details of a specific user by their ID.
+
+- **Endpoint**: `/api/v1/users/by-id/{id}`
+
+- **Security**: Requires authentication token as superadmin (`auth`).
+
+Request Body:
+
+```
+curl --location --request PUT 'http://localhost:3000/api/v1/dashboard/users/by-id/1' \
+--header 'Authorization: {{superadmin token}}' \
+--form 'name=""' \
+--form 'email=""' \
+--form 'avatar=@"/path/to/file"' \
+--form 'role=""'
+```
+
+Response Body:
+
+```
+{
+    "code": 200,
+    "status": "success",
+    "message": "User with id 4 updated successfully",
+    "data": {
+        "id": "4",
+        "name": "Himmel Hero",
+        "email": "himmel@gmail.com",
+        "updatedAt": "2024-06-07T21:30:03.966Z"
+    }
+}
+```
+
+#### [DEL] Delete a User
+
+> Deletes a specific user from the system by their ID.
+
+- **Endpoint**: `/api/v1/users/by-id/{id}`
+
+- **Security**: Requires authentication token as superadmin (`auth`).
+
+Request Body:
+
+```
+curl --location --request DELETE 'http://localhost:3000/api/v1/dashboard/users/by-id/19' \
+--header 'Authorization: {{superadmin token}}'
+```
+
+Response Body:
+
+```
+{
+    "code": 200,
+    "status": "success",
+    "message": "User with id 4 deleted successfully"
+}
+```
 
 ## Contribution
 
