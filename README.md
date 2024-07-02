@@ -285,6 +285,233 @@ http://localhost:3000/api-docs/
 }
 ```
 
+### 3. Cars (/cars)
+
+#### [GET] Get All Cars
+
+> Retrieves a list of all available cars in the system.
+
+Endpoint: `/api/v1/cars/`
+
+Request Body:
+
+```
+curl --location 'http://localhost:3000/api/v1/dashboard/cars'
+```
+
+Response Body:
+
+```
+{
+    "code": 200,
+    "status": "success",
+    "data": [
+        {
+            "id": 1,
+            "name": "Toyota Avanza",
+            "category": "MPV",
+            "price": 200000,
+            "start_rent": "2024-05-30T15:27:12.000Z",
+            "finish_rent": "2024-06-02T15:27:12.000Z",
+            "image": "https://res.cloudinary.com/dowiubuw3/image/upload/v1717012914/mhuwr8irhwqnjw7pxlmc.jpg",
+            "status": "active",
+            "createdAt": "2024-06-07T19:33:12.365Z",
+            "updatedAt": "2024-06-07T19:33:12.365Z"
+        },
+        {
+            "id": 2,
+            "name": "Toyota Innova",
+            "category": "MPV",
+            "price": 300000,
+            "start_rent": "2024-05-30T15:27:12.000Z",
+            "finish_rent": "2024-06-06T15:27:12.000Z",
+            "image": "https://res.cloudinary.com/dowiubuw3/image/upload/v1717012914/mhuwr8irhwqnjw7pxlmc.jpg",
+            "status": "active",
+            "createdAt": "2024-06-07T19:33:12.365Z",
+            "updatedAt": "2024-06-07T19:33:12.365Z"
+        },
+        {
+            "id": 3,
+            "name": "Toyota Yaris",
+            "category": "Hatchback",
+            "price": 150000,
+            "start_rent": null,
+            "finish_rent": null,
+            "image": "https://res.cloudinary.com/dowiubuw3/image/upload/v1717012914/mhuwr8irhwqnjw7pxlmc.jpg",
+            "status": null,
+            "createdAt": "2024-06-07T19:33:12.365Z",
+            "updatedAt": "2024-06-07T19:33:12.365Z"
+        },
+        ...
+    ]
+}
+```
+
+#### [GET] Search a Car
+
+> Searches for cars based on car name.
+
+Endpoint: `/api/v1/cars/search?title=`
+
+Request Body:
+
+```
+curl --location 'http://localhost:3000/api/v1/dashboard/cars/search?title=Alphard'
+```
+
+Response Body:
+
+```
+{
+    "code": 200,
+    "status": "success",
+    "data": [
+        {
+            "id": 5,
+            "name": "Toyota Alphard",
+            "category": "MPV",
+            "price": 500000,
+            "start_rent": null,
+            "finish_rent": null,
+            "image": "https://res.cloudinary.com/dowiubuw3/image/upload/v1717012914/mhuwr8irhwqnjw7pxlmc.jpg",
+            "status": null,
+            "createdAt": "2024-06-07T19:33:12.365Z",
+            "updatedAt": "2024-06-07T19:33:12.365Z"
+        }
+    ]
+}
+```
+
+#### [GET] Get a Car by Id
+
+> Retrieves detailed information about a specific car by its ID.
+
+Endpoint: `/api/v1/cars/:id`
+
+Request Body:
+
+```
+curl --location 'http://localhost:3000/api/v1/dashboard/cars/5'
+```
+
+Response Body:
+
+```
+{
+    "code": 200,
+    "status": "success",
+    "data": {
+        "id": 5,
+        "name": "Toyota Alphard",
+        "category": "MPV",
+        "price": 500000,
+        "start_rent": null,
+        "finish_rent": null,
+        "image": "https://res.cloudinary.com/dowiubuw3/image/upload/v1717012914/mhuwr8irhwqnjw7pxlmc.jpg",
+        "status": null,
+        "createdAt": "2024-06-07T19:33:12.365Z",
+        "updatedAt": "2024-06-07T19:33:12.365Z"
+    }
+}
+```
+
+#### [POST] Create a Car
+
+> Adds a new car to the system.
+
+Endpoint: `/api/v1/cars/`
+
+Request Body:
+
+```
+curl --location 'http://localhost:3000/api/v1/dashboard/cars/' \
+--form 'name="Honda NSX 2024"' \
+--form 'category="Supercar"' \
+--form 'price="2500000"' \
+--form 'image=@"/C:/Users/muham/OneDrive/Desktop/images/car01.min.jpg"'
+
+```
+
+Response Body:
+
+```
+{
+    "code": 201,
+    "status": "success",
+    "message": "Car added successfully",
+    "data": {
+        "id": 6,
+        "name": "Honda NSX 2024",
+        "category": "Supercar",
+        "price": "2500000",
+        "image": "https://res.cloudinary.com/dowiubuw3/image/upload/v1717794160/erq84bihs4gbfg59zqhi.jpg"
+    }
+}
+
+```
+
+#### [PUT] Edit a Car Data
+
+> Updates the details of a specific car by its ID.
+
+Endpoint: `/api/v1/cars/:id`
+
+Request Body:
+
+```
+curl --location --request PUT 'http://localhost:3000/api/v1/dashboard/cars/6' \
+--form 'name=""' \
+--form 'category=""' \
+--form 'price=""' \
+--form 'image=@"/C:/Users/muham/OneDrive/Desktop/images/car09.min.jpg"'
+
+```
+
+Response Body:
+
+```
+{
+    "code": 200,
+    "status": "success",
+    "message": "Car updated successfully",
+    "data": {
+        "id": "6",
+        "name": "Honda NSX 2024",
+        "category": "Supercar",
+        "price": 2500000,
+        "image": "https://res.cloudinary.com/dowiubuw3/image/upload/v1717802631/rlwgszbxkiqh6nxnapnr.jpg",
+        "createdAt": "2024-06-07T23:13:18.435Z",
+        "updatedAt": "2024-06-07T23:23:51.335Z"
+    }
+}
+
+```
+
+#### [DEL] Delete a Car
+
+> Deletes a specific car from the system by its ID.
+
+Endpoint: `/api/v1/cars/:id`
+
+Request Body:
+
+```
+curl --location --request DELETE 'http://localhost:3000/api/v1/dashboard/cars/6'
+```
+
+Response Body:
+
+```
+{
+    "code": 200,
+    "status": "success",
+    "message": "Car with id 6 deleted successfully"
+}
+
+```
+
+
+
 ## Contribution
 
 Contributions are welcome! If you find a bug or have suggestions for improvements, please open an issue or submit a pull request.
