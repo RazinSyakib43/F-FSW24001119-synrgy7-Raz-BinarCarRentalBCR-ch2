@@ -11,15 +11,13 @@ import {
     getCurrentUser,
     updateCurrentUser,
     deleteCurrentUser,
-} from "../controllers/userController";
+} from "../../controllers/userController";
 
-import uploadOnMemory from "../middleware/multerMemory";
-import { handleImageUpload } from "../middleware/errorHandler";
+import uploadOnMemory from "../../middleware/multerMemory";
 
-import { authorize, validateRoles } from "../middleware/authorization";
+import { authorize, validateRoles } from "../../middleware/authorization";
 
 const userRouter = Router();
-const upload = multer();
 
 // User CRUD routes (only admin or superadmin can access)
 userRouter.get("/", [authorize, validateRoles(["admin", "superadmin"])], getUsers);

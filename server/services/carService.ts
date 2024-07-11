@@ -42,7 +42,8 @@ export class CarService {
         return carItem;
     }
 
-    async getAllCars(driverType: boolean) {
+    // client
+    async getCars(driverType: boolean) {
         const cars = await this.carRepository.findAll();
 
         const filteredCars = cars.filter(car => car.driverType === driverType);
@@ -57,6 +58,12 @@ export class CarService {
     async getCarById(id: string) {
         const car = await this.carRepository.findById(id);
         return this.carsData(car);
+    }
+
+    // dashboard
+    async getAllCars() {
+        const cars = await this.carRepository.findAll();
+        return cars.map(car => this.carsData(car));
     }
 
     async addCar(file: any, carItem: any, user: any) {

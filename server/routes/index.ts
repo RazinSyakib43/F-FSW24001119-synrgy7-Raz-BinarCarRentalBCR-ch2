@@ -1,11 +1,10 @@
 import { Router } from 'express';
 
-import carRouter from './carRouter';
-import userRouter from './userRouter';
-// import orderRouter from './orderRouter';
-import authRouter from './authRouter';
+import carClientRouter from './client/carClientRouter';
 
-import { authorize } from "../middleware/authorization";
+import carRouter from './dashboard/carRouter';
+import userRouter from './dashboard/userRouter';
+import authRouter from './dashboard/authRouter';
 
 import knex from 'knex'
 import { Model } from 'objection';
@@ -22,11 +21,15 @@ const knexInstance = knex({
 Model.knex(knexInstance);
 
 const router = Router();
-const baseURL = '/api/v1/dashboard';
+const baseURLDashboard = '/api/v1/dashboard';
+const baseURLClient = '/api/v1/client'
 
-router.use(`${baseURL}/cars`, carRouter);
-router.use(`${baseURL}/users`, userRouter);
-// router.use(`${baseURL}/orders`, authorize, orderRouter);
-router.use(`${baseURL}/auth`, authRouter);
+// Client Route
+router.use(`${baseURLClient}/cars`, carClientRouter);
+
+// Dashboard Route
+router.use(`${baseURLDashboard}/cars`, carRouter);
+router.use(`${baseURLDashboard}/users`, userRouter);
+router.use(`${baseURLDashboard}/auth`, authRouter);
 
 export default router;

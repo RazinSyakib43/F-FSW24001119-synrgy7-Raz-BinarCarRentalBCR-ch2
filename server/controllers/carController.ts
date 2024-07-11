@@ -3,6 +3,7 @@ import { CarService } from '../services/carService';
 
 const carService = new CarService();
 
+// client
 export async function getCars(req: Request, res: Response) {
     // const { isAvailable }: { isAvailable: string } = req.query as { isAvailable: string };
     const { driverType } = req.query as { driverType: any } as { driverType: any };
@@ -10,7 +11,7 @@ export async function getCars(req: Request, res: Response) {
     // const { capacity }: { capacity: string } = req.query as { capacity: string };
 
     try {
-        const cars = await carService.getAllCars(driverType === 'true' ? true : false);
+        const cars = await carService.getCars(driverType === 'true' ? true : false);
         if (!driverType) {
             res.status(400).send({
                 code: 400,
@@ -49,6 +50,59 @@ export async function searchCar(req: Request, res: Response) {
                 code: 404,
                 status: 'fail',
                 message: 'Car that you are looking for is not found',
+            });
+        } else {
+            res.status(200).send({
+                code: 200,
+                status: 'success',
+                data: cars,
+            });
+        }
+    } catch (error: any) {
+        res.status(500).send({
+            code: 500,
+            status: 'error',
+            message: error.message,
+        });
+    }
+}
+
+export async function getCarByIdClient(req: Request, res: Response) {
+    const { id }: { id: string } = req.params as { id: string };
+
+    try {
+        const car = await carService.getCarById(id);
+        if (!car) {
+            res.status(404).send({
+                code: 404,
+                status: 'fail',
+                message: 'Car not found',
+            });
+        } else {
+            res.status(200).send({
+                code: 200,
+                status: 'success',
+                data: car,
+            });
+        }
+    } catch (error: any) {
+        res.status(500).send({
+            code: 500,
+            status: 'error',
+            message: error.message,
+        });
+    }
+}
+
+// dashboard
+export async function getAllCars(req: Request, res: Response) {
+    try {
+        const cars = await carService.getAllCars();
+        if (cars.length === 0) {
+            res.status(404).send({
+                code: 404,
+                status: 'fail',
+                message: 'Car not found',
             });
         } else {
             res.status(200).send({

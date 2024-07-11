@@ -8,12 +8,12 @@ import {
     loginSuperadmin,
     loginAdmin,
     loginMember
-} from "../controllers/authController";
+} from "../../controllers/authController";
 
-import uploadOnMemory from "../middleware/multerMemory";
-import { handleImageUpload } from "../middleware/errorHandler";
+import uploadOnMemory from "../../middleware/multerMemory";
+import { handleImageUpload } from "../../middleware/errorHandler";
 
-import { authorize, validateRoles } from "../middleware/authorization";
+import { authorize, validateRoles } from "../../middleware/authorization";
 
 const authRouter = Router();
 const upload = multer();
