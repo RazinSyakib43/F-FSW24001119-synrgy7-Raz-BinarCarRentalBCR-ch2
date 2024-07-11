@@ -5,6 +5,9 @@ dotenv.config(); // Load .env file
 import express, {Express, Request, Response, NextFunction} from "express";
 import path from "path"; // For file paths
 
+// Import CORS
+import cors from 'cors';
+
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './openapi.json';
 
@@ -17,6 +20,9 @@ const app = express();
 app.set("views", path.join(__dirname, "/views"));
 // Set EJS as templating engine
 app.set("view engine", "ejs");
+
+// Enable CORS for all requests, so that any frontend can make requests to this server
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
