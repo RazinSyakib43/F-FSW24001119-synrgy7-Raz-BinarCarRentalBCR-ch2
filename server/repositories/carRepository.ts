@@ -2,15 +2,15 @@ import { CarModel } from '../models/carModel';
 
 export class CarRepository {
     async findAll() {
-        return await CarModel.query().withGraphFetched("order");
+        return await CarModel.query();
     }
 
     async findSomeCar(title: string) {
-        return await CarModel.query().where('name', 'like', `%${title}%`).withGraphFetched("order");
+        return await CarModel.query().whereRaw('LOWER(manufacture) LIKE ?', [`%${title.toLowerCase()}%`]).orWhereRaw('LOWER(model) LIKE ?', [`%${title.toLowerCase()}%`]);
     }
 
     async findById(id: string) {
-        return await CarModel.query().findById(id).withGraphFetched("order");
+        return await CarModel.query().findById(id);
     }
 
     async create(carData: any) {

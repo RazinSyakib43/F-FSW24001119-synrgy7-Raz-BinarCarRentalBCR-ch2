@@ -8,7 +8,7 @@ const config: { [key: string]: Knex.Config } = {
     connection: {
       host: "localhost",
       port: 5432,
-      database: "car_rental_db",
+      database: "car_rental_ch7_db",
       user: "postgres",
       password: "yessgood123",
     },

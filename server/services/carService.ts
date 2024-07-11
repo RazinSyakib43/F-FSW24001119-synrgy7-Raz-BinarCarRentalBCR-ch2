@@ -15,10 +15,21 @@ export class CarService {
 
         const carItem = {
             id: car.id,
-            name: car.name,
-            category: car.category,
-            price: car.price,
+            plate: car.plate,
+            manufacture: car.manufacture,
+            model: car.model,
             image: car.image,
+            rentPerDay: car.rentPerDay,
+            capacity: car.capacity,
+            description: car.description,
+            driverType: car.driverType,
+            availableAt: car.availableAt,
+            transmission: car.transmission,
+            available: car.available,
+            type: car.type,
+            year: car.year,
+            options: car.options,
+            specs: car.specs,
             createdAt: car.created_at,
             createdBy: car.created_by,
             updatedAt: car.updated_at,
@@ -26,34 +37,16 @@ export class CarService {
             status: car.status,
             deletedAt: car.deleted_at,
             deletedBy: car.deleted_by,
-            orderInfo: {
-                startRent: car.order?.start_rent || null,
-                finishRent: car.order?.finish_rent || null,
-                orderStatus: car.order?.status || null,
-            }
         };
-
-        if (carItem.orderInfo.orderStatus === 'completed' || carItem.orderInfo.orderStatus === 'cancelled' || carItem.orderInfo.orderStatus === 'deleted') {
-            carItem.orderInfo.startRent = null;
-            carItem.orderInfo.finishRent = null;
-            carItem.orderInfo.orderStatus = null;
-        }
 
         return carItem;
     }
 
-    async getAllCars(includeDeleted: boolean = false, isAvailable: boolean = false) {
+    async getAllCars(driverType: boolean) {
         const cars = await this.carRepository.findAll();
 
-        if (includeDeleted) {
-            return cars.map(car => this.carsData(car));
-        } else if (isAvailable) {
-            const availableCars = cars.filter(car => car.order?.status === 'completed' || car.order?.status === 'cancelled' || car.order?.status === 'deleted');
-            return availableCars.map(car => this.carsData(car));
-        } else {
-            const activeCars = cars.filter(car => car.status !== 'deleted');
-            return activeCars.map(car => this.carsData(car));
-        }
+        const filteredCars = cars.filter(car => car.driverType === driverType);
+        return filteredCars.map(car => this.carsData(car));
     }
 
     async searchCars(title: string) {
@@ -93,18 +86,40 @@ export class CarService {
         const actorName = user.name;
 
         const oldCarData = {
-            name: selectedCar?.name,
-            category: selectedCar?.category,
-            price: selectedCar?.price,
+            plate: selectedCar?.plate,
+            manufacture: selectedCar?.manufacture,
+            model: selectedCar?.model,
             image: selectedCar?.image,
+            rentPerDay: selectedCar?.rentPerDay,
+            capacity: selectedCar?.capacity,
+            description: selectedCar?.description,
+            driverType: selectedCar?.driverType,
+            availableAt: selectedCar?.availableAt,
+            transmission: selectedCar?.transmission,
+            available: selectedCar?.available,
+            type: selectedCar?.type,
+            year: selectedCar?.year,
+            options: selectedCar?.options,
+            specs: selectedCar?.specs,
         };
         console.log("oldCarData", oldCarData);
 
         const updatedCarData = {
-            name: carItem.name || oldCarData.name,
-            category: carItem.category || oldCarData.category,
-            price: carItem.price || oldCarData.price,
+            plate: carItem.plate || oldCarData.plate,
+            manufacture: carItem.manufacture || oldCarData.manufacture,
+            model: carItem.model || oldCarData.model,
             image: file ? (await uploadToCloudinary(file)).secure_url : oldCarData.image,
+            rentPerDay: carItem.rentPerDay || oldCarData.rentPerDay,
+            capacity: carItem.capacity || oldCarData.capacity,
+            description: carItem.description || oldCarData.description,
+            driverType: carItem.driverType || oldCarData.driverType,
+            availableAt: carItem.availableAt || oldCarData.availableAt,
+            transmission: carItem.transmission || oldCarData.transmission,
+            available: carItem.available || oldCarData.available,
+            type: carItem.type || oldCarData.type,
+            year: carItem.year || oldCarData.year,
+            options: carItem.options || oldCarData.options,
+            specs: carItem.specs || oldCarData.specs,
             updated_at: new Date(),
             updated_by: `${actorRole} - ${actorName}`,
         };

@@ -4,15 +4,24 @@ import { CarService } from '../services/carService';
 const carService = new CarService();
 
 export async function getCars(req: Request, res: Response) {
-    const { includeDeleted }: { includeDeleted: string } = req.query as { includeDeleted: string };
-    const { isAvailable }: { isAvailable: string } = req.query as { isAvailable: string };
+    // const { isAvailable }: { isAvailable: string } = req.query as { isAvailable: string };
+    const { driverType } = req.query as { driverType: any } as { driverType: any };
+    // const { availableAt } = req.query as { availableAt: unknown } as { availableAt: Date };
+    // const { capacity }: { capacity: string } = req.query as { capacity: string };
+
     try {
-        const cars = await carService.getAllCars(includeDeleted === 'true' ? true : false, isAvailable === 'true' ? true : false);
-        if (cars.length === 0) {
+        const cars = await carService.getAllCars(driverType === 'true' ? true : false);
+        if (!driverType) {
+            res.status(400).send({
+                code: 400,
+                status: 'fail',
+                message: 'Please provide driverType query parameter',
+            });
+        } else if (cars.length === 0) {
             res.status(404).send({
                 code: 404,
                 status: 'fail',
-                message: 'Cars not found',
+                message: 'Car not found',
             });
         } else {
             res.status(200).send({
