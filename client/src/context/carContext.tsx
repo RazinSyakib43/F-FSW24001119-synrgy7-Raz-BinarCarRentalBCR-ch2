@@ -29,17 +29,34 @@ export interface Car {
 
 interface CarContextProps {
     cars: Car[];
+
+    searchCars: (driverType: string) => void;
+
     fetchCars: () => void;
     addCar: (car: Car) => void;
     updateCar: (car: Car) => void;
     deleteCar: (id: string) => void;
 }
 
-const CarContext = createContext<CarContextProps | undefined>(undefined);
+export const CarContext = createContext<CarContextProps | undefined>(undefined);
 
 export function CarProvider({ children }: { children: React.ReactNode }) {
     const [cars, setCars] = useState<Car[]>([]);
 
+    // Client
+    const searchCars = async (driverType: string) => {
+        try {
+            const response = await axios.get(`http://localhost:8080/api/v1/client/cars`, {
+                params: { driverType }
+            });
+            setCars(response.data.data);
+            console.log(response.data.data);
+        } catch (error) {
+            console.error('Error fetching cars:', error);
+        }
+    };
+
+    // Dashboard
     const fetchCars = async () => {
         try {
             const response = await axios.get('http://localhost:8080/api/v1/dashboard/cars');
@@ -79,10 +96,11 @@ export function CarProvider({ children }: { children: React.ReactNode }) {
 
     useEffect(() => {
         fetchCars();
+        searchCars('');
     }, []);
 
     return (
-        <CarContext.Provider value={{ cars, fetchCars, addCar, updateCar, deleteCar }}>
+        <CarContext.Provider value={{ cars, searchCars, fetchCars, addCar, updateCar, deleteCar }}>
             {children}
         </CarContext.Provider>
     );

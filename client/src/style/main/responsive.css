@@ -1,0 +1,230 @@
+* {
+    font-family: Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+:root {
+    --primary-color: #F1F3FF;
+    --lime-green: #5CB85F;
+    --lime-green-young: #A3D2A3;
+    --lime-green-old: #3A7D44;
+    --neutral: #D0D0D0;
+    --dark-blue: #0D28A6;
+}
+
+@media screen and (max-width: 991px) {
+    body {
+        margin: 0;
+    }
+
+    /* Navbar Section */
+    .navbar-toggler,
+    .navbar-toggler:focus,
+    .navbar-toggler:active,
+    .navbar-toggler-icon:focus {
+        outline: none;
+        box-shadow: none;
+        border: none;
+    }
+
+    .btn-close,
+    .btn-close:focus,
+    .btn-close:active {
+        outline: none;
+        box-shadow: none;
+        border: none;
+    }
+
+    .offcanvas {
+        padding-top: 32px;
+    }
+
+    .navbar__register-button {
+        margin-top: 16px;
+    }
+
+    /* Hero Section */
+    .hero {
+        height: 100%;
+        margin-bottom: 60px;
+    }
+
+    .hero__description {
+        width: 100%;
+        text-align: justify;
+    }
+
+    .hero__img-car {
+        position: static;
+        width: 100%;
+        margin-left: 16px !important;
+        padding-top: 24px;
+    }
+
+    /* Our Services Section */
+    .our-services {
+        padding-top: 60px;
+        width: 100%;
+    }
+
+    .our-services__row {
+        padding-left: 16px;
+        padding-right: 16px;
+        padding-bottom: 0px;
+    }
+
+    .our-services__col1 {
+        display: flex;
+        justify-content: center;
+        padding: 0px 54px;
+    }
+
+    .our-services__img {
+        width: 252px;
+        height: 228px;
+        margin-bottom: 24px;
+    }
+
+    .our-services__title,
+    .our-services__description {
+        text-align: justify;
+        margin-bottom: 16px;
+    }
+
+    /* Why Us Section */
+    .why-us {
+        margin-top: 60px;
+        margin-bottom: 60px;
+    }
+
+    .why-us__title {
+        text-align: center;
+    }
+
+    .why-us__description {
+        text-align: center;
+        margin-bottom: 16px;
+    }
+
+    .why-us__card {
+        margin-bottom: 16px;
+    }
+
+    /* Testimonial Section */
+    .testimonial {
+        height: 614px;
+    }
+
+    .testimonial__description {
+        margin-bottom: 0;
+    }
+
+    .testimonial__swiper {
+        margin-top: 16px;
+    }
+
+    .swiper-wrapper {
+        padding: 16px !important;
+    }
+
+    .testimonial__card {
+        width: 328px;
+        height: auto;
+    }
+
+    .testimonial__card-body {
+        display: flex !important;
+        flex-direction: column;
+        padding: 40px 16px;
+    }
+
+    .testimonial__card-img {
+        margin-bottom: 24px;
+        margin-right: 0;
+    }
+
+    .testimonial__card-review section {
+        text-align: center;
+    }
+
+    .testimonial__card-quote {
+        text-align: justify;
+    }
+
+    /* Getting Started Section */
+    .getting-started {
+        margin-top: 100px !important;
+    }
+
+    .getting-started__card {
+        padding: 64px 58px !important;
+        margin-bottom: 60px;
+    }
+
+    .getting-started__card-body {
+        width: 100% !important;
+    }
+
+    .getting-started__card-body section {
+        width: 100%;
+        margin-bottom: 32px;
+    }
+
+    .getting-started__title {
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 36px;
+        margin-bottom: 16px;
+    }
+
+    /* FAQ Section */
+    .faq {
+        margin-bottom: 0;
+    }
+
+    .faq__title,
+    .faq__description {
+        text-align: center;
+    }
+
+    /* Footer Section */
+    footer {
+        margin-top: 60px;
+        padding-bottom: 0px;
+        margin-bottom: 60px;
+    }
+
+    .footer__address {
+        margin-bottom: 24px;
+    }
+
+    .footer__address-item:nth-child(3) {
+        margin-bottom: 0;
+    }
+
+    .footer__navigation ul {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+    }
+
+    .footer__navigation {
+        margin-bottom: 24px;
+    }
+
+    .footer__navigation li:nth-child(4) {
+        margin-bottom: 0;
+    }
+
+    .footer__sosmed-icon {
+        margin-bottom: 24px;
+    }
+}
