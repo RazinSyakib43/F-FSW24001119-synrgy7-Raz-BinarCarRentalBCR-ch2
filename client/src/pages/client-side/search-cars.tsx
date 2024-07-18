@@ -1,6 +1,10 @@
 import { useCarContext } from '../../context/carContext';
+
+import Navbar from '../../components/client-side/cars/navbar';
+import Hero from '../../components/client-side/cars/hero';
+import SearchForm from '../../components/client-side/cars/searchForm';
 import CarItem from '../../components/client-side/cars/carCard';
-import SearchForm from '../../components/client-side/cars/searchCarForm';
+import Footer from '../../components/client-side/cars/footer';
 
 import '../../style/main/style.css'
 import '../../style/main/responsive.css'
@@ -9,15 +13,24 @@ export default function SearchCarsPage() {
     const { cars } = useCarContext();
 
     return (
-        <section className="container">
-            <SearchForm />
-            <section id="cars-container" className="row row-cols-1 row-cols-md-3">
-                {cars.map(car => (
-                    <div className="col mb-4" key={car.id}>
-                        <CarItem car={car} />
-                    </div>
-                ))}
+        <>
+            <header>
+                <Navbar />
+            </header>
+            <main>
+                <Hero />
+                <SearchForm />
+            </main>
+            <section className="container">
+                <section className="row row-cols-1 row-cols-md-3">
+                    {cars.map(car => (
+                        <div className="col mb-4" key={car.id}>
+                            <CarItem car={car} />
+                        </div>
+                    ))}
+                </section>
             </section>
-        </section>
+            <Footer/>
+        </>
     );
 }

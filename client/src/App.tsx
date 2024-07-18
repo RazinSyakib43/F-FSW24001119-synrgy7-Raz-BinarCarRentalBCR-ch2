@@ -10,12 +10,10 @@ function App() {
   return (
     <CarProvider>
       <Router>
-        <div className="container mx-auto">
           <Routes>
             <Route path="/dashboard/car" element={<CarList />} />
             <Route path="/search" element={<SearchCarsPage />} />
           </Routes>
-        </div>
       </Router>
     </CarProvider>
   );
