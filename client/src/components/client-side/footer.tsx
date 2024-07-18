@@ -1,11 +1,11 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import facebookIcon from '../../../assets/icons/sosmed/icon_facebook.png';
-import instagramIcon from '../../../assets/icons/sosmed/icon_instagram.png';
-import twitterIcon from '../../../assets/icons/sosmed/icon_twitter.png';
-import mailIcon from '../../../assets/icons/sosmed/icon_mail.png';
-import twitchIcon from '../../../assets/icons/sosmed/icon_twitch.png';
-import logo from '../../../assets/images/logo.png';
+import facebookIcon from '../../assets/icons/sosmed/icon_facebook.png';
+import instagramIcon from '../../assets/icons/sosmed/icon_instagram.png';
+import twitterIcon from '../../assets/icons/sosmed/icon_twitter.png';
+import mailIcon from '../../assets/icons/sosmed/icon_mail.png';
+import twitchIcon from '../../assets/icons/sosmed/icon_twitch.png';
+import logo from '../../assets/images/logo.png';
 
 export default function Footer(): JSX.Element {
     return (

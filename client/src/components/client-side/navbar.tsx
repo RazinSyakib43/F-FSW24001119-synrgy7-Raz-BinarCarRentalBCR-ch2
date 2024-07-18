@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import logo from '../../../assets/images/logo.png';
+import logo from '../../assets/images/logo.png';
 
 export default function Navbar(): JSX.Element {
     return (
