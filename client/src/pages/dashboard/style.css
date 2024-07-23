@@ -211,13 +211,13 @@ a {
 .cars-card {
     margin-top: 27px;
     border: none;
-    border-radius: 8px;
+    border-radius: 8px !important;
     background-color: white;
     box-shadow: 0px 0px 10px 0px #00000026;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    -ms-border-radius: 8px;
-    -o-border-radius: 8px;
+    -webkit-border-radius: 8px !important;
+    -moz-border-radius: 8px !important;
+    -ms-border-radius: 8px !important;
+    -o-border-radius: 8px !important;
 }
 
 .cars__card-body {
@@ -228,6 +228,11 @@ a {
     object-fit: cover;
     width: 100%;
     height: 222px;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
 }
 
 .cars__name {
