@@ -30,6 +30,7 @@ a {
     text-decoration: none;
 }
 
+/* For All Dashboard Pages */
 .sidebar-nav {
     background-color: var(--primary-color);
     color: var(--neutral);
@@ -111,7 +112,7 @@ a {
     height: 34px;
 }
 
-.top-navbar__user-picture{
+.top-navbar__user-picture {
     height: 38px;
 }
 
@@ -123,10 +124,201 @@ a {
     margin: 9px;
 }
 
-.top-navbar__dropdown{
+.top-navbar__dropdown {
     height: 24px;
 }
 
+/* List Car Page */
+.list-car-section {
+    background-color: var(--background-color);
+    padding-top: 32px;
+    padding-right: 25px;
+    padding-left: 25px;
+    padding-bottom: 40px;
+    height: 100vh;
+}
+
+.list-car-section__title {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 30px;
+    text-align: left;
+    margin-bottom: 24px;
+}
+
+.add-new-car-button {
+    background-color: var(--primary-color);
+    color: var(--neutral);
+    padding: 8px 12px;
+    border: none;
+    border-radius: 2px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    width: auto;
+    height: 36px;
+    animation: ease-in-out;
+    animation-duration: 2s;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -o-border-radius: 2px;
+    -webkit-animation: ease-in-out;
+
+}
+
+.list-car-section__filter-button {
+    background-color: var(--neutral);
+    color: var(--primary-color);
+    padding: 8px 12px;
+    border: 1px solid var(--primary-color);
+    border-radius: 2px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    width: auto;
+    height: 36px;
+    margin-right: 16px;
+    animation: ease-in-out;
+    animation-duration: 2s;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -o-border-radius: 2px;
+    -webkit-animation: ease-in-out;
+}
+
+.list-car-section__filter-button-active {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    padding: 8px 12px;
+    border: 1px solid var(--primary-color);
+    border-radius: 2px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    width: auto;
+    height: 36px;
+    animation: ease-in-out;
+    animation-duration: 2s;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -o-border-radius: 2px;
+    -webkit-animation: ease-in-out;
+}
+
+.cars-card {
+    margin-top: 27px;
+    border: none;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0px 0px 10px 0px #00000026;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+}
+
+.cars__card-body {
+    padding-bottom: 0;
+}
+
+.cars-card-img {
+    object-fit: cover;
+    width: 100%;
+    height: 222px;
+}
+
+.cars__name {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.cars__price {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+}
+
+.cars__spec {
+    margin-top: 16px !important;
+    margin: 0px !important;
+}
+
+.cars__spec-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+}
+
+.car__spec-text {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 20px;
+}
+
+.cars__button {
+    max-width: 100%;
+    margin-top: 8px !important;
+    margin: 24px;
+    padding: 18px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    -o-border-radius: 2px;
+}
+
+.cars__button img {
+    margin-right: 12px;
+}
+
+.cars__button p {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    text-align: left;
+    margin: 0;
+}
+
+.delete-button {
+    margin-right: 8px !important;
+    background-color: var(--neutral);
+    color: var(--red);
+    border: 1.5px solid var(--red);
+    width: 50%;
+}
+
+.edit-button {
+    margin-left: 8px !important;
+    background-color: var(--lime-green);
+    color: var(--neutral);
+    border: 1.5px solid var(--lime-green);
+    width: 50%;
+}
+
+.delete-button:hover {
+    margin-right: 8px !important;
+    background-color: var(--neutral);
+    color: var(--red);
+    border: 1.5px solid var(--red);
+    width: 50%;
+}
+
+.edit-button:hover {
+    margin-left: 8px !important;
+    background-color: var(--lime-green);
+    color: var(--neutral);
+    border: 1.5px solid var(--lime-green);
+    width: 50%;
+}
+
+/* Add Cars Page */
 .car-form {
     background-color: var(--background-color);
     padding-top: 32px;
