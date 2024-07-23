@@ -80,9 +80,9 @@ export default function Testimonial(): JSX.Element {
             </section>
 
             <section className="testimonial__swiper swiper mySwiper">
-                <div className="swiper-wrapper">
+                <section className="swiper-wrapper">
                     {testimonialsData.map((testi, index) => (
-                        <div className="swiper-slide" key={index}>
+                        <section className="swiper-slide" key={index}>
                             <section className="testimonial__card card border-0">
                                 <section className="testimonial__card-body card-body d-flex align-items-center justify-content-center">
                                     <img src={testi.imgSrc} className="testimonial__card-img" alt="" />
@@ -97,9 +97,9 @@ export default function Testimonial(): JSX.Element {
                                     </section>
                                 </section>
                             </section>
-                        </div>
+                        </section>
                     ))}
-                </div>
+                </section>
 
                 <section className="testimonial__swiper-button-next swiper-button-next"></section>
                 <section className="testimonial__swiper-button-prev swiper-button-prev"></section>

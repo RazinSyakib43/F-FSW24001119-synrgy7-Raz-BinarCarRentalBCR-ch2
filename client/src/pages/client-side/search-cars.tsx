@@ -23,9 +23,9 @@ export default function SearchCarsPage() {
                 <section className="container">
                     <section className="row row-cols-1 row-cols-md-3">
                         {cars.map(car => (
-                            <div className="col mb-4" key={car.id}>
+                            <section className="col mb-4" key={car.id}>
                                 <CarItem car={car} />
-                            </div>
+                            </section>
                         ))}
                     </section>
                 </section>

@@ -19,7 +19,7 @@ function App() {
             <Route path="/" element={<Homepage />} />
             <Route path="/cars" element={<SearchCarsPage />} />
 
-            <Route path="/dashboard/car" element={<CarList />} />
+            <Route path="/dashboard/cars" element={<CarList />} />
           </Routes>
       </Router>
     </CarProvider>
