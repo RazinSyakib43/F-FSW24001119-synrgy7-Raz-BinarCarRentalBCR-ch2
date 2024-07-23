@@ -335,9 +335,9 @@ a {
     padding-bottom: 40px;
     height: 100vh;
 
-    display: flex;
+    /* display: flex;
     justify-content: space-between !important;
-    flex-direction: column;
+    flex-direction: column; */
 }
 
 .car-form__breadcrumb {
@@ -357,6 +357,7 @@ a {
     font-weight: 700;
     line-height: 30px;
     text-align: left;
+    margin-bottom: 16px;
 }
 
 .car-form__forms {

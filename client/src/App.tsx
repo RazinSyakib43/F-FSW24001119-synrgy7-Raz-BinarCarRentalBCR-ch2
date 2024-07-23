@@ -8,6 +8,7 @@ import Homepage from './pages/client-side/homepage';
 
 // Dashboard Pages
 import CarList from './pages/dashboard/carList';
+import AddCar from './pages/dashboard/addCar';
 
 import { CarProvider } from './context/carContext';
 
@@ -20,6 +21,7 @@ function App() {
             <Route path="/cars" element={<SearchCarsPage />} />
 
             <Route path="/dashboard/cars" element={<CarList />} />
+            <Route path="/dashboard/car/add-car" element={<AddCar />} />
           </Routes>
       </Router>
     </CarProvider>
