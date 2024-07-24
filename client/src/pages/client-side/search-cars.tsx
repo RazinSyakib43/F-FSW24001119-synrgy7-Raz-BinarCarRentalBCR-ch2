@@ -14,6 +14,7 @@ export default function SearchCarsPage() {
 
     return (
         <>
+        <h1>sdfhsdfk</h1>
             <header>
                 <Navbar />
             </header>

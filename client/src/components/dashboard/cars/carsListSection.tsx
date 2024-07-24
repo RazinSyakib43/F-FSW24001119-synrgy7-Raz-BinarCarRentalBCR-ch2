@@ -47,7 +47,7 @@ export default function CarsListSection(): JSX.Element {
                 </section>
                 <section className="d-flex justify-content-between">
                     <h2 className="list-car-section__title">List Car</h2>
-                    <a href="/dashboard/car/add-car">
+                    <a href="/dashboard/cars/add-car">
                         <button type="button" className="btn btn-primary add-new-car-button"><span
                             style={{ marginRight: '12px' }}>+</span>Add
                             New Car</button>

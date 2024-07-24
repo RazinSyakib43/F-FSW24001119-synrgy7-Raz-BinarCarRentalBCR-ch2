@@ -1,31 +1,36 @@
-import './App.css'
-
+import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-// CLient Pages
-import SearchCarsPage from './pages/client-side/search-cars';
-import Homepage from './pages/client-side/homepage';
+// Auth pages
+import Login from './pages/auth/login';
 
-// Dashboard Pages
+// // Client side pages
+import Homepage from './pages/client-side/homepage';
+import SearchCarsPage from './pages/client-side/search-cars';
+
+// Dashboard pages
+import DashboardMain from './pages/dashboard/dashboardHome';
 import CarList from './pages/dashboard/carList';
 import AddCar from './pages/dashboard/addCar';
 
-import { CarProvider } from './context/carContext';
+import Protected from './components/auth/protected';
+import { AuthProvider } from './hooks/useAuth';
 
 function App() {
   return (
-    <CarProvider>
-      <Router>
-          <Routes>
-            <Route path="/" element={<Homepage />} />
-            <Route path="/cars" element={<SearchCarsPage />} />
-
-            <Route path="/dashboard/cars" element={<CarList />} />
-            <Route path="/dashboard/car/add-car" element={<AddCar />} />
-          </Routes>
-      </Router>
-    </CarProvider>
+    <Router>
+      <AuthProvider>
+        <Routes>
+          <Route path="/auth/login" element={<Login />} />
+          <Route path="/" element={<Homepage />} />
+          <Route path="/cars" element={<SearchCarsPage />} />
+          <Route path="/dashboard" element={<DashboardMain />} />
+          <Route path="/dashboard/cars" element={<Protected><CarList /></Protected>} />
+          <Route path="/dashboard/cars/add-car" element={<Protected><AddCar /></Protected>} />
+        </Routes>
+      </AuthProvider>
+    </Router>
   );
 }
 
-export default App
+export default App;
