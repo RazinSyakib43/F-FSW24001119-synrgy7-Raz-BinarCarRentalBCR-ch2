@@ -59,8 +59,11 @@ export function CarProvider({ children }: { children: React.ReactNode }) {
     // Dashboard
     const fetchCars = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/v1/dashboard/cars');
-            console.log('Fetched cars:', response.data.data);
+            const response = await axios.get('http://localhost:8080/api/v1/dashboard/cars', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
             setCars(response.data.data);
         } catch (error) {
             console.error('Failed to fetch cars', error);
@@ -69,7 +72,11 @@ export function CarProvider({ children }: { children: React.ReactNode }) {
 
     const addCar = async (car: Car) => {
         try {
-            const response = await axios.post('http://localhost:8080/api/v1/dashboard/cars', car);
+            const response = await axios.post('http://localhost:8080/api/v1/dashboard/cars', car, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
             setCars([...cars, response.data.data]);
         } catch (error) {
             console.error('Failed to add car', error);
@@ -78,7 +85,11 @@ export function CarProvider({ children }: { children: React.ReactNode }) {
 
     const updateCar = async (car: Car) => {
         try {
-            const response = await axios.put(`http://localhost:8080/api/v1/dashboard/cars/${car.id}`, car);
+            const response = await axios.put(`http://localhost:8080/api/v1/dashboard/cars/${car.id}`, car, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
             setCars(cars.map(c => (c.id === car.id ? response.data.data : c)));
         } catch (error) {
             console.error('Failed to update car', error);
@@ -87,7 +98,11 @@ export function CarProvider({ children }: { children: React.ReactNode }) {
 
     const deleteCar = async (id: string) => {
         try {
-            await axios.delete(`http://localhost:8080/api/v1/dashboard/cars/${id}`);
+            await axios.delete(`http://localhost:8080/api/v1/dashboard/cars/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
             setCars(cars.filter(c => c.id !== id));
         } catch (error) {
             console.error('Failed to delete car', error);
