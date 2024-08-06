@@ -148,7 +148,34 @@ export async function getCarById(req: Request, res: Response) {
 }
 
 export async function addCar(req: Request, res: Response) {
-    const { name, category, price }: { name: string; category: string; price: number } = req.body;
+    const {
+        plate,
+        manufacture,
+        model,
+        rentPerDay,
+        capacity,
+        description,
+        driverType,
+        transmission,
+        type,
+        year,
+        options,
+        specs
+    }: {
+        plate: string;
+        manufacture: string;
+        model: number;
+        rentPerDay: number;
+        capacity: number;
+        description: string;
+        driverType: boolean;
+        transmission: string;
+        available: boolean;
+        type: string;
+        year: number;
+        options: string[];
+        specs: string[];
+    } = req.body;
 
     const image = req.file;
     const user = (req as any).user;
@@ -156,14 +183,27 @@ export async function addCar(req: Request, res: Response) {
     console.log(req.body);
 
     try {
-        if (!name && !category && !price && !image) {
+        if (!plate || !manufacture || !image || !model || !rentPerDay || !capacity || !description || !driverType || !transmission || !type || !year || !options || !specs) {
             return res.status(400).send({
                 code: 400,
                 status: "fail",
-                message: "Please fill all required fields (name, category, price, image)",
+                message: "Please fill all required fields (plate, manufacture, image, model, rentPerDay, capacity, description, driverType, transmission, type, year, options, specs)",
             });
         } else {
-            const newCar = await carService.addCar(image, { name, category, price }, user);
+            const newCar = await carService.addCar(image, {
+                plate,
+                manufacture,
+                model,
+                rentPerDay,
+                capacity,
+                description,
+                driverType,
+                transmission,
+                type,
+                year,
+                options,
+                specs
+            }, user);
 
             res.status(201).send({
                 code: 201,

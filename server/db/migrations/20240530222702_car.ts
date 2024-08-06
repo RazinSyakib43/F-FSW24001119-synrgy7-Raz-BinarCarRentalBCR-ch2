@@ -4,7 +4,7 @@ const randomBoolean = Math.random() < 0.5 ? true : false;
 
 export async function up(knex: Knex): Promise<void> {
     return knex.schema.createTable('car', table => {
-        table.uuid('id').primary();
+        table.uuid('id').primary().defaultTo(knex.raw('uuid_generate_v4()'));
         table.string('plate').notNullable();
         table.string('manufacture').notNullable();
         table.string('model').notNullable();

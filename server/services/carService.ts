@@ -75,6 +75,8 @@ export class CarService {
         const newCarData = {
             ...carItem,
             image: uploadResult.secure_url,
+            available: true,
+            availableAt: new Date(),
             created_at: new Date(),
             created_by: `${actorRole} - ${actorName}`,
             updated_at: new Date(),
