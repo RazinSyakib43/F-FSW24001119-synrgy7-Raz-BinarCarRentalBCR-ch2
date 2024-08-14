@@ -66,6 +66,11 @@ export class CarService {
         return cars.map(car => this.carsData(car));
     }
 
+    async getCarsForDashboard() {
+        const cars = await this.carRepository.findSomeCarWithStatusActive();
+        return cars.map(car => this.carsData(car));
+    }
+
     async addCar(file: any, carItem: any, user: any) {
         const uploadResult: UploadApiResponse = await uploadToCloudinary(file);
 

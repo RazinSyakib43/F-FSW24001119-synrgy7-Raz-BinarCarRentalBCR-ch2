@@ -12,11 +12,11 @@ import userPPIcon from '../../../assets/icons/dashboard/user_pp.png';
 import chevronDownIcon from '../../../assets/icons/dashboard/fi_chevron-down.png';
 
 export default function CarsListSection(): JSX.Element {
-    const { cars, fetchCars } = useCarContext();
+    const { cars, fetchCarsForDashboard } = useCarContext();
 
     useEffect(() => {
-        fetchCars();
-    }, [fetchCars]);
+        fetchCarsForDashboard();
+    }, [fetchCarsForDashboard]);
 
     const { userName, userAvatar } = useAuth();
 

@@ -34,6 +34,7 @@ interface CarContextProps {
     searchCars: (driverType: string) => void;
 
     fetchCars: () => void;
+    fetchCarsForDashboard: () => void;
     addCar: (formData: FormData) => void;
     updateCar: (car: Car) => void;
     deleteCar: (id: string) => void;
@@ -57,7 +58,7 @@ export function CarProvider({ children }: { children: React.ReactNode }) {
         }
     };
 
-    // Dashboard
+    // Just for backend side, not used in frontend side
     const fetchCars = async () => {
         try {
             const response = await axios.get('http://localhost:8080/api/v1/dashboard/cars', {
@@ -71,21 +72,35 @@ export function CarProvider({ children }: { children: React.ReactNode }) {
         }
     };
 
-const addCar = async (formData: FormData) => {
-    try {
-        const response = await axios.post('http://localhost:8080/api/v1/dashboard/cars', formData, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')?.replace(/"/g, '')}`,
-                'Content-Type': 'multipart/form-data'
-            }
-        });
-        setCars([...cars, response.data.data]);
-        const token = localStorage.getItem('token');
-        console.log(token);
-    } catch (error) {
-        console.error('Failed to add car', error);
-    }
-};
+    // dashboard
+    const fetchCarsForDashboard = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/api/v1/dashboard/cars/dashboard', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            setCars(response.data.data);
+        } catch (error) {
+            console.error('Failed to fetch cars', error);
+        }
+    };
+
+    const addCar = async (formData: FormData) => {
+        try {
+            const response = await axios.post('http://localhost:8080/api/v1/dashboard/cars', formData, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')?.replace(/"/g, '')}`,
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            setCars([...cars, response.data.data]);
+            const token = localStorage.getItem('token');
+            console.log(token);
+        } catch (error) {
+            console.error('Failed to add car', error);
+        }
+    };
 
 
     const updateCar = async (car: Car) => {
@@ -120,8 +135,16 @@ const addCar = async (formData: FormData) => {
     }, []);
 
     return (
-        <CarContext.Provider value={{ cars, searchCars, fetchCars, addCar, updateCar, deleteCar }}>
-            {children}
+        <CarContext.Provider value={{
+            cars,
+            searchCars,
+
+            fetchCars,
+            fetchCarsForDashboard,
+            addCar,
+            updateCar,
+            deleteCar
+        }}> {children}
         </CarContext.Provider>
     );
 }

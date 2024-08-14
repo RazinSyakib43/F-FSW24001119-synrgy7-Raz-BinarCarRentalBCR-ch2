@@ -7,6 +7,7 @@ import { authorize, validateRoles } from "../../middleware/authorization";
 
 import {
     getAllCars,
+    getCarsDashboard,
     getCarById,
     addCar,
     updateCar,
@@ -16,6 +17,7 @@ import {
 const carRouter = Router();
 
 carRouter.get("/", getAllCars);
+carRouter.get("/dashboard", getCarsDashboard);
 carRouter.get("/:id", getCarById);
 carRouter.post("/", [authorize, validateRoles(["admin", "superadmin"])], uploadOnMemory.single("image"), handleImageUpload, addCar);
 carRouter.put("/:id", [authorize, validateRoles(["admin", "superadmin"])], uploadOnMemory.single("image"), updateCar);

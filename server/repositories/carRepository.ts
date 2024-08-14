@@ -9,6 +9,10 @@ export class CarRepository {
         return await CarModel.query().whereRaw('LOWER(manufacture) LIKE ?', [`%${title.toLowerCase()}%`]).orWhereRaw('LOWER(model) LIKE ?', [`%${title.toLowerCase()}%`]);
     }
 
+    async findSomeCarWithStatusActive() {
+        return await CarModel.query().where('status', 'active');
+    }
+
     async findById(id: string) {
         return await CarModel.query().findById(id);
     }

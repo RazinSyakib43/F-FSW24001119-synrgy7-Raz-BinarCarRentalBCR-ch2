@@ -94,10 +94,36 @@ export async function getCarByIdClient(req: Request, res: Response) {
     }
 }
 
-// dashboard
+// just for backend side
 export async function getAllCars(req: Request, res: Response) {
     try {
         const cars = await carService.getAllCars();
+        if (cars.length === 0) {
+            res.status(404).send({
+                code: 404,
+                status: 'fail',
+                message: 'Car not found',
+            });
+        } else {
+            res.status(200).send({
+                code: 200,
+                status: 'success',
+                data: cars,
+            });
+        }
+    } catch (error: any) {
+        res.status(500).send({
+            code: 500,
+            status: 'error',
+            message: error.message,
+        });
+    }
+}
+
+// dashboard
+export async function getCarsDashboard(req: Request, res: Response) {
+    try{
+        const cars = await carService.getCarsForDashboard();
         if (cars.length === 0) {
             res.status(404).send({
                 code: 404,
