@@ -107,9 +107,10 @@ export function CarProvider({ children }: { children: React.ReactNode }) {
         try {
             const response = await axios.put(`http://localhost:8080/api/v1/dashboard/cars/${car.id}`, car, {
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    'Authorization': `Bearer ${localStorage.getItem('token')?.replace(/"/g, '')}`,
                 }
             });
+            console.log("Delete car", response.data.data);
             setCars(cars.map(c => (c.id === car.id ? response.data.data : c)));
         } catch (error) {
             console.error('Failed to update car', error);
@@ -118,11 +119,12 @@ export function CarProvider({ children }: { children: React.ReactNode }) {
 
     const deleteCar = async (id: string) => {
         try {
-            await axios.delete(`http://localhost:8080/api/v1/dashboard/cars/${id}`, {
+            const response = await axios.delete(`http://localhost:8080/api/v1/dashboard/cars/${id}`, {
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    'Authorization': `Bearer ${localStorage.getItem('token')?.replace(/"/g, '')}`,
                 }
             });
+            console.log("Delete car", response.data.data);
             setCars(cars.filter(c => c.id !== id));
         } catch (error) {
             console.error('Failed to delete car', error);

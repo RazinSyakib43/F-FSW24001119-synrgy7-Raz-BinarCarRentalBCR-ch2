@@ -1,4 +1,5 @@
 import { Car } from '../../../context/carContext';
+import { useCarContext } from '../../../context/carContext';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../../../style/dashboard/style.css'
@@ -13,6 +14,14 @@ interface CarItemProps {
 }
 
 export default function CarItem({ car }: CarItemProps): JSX.Element {
+    const { deleteCar } = useCarContext();
+
+    const handleDelete = () => {
+        if (window.confirm(`Are you sure you want to delete ${car.manufacture} ${car.model} with id ${car.id}?`)) {
+            deleteCar(car.id);
+        }
+    };
+
     return (
         <section className="cars-card card px-0">
             <img src={car.image}
@@ -32,7 +41,10 @@ export default function CarItem({ car }: CarItemProps): JSX.Element {
                 </section>
             </section>
             <section className="d-flex">
-                <button className="btn cars__button delete-button d-flex justify-content-center">
+                <button
+                    className="btn cars__button delete-button d-flex justify-content-center"
+                    onClick={handleDelete}
+                >
                     <img src={trashIcon} alt="" />
                     <p>Delete</p>
                 </button>
