@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
-
 export interface Car {
     id: string;
     plate: string;
@@ -25,6 +25,7 @@ export interface Car {
     status: string;
     deletedAt: string | null;
     deletedBy: string | null;
+    [key: string]: any;
 }
 
 interface CarContextProps {
@@ -33,7 +34,7 @@ interface CarContextProps {
     searchCars: (driverType: string) => void;
 
     fetchCars: () => void;
-    addCar: (car: Car) => void;
+    addCar: (formData: FormData) => void;
     updateCar: (car: Car) => void;
     deleteCar: (id: string) => void;
 }
@@ -70,18 +71,22 @@ export function CarProvider({ children }: { children: React.ReactNode }) {
         }
     };
 
-    const addCar = async (car: Car) => {
-        try {
-            const response = await axios.post('http://localhost:8080/api/v1/dashboard/cars', car, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
-            });
-            setCars([...cars, response.data.data]);
-        } catch (error) {
-            console.error('Failed to add car', error);
-        }
-    };
+const addCar = async (formData: FormData) => {
+    try {
+        const response = await axios.post('http://localhost:8080/api/v1/dashboard/cars', formData, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')?.replace(/"/g, '')}`,
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        setCars([...cars, response.data.data]);
+        const token = localStorage.getItem('token');
+        console.log(token);
+    } catch (error) {
+        console.error('Failed to add car', error);
+    }
+};
+
 
     const updateCar = async (car: Car) => {
         try {

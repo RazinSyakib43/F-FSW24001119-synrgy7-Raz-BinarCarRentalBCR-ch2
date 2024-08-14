@@ -31,6 +31,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             setUserAvatar(avatar);
         } catch (error) {
             console.error('Failed to fetch user data', error);
+            logout();
         }
     };
 
