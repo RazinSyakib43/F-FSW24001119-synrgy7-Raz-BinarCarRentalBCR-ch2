@@ -30,12 +30,14 @@ export interface Car {
 
 interface CarContextProps {
     cars: Car[];
+    carData: Car | null;
 
     searchCars: (driverType: string) => void;
 
     fetchCarsForDashboard: () => void;
+    getCarDetailById: (id: string) => void;
     addCar: (formData: FormData) => void;
-    updateCar: (car: Car) => void;
+    updateCar: (id: string, formData: FormData) => void;
     deleteCar: (id: string) => void;
 }
 
@@ -43,6 +45,7 @@ export const CarContext = createContext<CarContextProps | undefined>(undefined);
 
 export function CarProvider({ children }: { children: React.ReactNode }) {
     const [cars, setCars] = useState<Car[]>([]);
+    const [carData, setCarData] = useState<Car | null>(null);
 
     // Client
     const searchCars = async (driverType: string) => {
@@ -51,7 +54,7 @@ export function CarProvider({ children }: { children: React.ReactNode }) {
                 params: { driverType }
             });
             setCars(response.data.data);
-            console.log(response.data.data);
+            console.log("searchCars:", response.data.data);
         } catch (error) {
             console.error('Error fetching cars:', error);
         }
@@ -66,8 +69,25 @@ export function CarProvider({ children }: { children: React.ReactNode }) {
                 }
             });
             setCars(response.data.data);
+            console.log("fetchCarsForDashboard:", response.data.data);
         } catch (error) {
             console.error('Failed to fetch cars', error);
+        }
+    };
+
+    const getCarDetailById = async (id: string) => {
+        try {
+            const response = await axios.get(`http://localhost:8080/api/v1/dashboard/cars/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+
+            const carDetail: Car = response.data.data;
+            setCarData(carDetail);
+            console.log("getCarDetailById:", carDetail);
+        } catch (error) {
+            console.error('Failed to fetch car detail', error);
         }
     };
 
@@ -82,21 +102,23 @@ export function CarProvider({ children }: { children: React.ReactNode }) {
             setCars([...cars, response.data.data]);
             const token = localStorage.getItem('token');
             console.log(token);
+            console.log("Add car", response.data.data);
         } catch (error) {
             console.error('Failed to add car', error);
         }
     };
 
 
-    const updateCar = async (car: Car) => {
+    const updateCar = async (id: string, formData: FormData) => {
         try {
-            const response = await axios.put(`http://localhost:8080/api/v1/dashboard/cars/${car.id}`, car, {
+            const response = await axios.put(`http://localhost:8080/api/v1/dashboard/cars/${id}`, formData, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')?.replace(/"/g, '')}`,
+                    'Content-Type': 'multipart/form-data'
                 }
             });
-            console.log("Delete car", response.data.data);
-            setCars(cars.map(c => (c.id === car.id ? response.data.data : c)));
+            console.log("Update car", response.data.data);
+            setCars(cars.map(c => c.id === id ? response.data.data : c));
         } catch (error) {
             console.error('Failed to update car', error);
         }
@@ -123,9 +145,11 @@ export function CarProvider({ children }: { children: React.ReactNode }) {
     return (
         <CarContext.Provider value={{
             cars,
+            carData,
             searchCars,
 
             fetchCarsForDashboard,
+            getCarDetailById,
             addCar,
             updateCar,
             deleteCar

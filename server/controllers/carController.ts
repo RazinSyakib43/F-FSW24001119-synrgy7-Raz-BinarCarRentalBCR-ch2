@@ -12,7 +12,7 @@ export async function getCars(req: Request, res: Response) {
 
     try {
         const { driverType } = req.query as { driverType: string };
-        
+
         if (!driverType) {
             res.status(400).send({
                 code: 400,
@@ -27,7 +27,7 @@ export async function getCars(req: Request, res: Response) {
             });
         } else {
             const cars = await carService.getCars(driverType === 'true');
-            
+
             if (cars.length === 0) {
                 res.status(404).send({
                     code: 404,
@@ -133,7 +133,7 @@ export async function getAllCars(req: Request, res: Response) {
 
 // dashboard
 export async function getCarsDashboard(req: Request, res: Response) {
-    try{
+    try {
         const cars = await carService.getCarsForDashboard();
         if (cars.length === 0) {
             res.status(404).send({
@@ -220,11 +220,23 @@ export async function addCar(req: Request, res: Response) {
     console.log(req.body);
 
     try {
-        if (!plate || !manufacture || !image || !model || !rentPerDay || !capacity || !description || !driverType || !transmission || !type || !year || !options || !specs) {
+        if (plate === "" || manufacture === "" || model === 0 || rentPerDay === 0 || capacity === 0 || description === "" || transmission === "" || type === "" || year === 0 || options.length === 0 || specs.length === 0) {
+            return res.status(400).send({
+                code: 400,
+                status: "fail",
+                message: "Please fill all required fields with valid value (plate, manufacture, model, rentPerDay, capacity, description, transmission, type, year, options, specs)",
+            });
+        }else if (!plate || !manufacture || !image || !model || !rentPerDay || !capacity || !description || !driverType || !transmission || !type || !year || !options || !specs) {
             return res.status(400).send({
                 code: 400,
                 status: "fail",
                 message: "Please fill all required fields (plate, manufacture, image, model, rentPerDay, capacity, description, driverType, transmission, type, year, options, specs)",
+            });
+        } else if (rentPerDay < 0 || capacity < 0 || year < 0) {
+            return res.status(400).send({
+                code: 400,
+                status: "fail",
+                message: "Please fill all required fields with positive number (rentPerDay, capacity, year)",
             });
         } else {
             const newCar = await carService.addCar(image, {
@@ -260,7 +272,34 @@ export async function addCar(req: Request, res: Response) {
 
 export async function updateCar(req: Request, res: Response) {
     const { id }: { id: string } = req.params as { id: string };
-    const { name, category, price }: { name: string; category: string; price: number } = req.body;
+    const {
+        plate,
+        manufacture,
+        model,
+        rentPerDay,
+        capacity,
+        description,
+        driverType,
+        transmission,
+        type,
+        year,
+        options,
+        specs
+    }: {
+        plate: string;
+        manufacture: string;
+        model: number;
+        rentPerDay: number;
+        capacity: number;
+        description: string;
+        driverType: boolean;
+        transmission: string;
+        available: boolean;
+        type: string;
+        year: number;
+        options: string[];
+        specs: string[];
+    } = req.body;
 
     const image = req.file;
     const user = (req as any).user;
@@ -273,8 +312,21 @@ export async function updateCar(req: Request, res: Response) {
                 status: 'fail',
                 message: 'Car not found',
             });
-        } else if (name || category || price || image) {
-            const updatedCar = await carService.updateCar(id, { name, category, price }, image, user);
+        } else if (plate || manufacture || image || model || rentPerDay || capacity || description || driverType || transmission || type || year || options || specs) {
+            const updatedCar = await carService.updateCar(id, {
+                plate,
+                manufacture,
+                image, model,
+                rentPerDay, 
+                capacity, 
+                description, 
+                driverType, 
+                transmission, 
+                type, 
+                year, 
+                options, 
+                specs
+            }, image, user);
             res.status(200).send({
                 code: 200,
                 status: 'success',
@@ -285,7 +337,7 @@ export async function updateCar(req: Request, res: Response) {
             return res.status(400).send({
                 code: 400,
                 status: "fail",
-                message: "Please fill one of the required fields (name, category, price, image)",
+                message: "Please fill one of the required fields (plate, manufacture, image, model, rentPerDay, capacity, description, driverType, transmission, type, year, options, specs)",
             });
         }
     } catch (error: any) {

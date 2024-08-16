@@ -11,6 +11,7 @@ import Homepage from './pages/client-side/homepage';
 // Dashboard Pages
 import CarList from './pages/dashboard/carList';
 import AddCar from './pages/dashboard/addCar';
+import EditCar from './pages/dashboard/editCar';
 
 import { CarProvider } from './context/carContext';
 import { AuthProvider } from './context/authContext';
@@ -40,6 +41,11 @@ function App() {
             <Route path="/dashboard/cars/add-car" element={
               <PrivateRoute element={
                 <AddCar />
+              } />
+            } />
+            <Route path="/dashboard/cars/edit-car/:id" element={
+              <PrivateRoute element={
+                <EditCar />
               } />
             } />
           </Routes>
