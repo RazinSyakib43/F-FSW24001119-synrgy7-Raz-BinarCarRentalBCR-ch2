@@ -33,7 +33,6 @@ interface CarContextProps {
 
     searchCars: (driverType: string) => void;
 
-    fetchCars: () => void;
     fetchCarsForDashboard: () => void;
     addCar: (formData: FormData) => void;
     updateCar: (car: Car) => void;
@@ -55,20 +54,6 @@ export function CarProvider({ children }: { children: React.ReactNode }) {
             console.log(response.data.data);
         } catch (error) {
             console.error('Error fetching cars:', error);
-        }
-    };
-
-    // Just for backend side, not used in frontend side
-    const fetchCars = async () => {
-        try {
-            const response = await axios.get('http://localhost:8080/api/v1/dashboard/cars', {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
-            });
-            setCars(response.data.data);
-        } catch (error) {
-            console.error('Failed to fetch cars', error);
         }
     };
 
@@ -132,7 +117,6 @@ export function CarProvider({ children }: { children: React.ReactNode }) {
     };
 
     useEffect(() => {
-        fetchCars();
         searchCars('');
     }, []);
 
@@ -141,7 +125,6 @@ export function CarProvider({ children }: { children: React.ReactNode }) {
             cars,
             searchCars,
 
-            fetchCars,
             fetchCarsForDashboard,
             addCar,
             updateCar,

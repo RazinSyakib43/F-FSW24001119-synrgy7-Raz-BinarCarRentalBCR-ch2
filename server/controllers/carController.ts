@@ -11,25 +11,36 @@ export async function getCars(req: Request, res: Response) {
     // const { capacity }: { capacity: string } = req.query as { capacity: string };
 
     try {
-        const cars = await carService.getCars(driverType === 'true' ? true : false);
+        const { driverType } = req.query as { driverType: string };
+        
         if (!driverType) {
             res.status(400).send({
                 code: 400,
                 status: 'fail',
                 message: 'Please provide driverType query parameter',
             });
-        } else if (cars.length === 0) {
-            res.status(404).send({
-                code: 404,
+        } else if (driverType !== 'true' && driverType !== 'false') {
+            res.status(400).send({
+                code: 400,
                 status: 'fail',
-                message: 'Car not found',
+                message: 'Invalid driverType value. Only true or false is allowed.',
             });
         } else {
-            res.status(200).send({
-                code: 200,
-                status: 'success',
-                data: cars,
-            });
+            const cars = await carService.getCars(driverType === 'true');
+            
+            if (cars.length === 0) {
+                res.status(404).send({
+                    code: 404,
+                    status: 'fail',
+                    message: 'Car not found',
+                });
+            } else {
+                res.status(200).send({
+                    code: 200,
+                    status: 'success',
+                    data: cars,
+                });
+            }
         }
     } catch (error: any) {
         res.status(500).send({
