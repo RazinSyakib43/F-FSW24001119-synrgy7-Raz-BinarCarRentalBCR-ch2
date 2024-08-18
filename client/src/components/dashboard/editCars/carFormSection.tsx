@@ -1,11 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useFormik } from 'formik';
+
 import { useCarContext } from '../../../context/carContext';
 import { useAuth } from '../../../hooks/useAuth';
 
 import "bootstrap/dist/css/bootstrap.min.css";
-
 import '../../../style/dashboard/style.css'
 
 import menuIcon from '../../../assets/icons/dashboard/fi_menu.png';
@@ -15,118 +15,63 @@ import chevronDownIcon from '../../../assets/icons/dashboard/fi_chevron-down.png
 export default function CarFormSection(): JSX.Element {
     const { id } = useParams();
     const { userName, userAvatar } = useAuth();
-    const { getCarDetailById, updateCar } = useCarContext();
+    const { getCarDetailById, carData, updateCar } = useCarContext();
     const navigate = useNavigate();
 
-    const [formData, setFormData] = useState({
-        plate: '',
-        manufacture: '',
-        model: '',
-        image: null as File | null,
-        rentPerDay: '',
-        capacity: '',
-        description: '',
-        driverType: '',
-        transmission: '',
-        type: '',
-        year: '',
-        options: '',
-        specs: ''
-    });
-
     useEffect(() => {
-        const fetchCarDetail = async () => {
-            if (id) {
-                try {
-                    const carData = await getCarDetailById(id as string) as unknown as {
-                        plate?: string;
-                        manufacture?: string;
-                        model?: string;
-                        rentPerDay?: string;
-                        capacity?: string;
-                        description?: string;
-                        driverType?: string;
-                        transmission?: string;
-                        type?: string;
-                        year?: string;
-                        options?: string;
-                        specs?: string;
-                    };
-                    console.log('Car Data:', carData);
-                    if (carData) {
-                        setFormData({
-                            plate: carData.plate || '',
-                            manufacture: carData.manufacture || '',
-                            model: carData.model || '',
-                            image: null,
-                            rentPerDay: carData.rentPerDay || '',
-                            capacity: carData.capacity || '',
-                            description: carData.description || '',
-                            driverType: carData.driverType || '',
-                            transmission: carData.transmission || '',
-                            type: carData.type || '',
-                            year: carData.year || '',
-                            options: carData.options || '',
-                            specs: carData.specs || ''
-                        });
-                    }
-                } catch (error) {
-                    console.error('Failed to fetch car details:', error);
-                }
-            }
+        if (id) {
+            getCarDetailById(id);
         }
-        fetchCarDetail();
     }, [id, getCarDetailById]);
 
+    console.log('Car Data:', carData);
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
-    };
+    const formik = useFormik({
+        initialValues: {
+            plate: carData?.plate || '',
+            manufacture: carData?.manufacture || '',
+            model: carData?.model || '',
+            image: null,
+            rentPerDay: carData?.rentPerDay || '',
+            capacity: carData?.capacity || '',
+            description: carData?.description || '',
+            driverType: carData?.driverType ? 'true' : 'false',
+            transmission: carData?.transmission || '',
+            type: carData?.type || '',
+            year: carData?.year || '',
+            options: carData?.options.join(', ') || '',
+            specs: carData?.specs.join(', ') || '',
+            createdAt: carData?.createdAt || '',
+            updatedAt: carData?.updatedAt || ''
+        },
+        enableReinitialize: true,
+        onSubmit: async (values) => {
+            console.log('Form Values:', values);
+            const carFormData = new FormData();
+            carFormData.append('plate', values.plate as string);
+            carFormData.append('manufacture', values.manufacture as string);
+            carFormData.append('model', values.model as string);
+            if (values.image) {
+                carFormData.append('image', values.image);
+            }
+            carFormData.append('rentPerDay', values.rentPerDay as string);
+            carFormData.append('capacity', values.capacity as string);
+            carFormData.append('description', values.description as string);
+            carFormData.append('driverType', values.driverType as string);
+            carFormData.append('transmission', values.transmission as string);
+            carFormData.append('type', values.type as string);
+            carFormData.append('year', values.year as string);
+            carFormData.append('options[]', values.options);
+            carFormData.append('specs[]', values.specs);
 
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            setFormData({
-                ...formData,
-                image: e.target.files[0]
-            });
+            try {
+                await updateCar(id as string, carFormData);
+                navigate('/dashboard/cars');
+            } catch (error) {
+                console.error('Failed to update car:', error);
+            }
         }
-    };
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        const carFormData = new FormData();
-        carFormData.append('plate', formData.plate);
-        carFormData.append('manufacture', formData.manufacture);
-        carFormData.append('model', formData.model);
-        if (formData.image) {
-            carFormData.append('image', formData.image);
-        }
-        carFormData.append('rentPerDay', formData.rentPerDay);
-        carFormData.append('capacity', formData.capacity);
-        carFormData.append('description', formData.description);
-        carFormData.append('driverType', formData.driverType);
-        carFormData.append('transmission', formData.transmission);
-        carFormData.append('type', formData.type);
-        carFormData.append('year', formData.year);
-        carFormData.append('options[]', formData.options);
-        carFormData.append('specs[]', formData.specs);
-
-        try {
-            await updateCar(id as string, carFormData);
-            navigate('/dashboard/cars');
-        } catch (error) {
-            console.error('Failed to update car:', error);
-        }
-    };
-
-    if (!formData) {
-        return <p>Loading...</p>;
-    }
+    });
 
     return (
         <section className="col-9 section-car-form" style={{ paddingLeft: 0 }}>
@@ -148,36 +93,36 @@ export default function CarFormSection(): JSX.Element {
             <section className="car-form">
                 <section className="car-form__breadcrumb">
                     <nav aria-label="breadcrumb">
-                        {/* style={{ "--bs-breadcrumb-sectionider": ">" }} */}
                         <ol className="breadcrumb">
                             <li className="breadcrumb-item car-form__breadcrumb-item"><a href="/dashboard/cars"
                                 style={{ color: 'black' }}>Cars</a></li>
                             <li className="breadcrumb-item car-form__breadcrumb-item"><a href="/dashboard/cars"
                                 style={{ color: 'black' }}>List Car</a></li>
-                            <li className="breadcrumb-item active" aria-current="page">Add New Car</li>
+                            <li className="breadcrumb-item active" aria-current="page">Edit Car</li>
                         </ol>
                     </nav>
                 </section>
-                <h2 className="car-form__title">Add New Car</h2>
+                <h2 className="car-form__title">Edit Car ({formik.values.manufacture}{" "}{formik.values.model}) </h2>
                 <section className="car-form__forms">
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={formik.handleSubmit}>
                         {/* Plate */}
                         <section className="mb-3">
                             <section className="row">
                                 <section className="col-4 car-form__label">
-                                    <label htmlFor="exampleInputEmail1" className="form-label">Plat Nomor<span
+                                    <label htmlFor="plate" className="form-label">Plat Nomor<span
                                         style={{ color: '#EF5A6F' }}>*</span> </label>
                                 </section>
                                 <section className="col-8">
                                     <input
                                         type="text"
                                         className="form-control"
-                                        id="carPlate"
+                                        id="plate"
                                         aria-describedby="plateHelp"
                                         placeholder="Car Plate, ex: AD-3422-A"
                                         name="plate"
-                                        value={formData.plate}
-                                        onChange={handleInputChange}
+                                        value={formik.values.plate}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
                                     />
                                 </section>
                             </section>
@@ -186,19 +131,21 @@ export default function CarFormSection(): JSX.Element {
                         <section className="mb-3">
                             <section className="row">
                                 <section className="col-4 car-form__label">
-                                    <label htmlFor="exampleInputEmail1" className="form-label">Manufacture<span
+                                    <label htmlFor="manufacture" className="form-label">Manufacture<span
                                         style={{ color: '#EF5A6F' }}>*</span> </label>
                                 </section>
                                 <section className="col-8">
-                                    <input type="text" className="form-control" id="exampleInputEmail1"
-                                        aria-describedby="emailHelp" placeholder="Car Manufacture, ex: Toyota" name='manufacture' value={formData.manufacture}
-                                        onChange={handleInputChange} />
+                                    <input type="text" className="form-control" id="manufacture"
+                                        aria-describedby="manufactureHelp" placeholder="Car Manufacture, ex: Toyota" name='manufacture' value={formik.values.manufacture}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                    />
                                 </section>
                             </section>
                             <section className="row">
                                 <section className="col-4"></section>
                                 <section className="col-8">
-                                    <section id="emailHelp" className="form-text">Contoh: Toyota</section>
+                                    <section id="manufactureHelp" className="form-text">Contoh: Toyota</section>
                                 </section>
                             </section>
                         </section>
@@ -206,19 +153,21 @@ export default function CarFormSection(): JSX.Element {
                         <section className="mb-3">
                             <section className="row">
                                 <section className="col-4 car-form__label">
-                                    <label htmlFor="exampleInputEmail1" className="form-label">Model<span
+                                    <label htmlFor="model" className="form-label">Model<span
                                         style={{ color: '#EF5A6F' }}>*</span> </label>
                                 </section>
                                 <section className="col-8">
-                                    <input type="text" className="form-control" id="exampleInputEmail1"
-                                        aria-describedby="emailHelp" placeholder="Car Model, ex: Avanza" name='model' value={formData.model}
-                                        onChange={handleInputChange} />
+                                    <input type="text" className="form-control" id="model"
+                                        aria-describedby="modelHelp" placeholder="Car Model, ex: Avanza" name='model' value={formik.values.model}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                    />
                                 </section>
                             </section>
                             <section className="row">
                                 <section className="col-4"></section>
                                 <section className="col-8">
-                                    <section id="emailHelp" className="form-text">Contoh: Avanza</section>
+                                    <section id="modelHelp" className="form-text">Contoh: Avanza</section>
                                 </section>
                             </section>
                         </section>
@@ -226,20 +175,22 @@ export default function CarFormSection(): JSX.Element {
                         <section className="mb-3">
                             <section className="row">
                                 <section className="col-4 car-form__label">
-                                    <label htmlFor="exampleInputEmail1" className="form-label">Foto<span
+                                    <label htmlFor="image" className="form-label">Foto<span
                                         style={{ color: '#EF5A6F' }}>*</span> </label>
                                 </section>
                                 <section className="col-8">
-                                    <input type="file" className="form-control" id="exampleInputEmail1"
-                                        aria-describedby="emailHelp" placeholder="Car Image" name="image"
-                                        onChange={handleImageChange} />
-                                </section>
-                            </section>
-                            <section className="row">
-                                <section className="col-4"></section>
-                                <section className="col-8">
-                                    <section id="emailHelp" className="form-text">File size max.
-                                        2MB</section>
+                                    <input
+                                        className="form-control"
+                                        type="file"
+                                        id="image"
+                                        name="image"
+                                        onChange={(event) => {
+                                            const files = event.currentTarget.files;
+                                            if (files !== null) {
+                                                formik.setFieldValue('image', files[0]);
+                                            }
+                                        }}
+                                    />
                                 </section>
                             </section>
                         </section>
@@ -247,13 +198,21 @@ export default function CarFormSection(): JSX.Element {
                         <section className="mb-3">
                             <section className="row">
                                 <section className="col-4 car-form__label">
-                                    <label htmlFor="exampleInputEmail1" className="form-label">Rent Per Day<span
+                                    <label htmlFor="rentPerDay" className="form-label">Rent Per Day<span
                                         style={{ color: '#EF5A6F' }}>*</span> </label>
                                 </section>
                                 <section className="col-8">
-                                    <input type="text" className="form-control" id="exampleInputEmail1"
-                                        aria-describedby="emailHelp" placeholder="Car Rent Per Day, ex: 200000" name='rentPerDay' value={formData.rentPerDay}
-                                        onChange={handleInputChange} />
+                                    <input type="text" className="form-control" id="rentPerDay"
+                                        aria-describedby="rentPerDayHelp" placeholder="Rent Per Day, ex: 400000" name='rentPerDay' value={formik.values.rentPerDay}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                    />
+                                </section>
+                            </section>
+                            <section className="row">
+                                <section className="col-4"></section>
+                                <section className="col-8">
+                                    <section id="rentPerDayHelp" className="form-text">Contoh: 400000</section>
                                 </section>
                             </section>
                         </section>
@@ -261,13 +220,21 @@ export default function CarFormSection(): JSX.Element {
                         <section className="mb-3">
                             <section className="row">
                                 <section className="col-4 car-form__label">
-                                    <label htmlFor="exampleInputEmail1" className="form-label">Capacity<span
+                                    <label htmlFor="capacity" className="form-label">Capacity<span
                                         style={{ color: '#EF5A6F' }}>*</span> </label>
                                 </section>
                                 <section className="col-8">
-                                    <input type="text" className="form-control" id="exampleInputEmail1"
-                                        aria-describedby="emailHelp" placeholder="Car Capacity, ex: 6" name='capacity' value={formData.capacity}
-                                        onChange={handleInputChange} />
+                                    <input type="text" className="form-control" id="capacity"
+                                        aria-describedby="capacityHelp" placeholder="Capacity, ex: 7" name='capacity' value={formik.values.capacity}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                    />
+                                </section>
+                            </section>
+                            <section className="row">
+                                <section className="col-4"></section>
+                                <section className="col-8">
+                                    <section id="capacityHelp" className="form-text">Contoh: 7</section>
                                 </section>
                             </section>
                         </section>
@@ -275,12 +242,19 @@ export default function CarFormSection(): JSX.Element {
                         <section className="mb-3">
                             <section className="row">
                                 <section className="col-4 car-form__label">
-                                    <label htmlFor="exampleInputEmail1" className="form-label">Description</label>
+                                    <label htmlFor="description" className="form-label">Description<span
+                                        style={{ color: '#EF5A6F' }}>*</span> </label>
                                 </section>
                                 <section className="col-8">
-                                    <textarea className="form-control" id="exampleFormControlTextarea1" rows={3}
-                                        placeholder="Car Description, ex: Lorem Ipsum...." name='description' value={formData.description}
-                                        onChange={handleInputChange}></textarea>
+                                    <textarea className="form-control" id="description" rows={4} placeholder="Description" name='description' value={formik.values.description}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        style={
+                                            {
+                                                minHeight: '100px'
+                                            }
+                                        }
+                                    ></textarea>
                                 </section>
                             </section>
                         </section>
@@ -288,18 +262,24 @@ export default function CarFormSection(): JSX.Element {
                         <section className="mb-3">
                             <section className="row">
                                 <section className="col-4 car-form__label">
-                                    <label htmlFor="exampleInputEmail1" className="form-label">Driver Type<span
+                                    <label htmlFor="driverType" className="form-label">Driver Type<span
                                         style={{ color: '#EF5A6F' }}>*</span> </label>
                                 </section>
                                 <section className="col-8">
-                                    <select className="form-select" aria-label="Default select example" 
+                                    <select className="form-select" aria-label="Default select example"
                                         name="driverType"
-                                        value={formData.driverType}
-                                        onChange={handleInputChange}>
+                                        value={formik.values.driverType}
+                                        onChange={formik.handleChange}>
                                         <option value="">-</option>
                                         <option value="true">With Driver (Dengan Supir)</option>
                                         <option value="false">Without Driver (Lepas kunci)</option>
                                     </select>
+                                </section>
+                            </section>
+                            <section className="row">
+                                <section className="col-4"></section>
+                                <section className="col-8">
+                                    <section id="driverTypeHelp" className="form-text">Contoh: Manual</section>
                                 </section>
                             </section>
                         </section>
@@ -307,18 +287,24 @@ export default function CarFormSection(): JSX.Element {
                         <section className="mb-3">
                             <section className="row">
                                 <section className="col-4 car-form__label">
-                                    <label htmlFor="exampleInputEmail1" className="form-label">Transmission<span
+                                    <label htmlFor="transmission" className="form-label">Transmission<span
                                         style={{ color: '#EF5A6F' }}>*</span> </label>
                                 </section>
                                 <section className="col-8">
-                                    <select className="form-select" aria-label="Default select example" 
+                                    <select className="form-select" aria-label="Default select example"
                                         name="transmission"
-                                        value={formData.transmission}
-                                        onChange={handleInputChange}>
+                                        value={formik.values.transmission}
+                                        onChange={formik.handleChange}>
                                         <option value="">-</option>
                                         <option value="Automatic">Automatic</option>
                                         <option value="Manual">Manual</option>
                                     </select>
+                                </section>
+                            </section>
+                            <section className="row">
+                                <section className="col-4"></section>
+                                <section className="col-8">
+                                    <section id="transmissionHelp" className="form-text">Contoh: Automatic</section>
                                 </section>
                             </section>
                         </section>
@@ -326,14 +312,14 @@ export default function CarFormSection(): JSX.Element {
                         <section className="mb-3">
                             <section className="row">
                                 <section className="col-4 car-form__label">
-                                    <label htmlFor="exampleInputEmail1" className="form-label">Type<span
+                                    <label htmlFor="type" className="form-label">Type<span
                                         style={{ color: '#EF5A6F' }}>*</span> </label>
                                 </section>
                                 <section className="col-8">
                                     <select className="form-select" aria-label="Default select example"
                                         name="type"
-                                        value={formData.type}
-                                        onChange={handleInputChange}>
+                                        value={formik.values.type}
+                                        onChange={formik.handleChange}>
                                         <option value="">-</option>
                                         <option value="SUV">SUV</option>
                                         <option value="MPV">MPV</option>
@@ -342,18 +328,32 @@ export default function CarFormSection(): JSX.Element {
                                     </select>
                                 </section>
                             </section>
+                            <section className="row">
+                                <section className="col-4"></section>
+                                <section className="col-8">
+                                    <section id="typeHelp" className="form-text">Contoh: SUV</section>
+                                </section>
+                            </section>
                         </section>
                         {/* Year */}
                         <section className="mb-3">
                             <section className="row">
                                 <section className="col-4 car-form__label">
-                                    <label htmlFor="exampleInputEmail1" className="form-label">Year<span
+                                    <label htmlFor="year" className="form-label">Year<span
                                         style={{ color: '#EF5A6F' }}>*</span> </label>
                                 </section>
                                 <section className="col-8">
-                                    <input type="text" className="form-control" id="exampleInputEmail1"
-                                        aria-describedby="emailHelp" placeholder="Car Year, ex: 2019" name='year' value={formData.year}
-                                        onChange={handleInputChange} />
+                                    <input type="text" className="form-control" id="year"
+                                        aria-describedby="yearHelp" placeholder="Year, ex: 2022" name='year' value={formik.values.year}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                    />
+                                </section>
+                            </section>
+                            <section className="row">
+                                <section className="col-4"></section>
+                                <section className="col-8">
+                                    <section id="yearHelp" className="form-text">Contoh: 2022</section>
                                 </section>
                             </section>
                         </section>
@@ -361,12 +361,21 @@ export default function CarFormSection(): JSX.Element {
                         <section className="mb-3">
                             <section className="row">
                                 <section className="col-4 car-form__label">
-                                    <label htmlFor="exampleInputEmail1" className="form-label">Options</label>
+                                    <label htmlFor="options" className="form-label">Options<span
+                                        style={{ color: '#EF5A6F' }}>*</span> </label>
                                 </section>
                                 <section className="col-8">
-                                    <input type="text" className="form-control" id="exampleInputEmail1"
-                                        aria-describedby="emailHelp" placeholder="Car Options, ex: MP3, GPS, Baby Seat" name='options' value={formData.options}
-                                        onChange={handleInputChange} />
+                                    <input type="text" className="form-control" id="options"
+                                        aria-describedby="optionsHelp" placeholder="Options, ex: GPS, Airbag" name='options' value={formik.values.options}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                    />
+                                </section>
+                            </section>
+                            <section className="row">
+                                <section className="col-4"></section>
+                                <section className="col-8">
+                                    <section id="optionsHelp" className="form-text">Contoh: GPS, Airbag</section>
                                 </section>
                             </section>
                         </section>
@@ -374,12 +383,21 @@ export default function CarFormSection(): JSX.Element {
                         <section className="mb-3">
                             <section className="row">
                                 <section className="col-4 car-form__label">
-                                    <label htmlFor="exampleInputEmail1" className="form-label">Specs</label>
+                                    <label htmlFor="specs" className="form-label">Specs<span
+                                        style={{ color: '#EF5A6F' }}>*</span> </label>
                                 </section>
                                 <section className="col-8">
-                                    <input type="text" className="form-control" id="exampleInputEmail1"
-                                        aria-describedby="emailHelp" placeholder="Car Specs, ex: NOS, 4 Doors, 4 Seats" name='specs' value={formData.specs}
-                                        onChange={handleInputChange} />
+                                    <input type="text" className="form-control" id="specs"
+                                        aria-describedby="specsHelp" placeholder="Specs, ex: 2.0L Engine" name='specs' value={formik.values.specs}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                    />
+                                </section>
+                            </section>
+                            <section className="row">
+                                <section className="col-4"></section>
+                                <section className="col-8">
+                                    <section id="specsHelp" className="form-text">Contoh: 2.0L Engine</section>
                                 </section>
                             </section>
                         </section>
@@ -416,7 +434,10 @@ export default function CarFormSection(): JSX.Element {
                                         at</label>
                                 </section>
                                 <section className="col-8">
-                                    <p>-</p>
+                                    <p>{new Date(formik.values.createdAt).toLocaleDateString('id-ID', {
+                                        day: 'numeric', month: 'long', year: 'numeric',
+                                        hour: 'numeric', minute: 'numeric'
+                                    })}</p>
                                 </section>
                             </section>
                         </section>
@@ -428,10 +449,14 @@ export default function CarFormSection(): JSX.Element {
                                         at</label>
                                 </section>
                                 <section className="col-8">
-                                    <p>-</p>
+                                    <p>{new Date(formik.values.updatedAt).toLocaleDateString('id-ID', {
+                                        day: 'numeric', month: 'long', year: 'numeric',
+                                        hour: 'numeric', minute: 'numeric'
+                                    })}</p>
                                 </section>
                             </section>
                         </section>
+                        {/* Submit */}
                         <section className="car-form__button">
                             <button type="submit" className="btn btn-primary car-form__cancel-button">Cancel</button>
                             <button type="submit" className="btn btn-primary car-form__submit-button">Save</button>
