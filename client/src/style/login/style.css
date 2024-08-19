@@ -1,0 +1,105 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.loginPage {
+    height: 100vh;
+    display: flex;
+}
+
+.bannerImage {
+    height: 100%;
+    margin: 0;
+    flex-basis: 66.666667%;
+    object-fit: cover;
+}
+
+.bannerImage img {
+    height: 100%;
+    object-fit: cover;
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-basis: 33.333333%;
+    padding: 0 56px;
+}
+
+.login_welcome_title {
+    font-family: Helvetica;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 36px;
+    text-align: left;
+    margin-bottom: 32px;
+}
+
+.loginLogo {
+    width: 25%;
+    margin-bottom: 32px;
+}
+
+.loginLabel {
+    font-family: Helvetica;
+    font-size: 14px !important;
+    font-weight: 300;
+    line-height: 20px;
+    text-align: left;
+    margin-bottom: 8px !important;
+}
+
+.loginInput {
+    font-family: Helvetica;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    line-height: 24px;
+    text-align: left;
+    padding: 10px 15px !important;
+    margin-bottom: 16px;
+    border: 1px solid #E0E0E0;
+    border-radius: 4px !important;
+    -webkit-border-radius: 4px !important;
+    -moz-border-radius: 4px !important;
+    -ms-border-radius: 4px !important;
+    -o-border-radius: 4px !important;
+}
+
+.loginInput::placeholder {
+    color: #A5A5A5 !important;
+}
+
+.loginButton {
+    font-family: Helvetica !important;
+    color: #FFF !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    line-height: 24px;
+    text-align: center;
+    padding: 8px !important;
+    width: 100%;
+    margin-bottom: 16px;
+    background-color: #0D28A6 !important;
+    border: none;
+    border-radius: 2px !important;
+    -webkit-border-radius: 2px ;
+    -moz-border-radius: 2px ;
+    -ms-border-radius: 2px ;
+    -o-border-radius: 2px ;
+    cursor: pointer;
+}
+
+.loginButton:hover {
+    background-color: #FFF !important;
+    color: #0D28A6 !important;
+    border: 1px solid #0D28A6 !important;
+    border-radius: 2px !important;
+    -webkit-border-radius: 2px !important;
+    -moz-border-radius: 2px !important;
+    -ms-border-radius: 2px !important;
+    -o-border-radius: 2px !important;
+}
