@@ -12,6 +12,12 @@ export default function SearchForm() {
         if (carContext) {
             carContext.searchCars(driverType);
         }
+        
+        const driverTypeValue = (document.getElementById('tipe_driver__form') as HTMLSelectElement).value;
+        console.log("driverTypeValue:", driverTypeValue);
+
+        const dateValue = (document.getElementById('date') as HTMLInputElement).value;
+        console.log("dateValue:", dateValue);
     };
 
     return (
@@ -19,7 +25,7 @@ export default function SearchForm() {
             <form name="search_form" className="search" onSubmit={handleSearch}>
                 <section className="tipe_driver">
                     <p className="tipe_driver__title">Tipe Driver</p>
-                    <select className="form-select h-75" name="tipe_driver__form" id="" value={driverType} onChange={(e) => setDriverType(e.target.value)}>
+                    <select className="form-select h-75" name="tipe_driver__form" id="tipe_driver__form" value={driverType} onChange={(e) => setDriverType(e.target.value)}>
                         <option value="">Pilih Driver</option>
                         <option value="true">Dengan Supir</option>
                         <option value="false">Lepas kunci</option>

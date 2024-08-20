@@ -149,7 +149,7 @@ header {
 }
 
 .hero__img-car {
-    position: absolute;
+    position: relative;
     right: 0;
 }
 

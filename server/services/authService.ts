@@ -87,14 +87,6 @@ export class AuthService {
             }
         }
 
-        if (userRole !== "superadmin") {
-            return {
-                code: 403,
-                status: 'Forbidden',
-                message: 'You are not an admin'
-            }
-        }
-
         const isPasswordMatch = await checkPassword(selectedUser.password, password);
         if (!isPasswordMatch) {
             return {
@@ -126,14 +118,6 @@ export class AuthService {
                 code: 404,
                 status: 'fail',
                 message: 'Your email not found or has been deleted, please register as admin first'
-            }
-        }
-
-        if (userRole !== "admin") {
-            return {
-                code: 403,
-                status: 'Forbidden',
-                message: 'You are not an admin'
             }
         }
 
