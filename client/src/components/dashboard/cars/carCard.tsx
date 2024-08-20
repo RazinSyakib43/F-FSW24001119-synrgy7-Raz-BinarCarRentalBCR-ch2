@@ -52,10 +52,10 @@ export default function CarItem({ car }: CarItemProps): JSX.Element {
                         <img src={trashIcon} alt="" />
                         <p>Delete</p>
                     </button>
-                    <button className="btn cars__button edit-button d-flex justify-content-center">
+                    <a href={`/dashboard/cars/edit-car/${car.id}`} className="btn cars__button edit-button d-flex justify-content-center">
                         <img src={editIcon} alt="" />
                         <p>Edit</p>
-                    </button>
+                    </a>
                 </section>
             </section>
 

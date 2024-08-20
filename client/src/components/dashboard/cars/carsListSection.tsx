@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useCarContext } from '../../../context/carContext';
 import { useAuth } from '../../../hooks/useAuth';
+import { useLocation } from 'react-router-dom';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../../../style/dashboard/style.css'
@@ -13,15 +14,53 @@ import chevronDownIcon from '../../../assets/icons/dashboard/fi_chevron-down.png
 
 export default function CarsListSection(): JSX.Element {
     const { cars, fetchCarsForDashboard } = useCarContext();
+    const { userName, userAvatar } = useAuth();
+    const location = useLocation();
+
+    const [showModal, setShowModal] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
 
     useEffect(() => {
-        fetchCarsForDashboard();
-    }, [fetchCarsForDashboard]);
+        if (cars.length === 0) {
+            fetchCarsForDashboard();
+        }
 
-    const { userName, userAvatar } = useAuth();
+        if (location.state && location.state.showSuccessModal) {
+            setModalMessage(location.state.message || "Aksi berhasil");
+            setShowModal(true);
+
+            const timer = setTimeout(() => {
+                console.log("Modal is being closed");
+                setShowModal(false);
+            }, 3000);
+
+            window.history.replaceState({}, document.title);
+
+            return () => {
+                console.log("Clearing timeout");
+                clearTimeout(timer);
+            };
+        } else {
+            console.log("Modal should not be shown");
+            setShowModal(false);
+        }
+    }, [cars.length, fetchCarsForDashboard, location.state]);
+
 
     return (
         <section className="col-9 section-car-form" style={{ paddingLeft: 0 }}>
+            {showModal && (
+                <div className="modal" tabIndex={-1} style={{display: 'block'}}>
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-body">
+                                <p>{modalMessage}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <section className="top-navbar d-flex justify-content-between">
                 <img src={menuIcon} className="top-navbar__hamburger" alt="" />
                 <section className="d-flex">
