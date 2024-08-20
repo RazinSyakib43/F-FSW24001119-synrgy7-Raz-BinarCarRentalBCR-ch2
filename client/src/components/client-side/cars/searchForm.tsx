@@ -26,7 +26,7 @@ export default function SearchForm() {
             <form name="search_form" className="search" onSubmit={handleSearch}>
                 <section className="tipe_driver">
                     <p className="tipe_driver__title">Tipe Driver</p>
-                    <select className="form-select h-75" name="tipe_driver__form" id="tipe_driver__form" value={driverType} onChange={(e) => setDriverType(e.target.value)}>
+                    <select className="form-select h-75" name="tipe_driver__form" id="tipe_driver__form" value={driverType} onChange={(e) => setDriverType(e.target.value)} required>
                         <option value="">Pilih Driver</option>
                         <option value="true">Dengan Supir</option>
                         <option value="false">Lepas kunci</option>
@@ -34,11 +34,11 @@ export default function SearchForm() {
                 </section>
                 <section className="pilih-tanggal">
                     <p className="pilih-tanggal__title">Tanggal</p>
-                    <input type="date" className="form-control h-75" placeholder="Pilih Tanggal" name="pilih_tanggal__form" id="date" />
+                    <input type="date" className="form-control h-75" placeholder="Pilih Tanggal" name="pilih_tanggal__form" id="date" required/>
                 </section>
                 <section className="waktu_jemput">
                     <p className="waktu_jemput__title">Waktu Jemput/Ambil</p>
-                    <input type="time" className="form-control h-75" placeholder="Pilih Waktu" name="waktu_jemput__form" id="time" />
+                    <input type="time" className="form-control h-75" placeholder="Pilih Waktu" name="waktu_jemput__form" id="time" required/>
                 </section>
                 <section className="jumlah_penumpang">
                     <p className="jumlah_penumpang__title">Jumlah Penumpang (Optional)</p>
