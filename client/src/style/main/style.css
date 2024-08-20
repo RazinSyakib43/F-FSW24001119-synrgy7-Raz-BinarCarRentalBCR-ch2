@@ -87,8 +87,8 @@ header {
 }
 
 /* Hero Section */
-.hero {
-    background-color: var(--primary-color);
+.heroo {
+    background-color: var(--primary-color) !important;
 }
 
 .hero__row {

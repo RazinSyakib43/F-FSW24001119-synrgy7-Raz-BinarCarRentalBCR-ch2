@@ -4,7 +4,7 @@ import carImage from '../../../assets/images/img_car.png';
 
 export default function Hero(): JSX.Element {
     return (
-        <article className="hero" id="hero">
+        <article className="hero" id="hero" style={{ backgroundColor: '#f1f3ff'}}>
             <section className="container">
                 <section className="hero__row row">
                     <section className="col-lg-6 col-12 d-flex align-self-center flex-column">

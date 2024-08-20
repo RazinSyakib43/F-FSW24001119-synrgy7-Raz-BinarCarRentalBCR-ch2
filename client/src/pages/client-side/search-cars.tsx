@@ -14,7 +14,7 @@ export default function SearchCarsPage() {
 
     return (
         <>
-            <header>
+            <header style={{ backgroundColor: '#f1f3ff' }}>
                 <Navbar />
             </header>
             <main>

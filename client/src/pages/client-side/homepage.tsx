@@ -13,7 +13,7 @@ import '../../style/main/responsive.css'
 export default function Homepage() {
     return (
         <>
-            <header>
+            <header style={{ backgroundColor: '#f1f3ff' }}>
                 <Navbar />
             </header>
             <main>

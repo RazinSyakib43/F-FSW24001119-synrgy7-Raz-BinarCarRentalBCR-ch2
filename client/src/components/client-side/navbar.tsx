@@ -4,8 +4,8 @@ import logo from '../../assets/images/logo.png';
 
 export default function Navbar(): JSX.Element {
     return (
-            <nav className="navbar navbar-expand-lg">
-                <section className="container navbar__container">
+        <nav className="navbar navbar-expand-lg" style={{ backgroundColor: '#f1f3ff' }}>
+            <section className="container navbar__container">
                     <img src={logo} className="navbar-brand" alt=""/>
                         <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
