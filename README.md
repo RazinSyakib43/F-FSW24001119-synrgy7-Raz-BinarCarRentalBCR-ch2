@@ -1,7 +1,5 @@
 # Binar Car Rental - Full Stack Web (Front-End dan Back-End)
 
-Repositori ini berisi source untuk bagian Front-End (tampilan) dari website Binar Car Rental (BCR). Front-End web ini dibangun menggunakan HTML, CSS, dan Bootstrap 5, dengan penggunaan SwiperJS untuk slider pada bagian tertentu.
-
 ## Deployment
 
 (Halaman ini belum di deploy)
