@@ -5,8 +5,8 @@
 (Halaman ini belum di deploy)
 
 ## Repositories
-- [Front-End](https://github.com/RazinSyakib43/Car-Management-Dashboard/tree/Challenge-8-(Client))
-- [Back-End](https://github.com/RazinSyakib43/Car-Management-Dashboard/tree/Challenge-8-(Server))
+- [Front-End](https://github.com/RazinSyakib43/Car-Management-Dashboard/tree/Challenge_8-(FE))
+- [Back-End](https://github.com/RazinSyakib43/Car-Management-Dashboard/tree/Challenge_8-(BE))
 
 ## Halaman
 
