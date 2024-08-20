@@ -19,6 +19,8 @@ export default function CarsListSection(): JSX.Element {
 
     const [showModal, setShowModal] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
+    const [modalBgColor, setmodalBgColor] = useState('');
+    const [modalTextColor, setModalTextColor] = useState('');
 
     useEffect(() => {
         if (cars.length === 0) {
@@ -27,6 +29,8 @@ export default function CarsListSection(): JSX.Element {
 
         if (location.state && location.state.showSuccessModal) {
             setModalMessage(location.state.message || "Aksi berhasil");
+            setmodalBgColor(location.state.modalBgColor || 'white');
+            setModalTextColor(location.state.modalTextColor || 'black');
             setShowModal(true);
 
             const timer = setTimeout(() => {
@@ -53,8 +57,8 @@ export default function CarsListSection(): JSX.Element {
                 <div className="modal" tabIndex={-1} style={{display: 'block'}}>
                     <div className="modal-dialog">
                         <div className="modal-content">
-                            <div className="modal-body">
-                                <p>{modalMessage}</p>
+                            <div className="modalNotification modal-body" style={{ backgroundColor: modalBgColor }}>
+                                <p className='modalText' style={{ color: modalTextColor }}>{modalMessage}</p>
                             </div>
                         </div>
                     </div>

@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { Car } from '../../../context/carContext';
 import { useCarContext } from '../../../context/carContext';
 
@@ -19,9 +21,11 @@ interface CarItemProps {
 export default function CarItem({ car }: CarItemProps): JSX.Element {
     const { deleteCar } = useCarContext();
     const [showModal, setShowModal] = useState(false);
+    const navigate = useNavigate();
 
     const handleDelete = () => {
         deleteCar(car.id);
+        navigate('/dashboard/cars', { state: { showSuccessModal: true, message: 'Data Berhasil Dihapus', modalBgColor: '#151515', modalTextColor: '#FFF' } });
         setShowModal(false);
     };
 
@@ -71,7 +75,7 @@ export default function CarItem({ car }: CarItemProps): JSX.Element {
                                 <p>Setelah dihapus, data mobil tidak dapat dikembalikan. Yakin ingin menghapus?</p>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn modal-footer__button-delete" onClick={handleDelete}>Ya</button>
+                                <button type="button" className="btn modal-footer__button-delete" onClick={handleDelete} >Ya</button>
                                 <button type="button" className="btn modal-footer__button-cancel" onClick={() => setShowModal(false)}>Tidak</button>
                             </div>
                         </div>

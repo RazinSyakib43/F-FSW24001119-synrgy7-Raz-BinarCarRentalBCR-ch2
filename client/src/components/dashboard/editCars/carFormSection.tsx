@@ -66,7 +66,7 @@ export default function CarFormSection(): JSX.Element {
 
             try {
                 await updateCar(id as string, carFormData);
-                navigate('/dashboard/cars', { state: { showSuccessModal: true, message: 'Data Mobil Berhasil Diperbarui' } });
+                navigate('/dashboard/cars', { state: { showSuccessModal: true, message: 'Data Berhasil Disimpan', modalBgColor: '#73CA5C', modalTextColor: '#FFF' } });
             } catch (error) {
                 console.error('Failed to update car:', error);
             }

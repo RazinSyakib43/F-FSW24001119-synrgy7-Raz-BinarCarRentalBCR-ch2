@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { useCarContext } from '../../../context/carContext';
 import { useAuth } from '../../../hooks/useAuth';
 
@@ -14,6 +16,7 @@ import chevronDownIcon from '../../../assets/icons/dashboard/fi_chevron-down.png
 export default function CarFormSection(): JSX.Element {
     const { userName, userAvatar } = useAuth();
     const { addCar } = useCarContext();
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         plate: '',
@@ -69,6 +72,7 @@ export default function CarFormSection(): JSX.Element {
         carFormData.append('specs[]', formData.specs);
 
         addCar(carFormData);
+        navigate('/dashboard/cars', { state: { showSuccessModal: true, message: 'Data Berhasil Ditambahkan', modalBgColor: '#73CA5C', modalTextColor: '#FFF' }});
     };
 
     return (
