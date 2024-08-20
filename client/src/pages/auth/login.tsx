@@ -17,7 +17,7 @@ export function LoginPage() {
         e.preventDefault();
         try {
             await login(email, password);
-            navigate('/dashboard/cars');
+            navigate('/dashboard/');
         } catch (error) {
             console.error('Failed to login', error);
         }

@@ -150,6 +150,14 @@ a {
     margin-bottom: 24px;
 }
 
+.list-car-section__subtitle {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 20px;
+    text-align: left;
+    margin-bottom: 24px;
+}
+
 .add-new-car-button {
     background-color: var(--primary-color);
     color: var(--neutral);
@@ -613,4 +621,27 @@ a {
     font-weight: 400 !important;
     line-height: 24px !important;
     text-align: center !important;
+}
+
+
+th {
+    background-color: #CFD4ED !important;
+    color: #000 !important;
+    padding: 12px !important;
+
+    font-family: Helvetica;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    text-align: left;
+}
+
+td {
+    background-color: #FFF !important;
+    padding: 12px !important;
+    font-family: Helvetica;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 20px;
+    text-align: left;
 }

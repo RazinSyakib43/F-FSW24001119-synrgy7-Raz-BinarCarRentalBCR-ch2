@@ -458,3 +458,25 @@ a {
     -o-border-radius: 2px;
     -webkit-animation: ease-in-out;
 }
+
+th{
+    background-color: #CFD4ED !important;
+    color: #000 !important;
+    padding: 12px !important;
+
+    font-family: Helvetica;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    text-align: left;
+}
+
+td{
+    background-color: #FFF !important;
+    padding: 12px !important;
+    font-family: Helvetica;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 20px;
+    text-align: left;
+}

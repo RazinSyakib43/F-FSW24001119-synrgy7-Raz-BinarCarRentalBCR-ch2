@@ -9,6 +9,7 @@ import SearchCarsPage from './pages/client-side/search-cars';
 import Homepage from './pages/client-side/homepage';
 
 // Dashboard Pages
+import DashboardPage from './pages/dashboard/dashboardMainPage';
 import CarList from './pages/dashboard/carList';
 import AddCar from './pages/dashboard/addCar';
 import EditCar from './pages/dashboard/editCar';
@@ -33,6 +34,11 @@ function App() {
             <Route path="/" element={<Homepage />} />
             <Route path="/cars" element={<SearchCarsPage />} />
 
+            <Route path="/dashboard" element={
+              <PrivateRoute element={
+                <DashboardPage/>
+              } />
+            } />
             <Route path="/dashboard/cars" element={
               <PrivateRoute element={
                 <CarList />
