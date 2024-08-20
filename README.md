@@ -88,6 +88,10 @@ B. **Back-End**
          ```
       3. Konfigurasikan pengaturan database Anda dengan mengedit `knexfile.ts`. Anda dapat mengatur `user`, `password`, dan `database`. Kemudian simpan perubahan Anda. Contoh:
          ```
+            npm install
+         ```
+      4. Jalankan migrasi schema database
+            ```
             development: {
             client: "postgresql",
             connection: {
@@ -103,10 +107,6 @@ B. **Back-End**
                 tableName: "knex_migrations"
             }
             },
-        ```
-      4. Jalankan migrasi schema database
-            ```
-                npx knex migrate:latest
             ```
       6. Jalankan data seeds
             ```
