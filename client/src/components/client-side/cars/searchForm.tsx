@@ -5,12 +5,13 @@ import { CarContext } from '../../../context/carContext';
 
 export default function SearchForm() {
     const [driverType, setDriverType] = useState('');
+    const [capacity, setCapacity] = useState('');
     const carContext = useContext(CarContext);
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
         if (carContext) {
-            carContext.searchCars(driverType);
+            carContext.searchCars(driverType, capacity);
         }
         
         const driverTypeValue = (document.getElementById('tipe_driver__form') as HTMLSelectElement).value;
@@ -41,7 +42,7 @@ export default function SearchForm() {
                 </section>
                 <section className="jumlah_penumpang">
                     <p className="jumlah_penumpang__title">Jumlah Penumpang (Optional)</p>
-                    <input type="text" className="form-control h-75" placeholder="Jumlah Penumpang" name="jumlah_penumpang__form" id="qty" />
+                    <input type="text" className="form-control h-75" placeholder="Jumlah Penumpang" name="jumlah_penumpang__form" id="qty" value={capacity} onChange={(e) => setCapacity(e.target.value)} />
                 </section>
                 <section className="search__bar">
                     <p className="jumlah_penumpang__title" style={{ color: 'transparent' }}>P</p>

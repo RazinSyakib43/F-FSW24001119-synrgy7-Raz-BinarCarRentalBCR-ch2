@@ -8,10 +8,11 @@ export async function getCars(req: Request, res: Response) {
     // const { isAvailable }: { isAvailable: string } = req.query as { isAvailable: string };
     const { driverType } = req.query as { driverType: any } as { driverType: any };
     // const { availableAt } = req.query as { availableAt: unknown } as { availableAt: Date };
-    // const { capacity }: { capacity: string } = req.query as { capacity: string };
+    const { capacity }: { capacity: string } = req.query as { capacity: string };
 
     try {
         const { driverType } = req.query as { driverType: string };
+        const { capacity } = req.query as { capacity: string };
 
         if (!driverType) {
             res.status(400).send({
@@ -26,7 +27,7 @@ export async function getCars(req: Request, res: Response) {
                 message: 'Invalid driverType value. Only true or false is allowed.',
             });
         } else {
-            const cars = await carService.getCars(driverType === 'true');
+            const cars = await carService.getCars(driverType === 'true', parseInt(capacity));
 
             if (cars.length === 0) {
                 res.status(404).send({

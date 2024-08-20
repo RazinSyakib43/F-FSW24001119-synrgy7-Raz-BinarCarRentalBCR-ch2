@@ -43,10 +43,15 @@ export class CarService {
     }
 
     // client
-    async getCars(driverType: boolean) {
+    async getCars(driverType: boolean, capacity?: number) {
         const cars = await this.carRepository.findSomeCarWithStatusActive();
 
-        const filteredCars = cars.filter(car => car.driverType === driverType);
+        let filteredCars = cars.filter(car => car.driverType === driverType);
+
+        if (capacity) {
+            filteredCars = filteredCars.filter(car => car.capacity === capacity);
+        }
+
         return filteredCars.map(car => this.carsData(car));
     }
 

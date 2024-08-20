@@ -32,7 +32,7 @@ interface CarContextProps {
     cars: Car[];
     carData: Car | null;
 
-    searchCars: (driverType: string) => void;
+    searchCars: (driverType: string, capacity: string) => void;
 
     fetchCarsForDashboard: () => void;
     getCarDetailById: (id: string) => void;
@@ -48,10 +48,10 @@ export function CarProvider({ children }: { children: React.ReactNode }) {
     const [carData, setCarData] = useState<Car | null>(null);
 
     // Client
-    const searchCars = async (driverType: string) => {
+    const searchCars = async (driverType: string, capacity: string) => {
         try {
             const response = await axios.get(`http://localhost:8080/api/v1/client/cars`, {
-                params: { driverType }
+                params: { driverType, capacity }
             });
             setCars(response.data.data);
             console.log("searchCars:", response.data.data);
@@ -139,7 +139,7 @@ export function CarProvider({ children }: { children: React.ReactNode }) {
     };
 
     useEffect(() => {
-        searchCars('');
+        searchCars('','');
     }, []);
 
     return (
