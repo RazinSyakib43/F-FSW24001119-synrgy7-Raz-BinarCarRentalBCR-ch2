@@ -4,6 +4,10 @@
 
 (Halaman ini belum di deploy)
 
+## Repositories
+- [Front-End](https://github.com/RazinSyakib43/Car-Management-Dashboard/tree/Challenge-8-(Client))
+- [Back-End](https://github.com/RazinSyakib43/Car-Management-Dashboard/tree/Challenge-8-(Server))
+
 ## Halaman
 
 1. **Landing Page**
@@ -41,10 +45,6 @@ B. **Back-End**
 7. JWT (Json Web Token)
 8. Cloudinary
 9. Swagger
-
-## Repository Back-End
-
-[https://github.com/RazinSyakib43/Car-Management-Dashboard/tree/Challenge_6](https://github.com/RazinSyakib43/Car-Management-Dashboard/tree/Challenge_6)
 
 ## Instalasi dan Penggunaan
 
