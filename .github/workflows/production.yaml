@@ -18,7 +18,7 @@ jobs:
             - name: Install Node.js
               uses: actions/setup-node@v3
               with:
-                node-version: '20'
+                node-version: '20.11.1'
 
             - name: Upgrade npm
               run: npm install -g npm@latest
@@ -30,7 +30,7 @@ jobs:
               run: rm -rf node_modules
 
             - name: Install Dependencies
-              run: npm install
+              run: npm install --legacy-peer-deps
 
             - name: Install Vercel CLI
               run: npm install --global vercel@latest
