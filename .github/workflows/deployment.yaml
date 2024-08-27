@@ -11,17 +11,15 @@ jobs:
     runs-on: [ ubuntu-latest ]
     steps:
       - name: Checkout Source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
       - name: Install Dependencies
         run: npm install
-      - name: Build Project
-        run: npm run build
-      - name: Genrate Deployment Package
-        run: zip -r nodejs-app-build.zip .
+      - name: Generate deployment package
+        run: zip -r deploy.zip . -x '*.git*'
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v22
         with:
@@ -29,6 +27,6 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: 'Car-Challenge8-API'
           environment_name: 'car-challenge8-api-env'
-          version_label: ${{ github.sha }}
+          version_label: 12345
           region: us-east-1
           deployment_package: nodejs-app-build.zip
