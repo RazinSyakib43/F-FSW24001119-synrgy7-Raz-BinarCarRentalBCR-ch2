@@ -31,7 +31,7 @@ export function LoginPage() {
             <div className="loginForm">
                 <img className="loginLogo" src={loginLogo} alt="" />
                 <div className="loginForm__header">
-                    <h1 className="login_welcome_title">Welcome, Admin BCR</h1>
+                    <h1 className="login_welcome_title">Welcome, Admin BCR!!</h1>
                 </div>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group
