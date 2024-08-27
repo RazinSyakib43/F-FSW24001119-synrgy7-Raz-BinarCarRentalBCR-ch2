@@ -29,8 +29,11 @@ jobs:
             - name: Remove Node Modules
               run: rm -rf node_modules
 
+            - name: Use npm registry mirror
+              run: npm config set registry https://registry.npmjs.org/
+
             - name: Install Dependencies
-              run: npm install --legacy-peer-deps
+              run: npm ci
 
             - name: Install Vercel CLI
               run: npm install --global vercel@latest
