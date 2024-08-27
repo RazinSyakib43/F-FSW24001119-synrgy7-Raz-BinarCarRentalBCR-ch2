@@ -2,13 +2,13 @@
     "builds": [
         {
             "src": "src/main.tsx",
-            "use": "@vercel/node"
+            "use": "@vercel/static"
         }
     ],
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "/src/main.tsx"
+            "dest": "src/main.tsx"
         }
     ]
 }
