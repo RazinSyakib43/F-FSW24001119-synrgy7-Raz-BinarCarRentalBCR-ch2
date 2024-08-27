@@ -20,20 +20,17 @@ jobs:
               with:
                 node-version: '20.11.1'
 
-            - name: Upgrade npm
-              run: npm install -g npm@latest
+            - name: Install Yarn
+              run: npm install -g yarn
 
-            - name: Clean npm Cache
-              run: npm cache clean --force
+            - name: Clean Yarn Cache
+              run: yarn cache clean
 
             - name: Remove Node Modules
               run: rm -rf node_modules
 
-            - name: Use npm registry mirror
-              run: npm config set registry https://registry.npmjs.org/
-
-            - name: Install Dependencies
-              run: npm ci
+            - name: Install Dependencies with Yarn
+              run: yarn install
 
             - name: Install Vercel CLI
               run: npm install --global vercel@latest
