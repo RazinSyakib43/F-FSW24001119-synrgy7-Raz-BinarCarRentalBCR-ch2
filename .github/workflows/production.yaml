@@ -1,9 +1,5 @@
 name: Vercel Production Deployment
 
-env:
-    VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-    VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-
 on:
     push:
         branches:
@@ -20,17 +16,17 @@ jobs:
               with:
                 node-version: '20.11.1'
 
-            - name: Install Yarn
-              run: npm install -g yarn
+            - name: Upgrade npm
+              run: npm install -g npm@latest
 
-            - name: Clean Yarn Cache
-              run: yarn cache clean
+            - name: Clean npm Cache
+              run: npm cache clean --force
 
             - name: Remove Node Modules
               run: rm -rf node_modules
 
-            - name: Install Dependencies with Yarn
-              run: yarn install
+            - name: Install Dependencies
+              run: npm install --legacy-peer-deps
 
             - name: Install Vercel CLI
               run: npm install --global vercel@latest
