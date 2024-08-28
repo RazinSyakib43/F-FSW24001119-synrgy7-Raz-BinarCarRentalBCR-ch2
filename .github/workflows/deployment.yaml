@@ -45,6 +45,12 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Clean Yarn Cache
+        run: yarn cache clean
+
+      - name: Remove Node Modules
+        run: rm -rf node_modules
+
       - name: Install dependencies
         run: yarn install
 
