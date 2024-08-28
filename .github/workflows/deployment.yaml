@@ -16,8 +16,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+
+      - name: Install Yarn
+        run: npm install --global yarn@latest
+
+      - name: Clean Yarn Cache
+        run: yarn cache clean
+
+      - name: Remove Node Modules
+        run: rm -rf node_modules
+
       - name: Install Dependencies
-        run: npm install
+        run: yarn install --frozen-lockfile
       - name: Generate deployment package
         run: zip -r deploy.zip . -x '*.git*'
       - name: Deploy to EB
