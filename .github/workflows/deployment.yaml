@@ -55,7 +55,7 @@ jobs:
         env:
           KOYEB_API_TOKEN: 7mn92452fwp2net3olqnxly8glbq0a6ejnwb603ntbb51w0smc7vzi92h0vkugzd
         run: |
-          curl -X POST https://app.koyeb.com/v1/services/c7ae7002-8df6-48f9-ad18-fbd5fa336ebf/redeploy \
+          curl -X POST https://app.koyeb.com/v1/services/a35840b6-1e2a-4908-9031-47021e89551a/redeploy \
           -H "Authorization: Bearer 7mn92452fwp2net3olqnxly8glbq0a6ejnwb603ntbb51w0smc7vzi92h0vkugzd" \
           -H "Content-Type: application/json" \
           -d '
