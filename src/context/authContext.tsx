@@ -21,7 +21,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const getCurrentUser = async () => {    
         try {
-            const response = await axios.get('http://localhost:8080/api/v1/dashboard/users/me', {
+            const response = await axios.get('https://itchy-kass-zeens-e78e4aa6.koyeb.app/api/v1/dashboard/users/me', {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -47,7 +47,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             formData.append('email', email);
             formData.append('password', password);
 
-            const response = await axios.post('http://localhost:8080/api/v1/dashboard/auth/login/admin', formData);
+            const response = await axios.post('https://itchy-kass-zeens-e78e4aa6.koyeb.app/api/v1/dashboard/auth/login/admin', formData);
             const { token } = response.data.data;
 
             setToken(token);
