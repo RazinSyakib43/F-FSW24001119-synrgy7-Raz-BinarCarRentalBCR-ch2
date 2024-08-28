@@ -50,7 +50,7 @@ export function CarProvider({ children }: { children: React.ReactNode }) {
     // Client
     const searchCars = async (driverType: string, capacity: string) => {
         try {
-            const response = await axios.get(`https://yawning-unicorn-zeens-ed02ad15.koyeb.app//api/v1/client/cars`, {
+            const response = await axios.get(`https://yawning-unicorn-zeens-ed02ad15.koyeb.app/api/v1/client/cars`, {
                 params: { driverType, capacity }
             });
             setCars(response.data.data);
@@ -63,7 +63,7 @@ export function CarProvider({ children }: { children: React.ReactNode }) {
     // dashboard
     const fetchCarsForDashboard = async () => {
         try {
-            const response = await axios.get('https://yawning-unicorn-zeens-ed02ad15.koyeb.app//api/v1/dashboard/cars/dashboard', {
+            const response = await axios.get('https://yawning-unicorn-zeens-ed02ad15.koyeb.app/api/v1/dashboard/cars/dashboard', {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
@@ -77,7 +77,7 @@ export function CarProvider({ children }: { children: React.ReactNode }) {
 
     const getCarDetailById = async (id: string) => {
         try {
-            const response = await axios.get(`https://yawning-unicorn-zeens-ed02ad15.koyeb.app//api/v1/dashboard/cars/${id}`, {
+            const response = await axios.get(`https://yawning-unicorn-zeens-ed02ad15.koyeb.app/api/v1/dashboard/cars/${id}`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
@@ -93,7 +93,7 @@ export function CarProvider({ children }: { children: React.ReactNode }) {
 
     const addCar = async (formData: FormData) => {
         try {
-            const response = await axios.post('https://yawning-unicorn-zeens-ed02ad15.koyeb.app//api/v1/dashboard/cars', formData, {
+            const response = await axios.post('https://yawning-unicorn-zeens-ed02ad15.koyeb.app/api/v1/dashboard/cars', formData, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')?.replace(/"/g, '')}`,
                     'Content-Type': 'multipart/form-data'
@@ -111,7 +111,7 @@ export function CarProvider({ children }: { children: React.ReactNode }) {
 
     const updateCar = async (id: string, formData: FormData) => {
         try {
-            const response = await axios.put(`https://yawning-unicorn-zeens-ed02ad15.koyeb.app//api/v1/dashboard/cars/${id}`, formData, {
+            const response = await axios.put(`https://yawning-unicorn-zeens-ed02ad15.koyeb.app/api/v1/dashboard/cars/${id}`, formData, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')?.replace(/"/g, '')}`,
                     'Content-Type': 'multipart/form-data'
@@ -126,7 +126,7 @@ export function CarProvider({ children }: { children: React.ReactNode }) {
 
     const deleteCar = async (id: string) => {
         try {
-            const response = await axios.delete(`https://yawning-unicorn-zeens-ed02ad15.koyeb.app//api/v1/dashboard/cars/${id}`, {
+            const response = await axios.delete(`https://yawning-unicorn-zeens-ed02ad15.koyeb.app/api/v1/dashboard/cars/${id}`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')?.replace(/"/g, '')}`,
                 }
