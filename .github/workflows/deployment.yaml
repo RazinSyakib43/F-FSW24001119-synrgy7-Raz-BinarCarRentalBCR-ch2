@@ -1,42 +1,68 @@
 
-name: CICD Deployment API to Elastic Beanstalk
+name: CICD Deployment API Koyeb
 
 on:
   push:
     branches:
       - Ch8BE
+  pull_request:
+    branches:
+      - Ch8BE
 
 jobs:
-  build-and-deploy:
-    runs-on: [ ubuntu-latest ]
+  build:
+    runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Source
-        uses: actions/checkout@v2
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: '20'
 
-      - name: Install Yarn
-        run: npm install --global yarn@latest
+      - name: Install dependencies
+        run: yarn install
 
-      - name: Clean Yarn Cache
-        run: yarn cache clean
+      # - name: Run tests
+      #   run: npm test
 
-      - name: Remove Node Modules
-        run: rm -rf node_modules
+      # - name: Build project
+      #   run: npm run build
 
-      - name: Install Dependencies
-        run: yarn install --frozen-lockfile
-      - name: Generate deployment package
-        run: zip -r deploy.zip . -x '*.git*'
-      - name: Deploy to EB
-        uses: einaregilsson/beanstalk-deploy@v22
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/Ch8BE'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: 'Car-Challenge8-API'
-          environment_name: 'car-challenge8-api-env'
-          version_label: ${{ github.sha }}-${{ github.run_number }}
-          region: us-east-1
-          deployment_package: deploy.zip
+          node-version: '20'
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Deploy to Koyeb
+        env:
+          KOYEB_API_TOKEN: 7mn92452fwp2net3olqnxly8glbq0a6ejnwb603ntbb51w0smc7vzi92h0vkugzd
+        run: |
+          curl -X POST https://app.koyeb.com/v1/services/c7ae7002-8df6-48f9-ad18-fbd5fa336ebf/redeploy \
+          -H "Authorization: Bearer 7mn92452fwp2net3olqnxly8glbq0a6ejnwb603ntbb51w0smc7vzi92h0vkugzd" \
+          -H "Content-Type: application/json" \
+          -d '
+          {
+            "name": "synrgy-final-project-fsw",
+            "git": {
+              "repo":"https://github.com/RazinSyakib43/Car-Management-Dashboard.git",
+              "branch":"Ch8BE"
+            }
+          }'

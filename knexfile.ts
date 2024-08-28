@@ -4,14 +4,8 @@ import type { Knex } from "knex";
 
 const config: { [key: string]: Knex.Config } = {
   development: {
-    client: "pg",
-    connection: {
-      host: "localhost",
-      port: 5432,
-      database: "car_rental_ch7_db",
-      user: "postgres",
-      password: "yessgood123",
-    },
+    client: 'pg',
+    connection: "postgresql://postgres.hgxmajbxzfwodrzbdpmc:oQxil5ODW3SK@aws-0-us-east-1.pooler.supabase.com:6543/postgres",
     pool: {
       min: 0,
       max: 7
@@ -28,9 +22,12 @@ const config: { [key: string]: Knex.Config } = {
   staging: {
     client: "postgresql",
     connection: {
-      database: "my_db",
-      user: "username",
-      password: "password"
+      host: "carrentalch7db.cjss6eo44hm5.ap-southeast-1.rds.amazonaws.com",
+      port: 5432,
+      database: "car_rental_ch7_db",
+      user: "ch8admin",
+      password: "oQxil5ODW3SK",
+      ssl: { rejectUnauthorized: false }
     },
     pool: {
       min: 2,
@@ -44,9 +41,12 @@ const config: { [key: string]: Knex.Config } = {
   production: {
     client: "postgresql",
     connection: {
-      database: "my_db",
-      user: "username",
-      password: "password"
+      host: "carrentalch7db.cjss6eo44hm5.ap-southeast-1.rds.amazonaws.com",
+      port: 5432,
+      database: "car_rental_ch7_db",
+      user: "ch8admin",
+      password: "oQxil5ODW3SK",
+      ssl: { rejectUnauthorized: false }
     },
     pool: {
       min: 2,
