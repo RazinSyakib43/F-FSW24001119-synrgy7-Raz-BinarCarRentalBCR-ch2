@@ -2,7 +2,7 @@
 
 ## Deployment
 - Website (has implement the API): https://ch8fe.dauyu7ky61pqi.amplifyapp.com/
-- Back-End API: 
+- Back-End API: https://yawning-unicorn-zeens-ed02ad15.koyeb.app/
 
 ## Repositories
 - [Front-End](https://github.com/RazinSyakib43/Car-Management-Dashboard/tree/Challenge_8-(FE))
@@ -44,6 +44,7 @@ B. **Back-End**
 7. JWT (Json Web Token)
 8. Cloudinary
 9. Swagger
+10. Jest (Unit Testing)
 
 C. **Deployment**
 1. AWS Amplify (Front-End)
