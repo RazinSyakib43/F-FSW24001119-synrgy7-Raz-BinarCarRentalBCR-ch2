@@ -10,12 +10,7 @@ import knex from 'knex'
 import { Model } from 'objection';
 const knexInstance = knex({
     client: "postgresql",
-    connection: {
-        database: "car_rental_ch7_db",
-        user: "postgres",
-        password: "yessgood123",
-        port: 5432
-    }
+    connection: "postgresql://postgres.hgxmajbxzfwodrzbdpmc:oQxil5ODW3SK@aws-0-us-east-1.pooler.supabase.com:6543/postgres",
 })
 
 Model.knex(knexInstance);
