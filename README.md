@@ -2,6 +2,8 @@
 
 Welcome to the **Binar Car Rental - Car Management Dashboard** . This dashboard is designed to provide a comprehensive solution for managing car rentals efficiently. It offers a user-friendly interface for administrators to manage cars, users, and rental orders seamlessly.
 
+# Deployment
+
 # Table of Contents
 
 1. [Binar Car Rental - Car Management Dashboard](#binar-car-rental---car-management-dashboard)
@@ -19,7 +21,6 @@ Welcome to the **Binar Car Rental - Car Management Dashboard** . This dashboard 
    e. [Users - Current (Me) (/users/me)](#5-users---current-me-usersme)
    f. [Orders (/orders)](#6-orders-orders)
 9. [Contribution](#contribution)
-
 
 ## Technologies Used
 
@@ -57,13 +58,11 @@ Diagram source: [Razin -Car Management Dashboard API (dbdiagram.io)](https://dbd
    ```
    https://github.com/RazinSyakib43/Car-Management-Dashboard.git
    ```
-
 2. Install project dependencies:
 
    ```
    npm install
    ```
-
 3. Configure your database settings by editing the `knexfile.ts`. You can set the `user`, `password`, and `database`. Then save your changes. Example:
 
    ```
@@ -83,19 +82,16 @@ Diagram source: [Razin -Car Management Dashboard API (dbdiagram.io)](https://dbd
        }
      },
    ```
-
 4. Apply database schema migration:
 
    ```
    npx knex migrate:latest
    ```
-
 5. Create initial data:
 
    ```
    npx knex seed:run
    ```
-
 6. Run the server (with ts-node-dev for auto-reloading):
 
    ```
@@ -103,18 +99,23 @@ Diagram source: [Razin -Car Management Dashboard API (dbdiagram.io)](https://dbd
    ```
 
 ## Password for Testing
+
 1. Superadmin
+
 ```
 - email: ayano@gmail.com
 - password: iamayano
 ```
 
 2. Admin
+
 ```
 - email: naruto@gmail.com
 - password: iamnaruto
 ```
+
 3. Member
+
 ```
 - email: razin@gmail.com
 - password: iamrazin
@@ -142,7 +143,6 @@ http://localhost:3000/api-docs/
   - `/cars`
   - `/users`
   - `/orders`
-
 - Status Code:
 
   - **200 OK** : The request was successful.
@@ -554,7 +554,6 @@ Response Body:
 > Retrieves a list of all users registered in the system.
 
 - **Endpoint**: `/api/v1/users/`
-
 - **Security**: Requires authentication token as superadmin or admin (`auth`).
 
 Request Body:
@@ -601,7 +600,6 @@ Response Body:
 > Retrieves detailed information about a specific user by their ID.
 
 - **Endpoint**: `/api/v1/users/by-id/{id}`
-
 - **Security**: Requires authentication token as superadmin or admin (`auth`).
 
 Request Body:
@@ -632,7 +630,6 @@ Response Body:
 > Registers a new user in the system.
 
 - **Endpoint**: `/api/v1/users/`
-
 - **Security**: Requires authentication token as superadmin (`auth`).
 
 Request Body:
@@ -668,7 +665,6 @@ Response Body:
 > Updates the details of a specific user by their ID.
 
 - **Endpoint**: `/api/v1/users/by-id/{id}`
-
 - **Security**: Requires authentication token as superadmin (`auth`).
 
 Request Body:
@@ -703,7 +699,6 @@ Response Body:
 > Deletes a specific user from the system by their ID.
 
 - **Endpoint**: `/api/v1/users/by-id/{id}`
-
 - **Security**: Requires authentication token as superadmin (`auth`).
 
 Request Body:
@@ -730,7 +725,6 @@ Response Body:
 > Get Current User Profile, based on their token.
 
 - **Endpoint**: `/api/v1/users/me`
-
 - **Security**: Requires authentication token as user account (any roles) (`auth`).
 
 Request Body:
@@ -768,7 +762,6 @@ Response Body:
 > Updates the details of their profile, based on their token.
 
 - **Endpoint**: `/api/v1/users/me`
-
 - **Security**: Requires authentication token as user account (any roles) (`auth`).
 
 Request Body:
@@ -810,7 +803,6 @@ Response Body:
 > Deletes current user account, based on their token.
 
 - **Endpoint**: `/api/v1/users/me`
-
 - **Security**: Requires authentication token as user account (any roles) (`auth`).
 
 Request Body:
@@ -837,7 +829,6 @@ Response Body:
 > Retrieve a list of all orders, including details such as user information, car details, rental periods, pricing, and status.
 
 - **Endpoint**: `/api/v1/orders`
-
 - **Security**: Requires authentication token as superadmin or admin (`auth`).
 
 | Parameter     | Type      | Value                                            | Description  |
@@ -918,12 +909,11 @@ Response Body:
 > Retrieves detailed information about a specific order by its ID.
 
 - **Endpoint**: `/api/v1/orders/{{id}}`
-
 - **Security**: Requires authentication token as superadmin or admin (`auth`).
 
-| Parameter | Type      | Description                        |
-| :-------- | :-------- | :--------------------------------- |
-| `id`      | `integer` | **Required**. Id of order to fetch |
+| Parameter | Type        | Description                              |
+| :-------- | :---------- | :--------------------------------------- |
+| `id`    | `integer` | **Required**. Id of order to fetch |
 
 Request Body:
 
@@ -1008,12 +998,11 @@ Response Body:
 > Updates the details of a specific order by its ID.
 
 - **Endpoint**: `/api/v1/orders/{{id}}`
-
 - **Security**: Requires authentication token as superadmin or admin (`auth`).
 
-| Parameter | Type      | Description                        |
-| :-------- | :-------- | :--------------------------------- |
-| `id`      | `integer` | **Required**. Id of order to fetch |
+| Parameter | Type        | Description                              |
+| :-------- | :---------- | :--------------------------------------- |
+| `id`    | `integer` | **Required**. Id of order to fetch |
 
 Request Body:
 
@@ -1060,12 +1049,11 @@ Response Body:
 > Deletes a specific order from the system by its ID.
 
 - **Endpoint**: `/api/v1/orders/{{id}}`
-
 - **Security**: Requires authentication token as superadmin or admin (`auth`).
 
-| Parameter | Type      | Description                        |
-| :-------- | :-------- | :--------------------------------- |
-| `id`      | `integer` | **Required**. Id of order to fetch |
+| Parameter | Type        | Description                              |
+| :-------- | :---------- | :--------------------------------------- |
+| `id`    | `integer` | **Required**. Id of order to fetch |
 
 Request Body:
 

@@ -48,6 +48,9 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
+      # - name: Build project
+      #   run: npm run build
+
       - name: Deploy to Koyeb
         env:
           KOYEB_API_TOKEN: 7mn92452fwp2net3olqnxly8glbq0a6ejnwb603ntbb51w0smc7vzi92h0vkugzd
