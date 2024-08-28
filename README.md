@@ -1,8 +1,8 @@
 # Binar Car Rental - Full Stack Web (Front-End dan Back-End)
 
 ## Deployment
-
-(Halaman ini belum di deploy)
+- Website (has implement the API): https://ch8fe.dauyu7ky61pqi.amplifyapp.com/
+- Back-End API: 
 
 ## Repositories
 - [Front-End](https://github.com/RazinSyakib43/Car-Management-Dashboard/tree/Challenge_8-(FE))
@@ -10,32 +10,31 @@
 
 ## Halaman
 
-1. **Landing Page**
+1. **Landing Page**: ``{{Web_URL}}/``
    - Hero Section
    - Our Services Section
    - Why Us Section
    - Testimonial Section
    - Getting Started Section
    - Frequently Asked Question (FAQ) Section
-2. **Search Cars Page**
+2. **Search Cars Page**: ``{{Web_URL}}/auth/login/``
    - Hero Section
    - Search Car Bar Section
-3. **Login Page**
-4. **Admin Dashboard Page**
-   * List All Cars
-   * Cars Management (CRUD)
+3. **Login Page**: ``{{Web_URL}}/auth/login/``
+   - Form Input Email and Password
+4. **Admin Dashboard Page**: ``{{Web_URL}}/dashboard``
+   * List All Cars: ``{{Web_URL}}/dashboard``
+   * Cars Management (CRUD): ``{{Web_URL}}/dashboard/cars``
 
 ## Teknologi yang Digunakan
 
 A. **Front-End**
-
 1. React.js
 2. Bootstrap 5
 3. SwiperJS
 4. Axios
 
 B. **Back-End**
-
 1. TypeScript
 2. Node.js
 3. Express.js
@@ -46,7 +45,28 @@ B. **Back-End**
 8. Cloudinary
 9. Swagger
 
-## Instalasi dan Penggunaan
+C. **Deployment**
+1. AWS Amplify (Front-End)
+2. Koyeb (Back-End API)
+3. Supabase (Database Hosting)
+
+## Password for Testing
+
+1. Superadmin
+
+```
+- email: ayano@gmail.com
+- password: iamayano
+```
+
+2. Admin
+
+```
+- email: naruto@gmail.com
+- password: iamnaruto
+```
+
+## Instalasi dan Penggunaan Secara Local
 
 1. Clone repositori:
 
@@ -117,22 +137,6 @@ B. **Back-End**
 
 
 3. Untuk melakukan pengembangan atau penyesuaian, edit file project client maupun server sesuai kebutuhan Anda.
-
-## Password for Testing
-
-1. Superadmin
-
-```
-- email: ayano@gmail.com
-- password: iamayano
-```
-
-2. Admin
-
-```
-- email: naruto@gmail.com
-- password: iamnaruto
-```
 
 ## Kontribusi
 
