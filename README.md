@@ -1,7 +1,7 @@
 # Binar Car Rental - Full Stack Web (Front-End dan Back-End)
 
 ## Deployment
-- Website (has implement the API): https://ch8fe.dauyu7ky61pqi.amplifyapp.com/
+- Website (has implemented the API): https://ch8fe.dauyu7ky61pqi.amplifyapp.com/
 - Back-End API: https://yawning-unicorn-zeens-ed02ad15.koyeb.app/
 
 ## Repositories
@@ -16,7 +16,7 @@
    - Why Us Section
    - Testimonial Section
    - Getting Started Section
-   - Frequently Asked Question (FAQ) Section
+   - Frequently Asked Questions (FAQ) Section
 2. **Search Cars Page**: ``{{Web_URL}}/auth/login/``
    - Hero Section
    - Search Car Bar Section
@@ -29,16 +29,19 @@
 ## Teknologi yang Digunakan
 
 A. **Front-End**
-1. React.js
-2. Bootstrap 5
-3. SwiperJS
-4. Axios
+1. TypeScript
+2. React.js
+3. Vite
+4. Bootstrap 5
+5. Axios
+6. SwiperJS
+7. Eslint
 
 B. **Back-End**
 1. TypeScript
 2. Node.js
 3. Express.js
-4. Postgresql
+4. PostgreSQL
 5. Knex
 6. Objection
 7. JWT (Json Web Token)
@@ -47,7 +50,7 @@ B. **Back-End**
 10. Jest (Unit Testing)
 
 C. **Deployment**
-1. AWS Amplify (Front-End)
+1. AWS Amplify (Front-End Web)
 2. Koyeb (Back-End API)
 3. Supabase (Database Hosting)
 
@@ -67,9 +70,9 @@ C. **Deployment**
 - password: iamnaruto
 ```
 
-## Instalasi dan Penggunaan Secara Local
+## Instalasi dan Penggunaan Secara Lokal
 
-1. Clone repositori:
+1. Clone repository:
 
    ```
    git clone https://github.com/RazinSyakib43/Car-Management-Dashboard.git
@@ -83,7 +86,7 @@ C. **Deployment**
          ```
          cd client
          ```
-      2. Install Depedencies
+      2. Install Dependencies
 
          ```
          npm install
@@ -100,7 +103,7 @@ C. **Deployment**
          ```
             cd server
          ```
-      2. Install Depedencies
+      2. Install Dependencies
 
          ```
             npm install
